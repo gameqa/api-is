@@ -3,6 +3,7 @@ import users from "./users";
 import topics from "./topics";
 import paragraphs from "./paragraphs";
 import questions from "./questions";
+import answers from "./answers";
 
 export default RouteBuilder.joinRouters([
 	{
@@ -20,5 +21,9 @@ export default RouteBuilder.joinRouters([
 	{
 		route: "/questions/",
 		controller: questions,
+	},
+	{
+		route: "/answers/",
+		controller: answers,
 	},
 ]);

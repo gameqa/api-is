@@ -1,6 +1,6 @@
 import { Schema, model, Types } from "mongoose";
 import { AnswerInterface, AnswerCollectionInterface } from "./interface";
-import { Users } from "../";
+import { Users, Questions, Paragraphs } from "../";
 
 const answerSchema = new Schema(
 	{
@@ -16,6 +16,10 @@ const answerSchema = new Schema(
 			type: Types.ObjectId,
 			required: true,
 		},
+		questionId: {
+			type: Types.ObjectId,
+			required: true,
+		},
 		// questionId
 		// ^ firstWord in range of questions para
 		// ^ lastwordInRange of questions para
@@ -26,13 +30,28 @@ const answerSchema = new Schema(
 );
 
 answerSchema.pre<AnswerInterface>("save", async function (next) {
-	if (this.isModified("firstWord") || this.isModified("lastWord")) {
+	const spanModified =
+		this.isModified("firstWord") || this.isModified("lastWord");
+	if (spanModified) {
 		if (this.firstWord >= this.lastWord)
 			throw new Error("Word range must have positive span");
 	}
 	if (this.isModified("submittedBy")) {
 		const user = await Users.findById(this.submittedBy);
 		if (!user) throw new Error("No user found with this id");
+	}
+	if (this.isModified("questionId")) {
+		const question = await Questions.findById(this.questionId);
+		if (!question) throw new Error("No user found with this id");
+		if (spanModified) {
+			const paragraph = await Paragraphs.findById(question.paragraphId);
+			const words = paragraph.context.split(" ");
+			const wordCount = words.length;
+			if (wordCount < this.lastWord || wordCount < this.firstWord)
+				throw new Error(
+					"first and last words out of range for paragraph"
+				);
+		}
 	}
 	next();
 });

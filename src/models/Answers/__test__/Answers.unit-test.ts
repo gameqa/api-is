@@ -14,8 +14,9 @@ import { Types } from "mongoose";
 
 const validAnswer = {
 	firstWord: 1,
-	lastWord: 5,
+	lastWord: 6,
 	submittedBy: "",
+	questionId: "",
 };
 
 const validQuestion = {
@@ -25,7 +26,7 @@ const validQuestion = {
 };
 
 const validPara = {
-	context: "some para",
+	context: "some para asdf asdf some word text",
 	submittedBy: "",
 	topicId: "",
 };
@@ -71,6 +72,7 @@ beforeAll(async (done) => {
 	// @ts-ignore
 	question = await Questions.create(validQuestion);
 	validAnswer.submittedBy = user._id;
+	validAnswer.questionId = question._id;
 	done();
 });
 
@@ -178,6 +180,23 @@ describe("Creating Answer", () => {
 			await expect(throwsError()).rejects.toEqual(new Error("test"));
 			done();
 		});
+
+		it("Should not allow lastWord to be outside of paragraph", async (done) => {
+			const throwsError = async () => {
+				try {
+					await Answers.create({
+						...validAnswer,
+						firstWord: 7,
+						lastWord: 1,
+					});
+					return "works";
+				} catch (error) {
+					throw Error("test");
+				}
+			};
+			await expect(throwsError()).rejects.toEqual(new Error("test"));
+			done();
+		});
 	});
 
 	describe("Selecting submittedBy", () => {
@@ -233,6 +252,69 @@ describe("Creating Answer", () => {
 					await Answers.create({
 						...validAnswer,
 						submittedBy: user._id,
+					});
+					return "works";
+				} catch (error) {
+					throw Error("test");
+				}
+			};
+			await expect(throwsError()).resolves.toEqual("works");
+			done();
+		});
+	});
+
+	describe("Selecting question", () => {
+		it("Should not work without questionId", async (done) => {
+			const throwsError = async () => {
+				try {
+					await Answers.create({
+						...validAnswer,
+						questionId: undefined,
+					});
+				} catch (error) {
+					throw Error("test");
+				}
+			};
+			await expect(throwsError()).rejects.toEqual(new Error("test"));
+			done();
+		});
+
+		it("Should fail if questionId is not objectId", async (done) => {
+			const throwsError = async () => {
+				try {
+					await Answers.create({
+						...validAnswer,
+						questionId: "asdf",
+					});
+				} catch (error) {
+					throw Error("test");
+				}
+			};
+			await expect(throwsError()).rejects.toEqual(new Error("test"));
+			done();
+		});
+
+		it("Should fail if questionId is not a question id", async (done) => {
+			const throwsError = async () => {
+				try {
+					await Answers.create({
+						...validAnswer,
+						questionId: Types.ObjectId(),
+					});
+				} catch (error) {
+					throw Error("test");
+				}
+			};
+			await expect(throwsError()).rejects.toEqual(new Error("test"));
+			done();
+		});
+
+		it("Should work if questionId is a valid question ", async (done) => {
+			const throwsError = async () => {
+				try {
+					await Answers.create({
+						...validAnswer,
+						questionId: question._id,
 					});
 					return "works";
 				} catch (error) {

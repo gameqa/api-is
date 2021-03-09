@@ -36,5 +36,9 @@ questionsSchema.pre<QuestionInterface>("save", async function (next) {
 	next();
 });
 
-export const Questions = model("questions", questionsSchema, "questions");
+export const Questions = model<QuestionInterface, QuestionCollectionInterface>(
+	"questions",
+	questionsSchema,
+	"questions"
+);
 export * from "./interface";

@@ -12,7 +12,7 @@ export default RouteBuilder.routerForEndpoints([
 		middleware: [auth, populate([["questionId", Questions, "question"]])],
 	},
 	{
-		route: "/:questionId/answer",
+		route: "/:questionId/answers",
 		controller: createAnswer,
 		method: "post",
 		middleware: [auth, populate([["questionId", Questions, "question"]])],

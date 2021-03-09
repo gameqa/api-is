@@ -20,9 +20,6 @@ const answerSchema = new Schema(
 			type: Types.ObjectId,
 			required: true,
 		},
-		// questionId
-		// ^ firstWord in range of questions para
-		// ^ lastwordInRange of questions para
 	},
 	{
 		timestamps: true,

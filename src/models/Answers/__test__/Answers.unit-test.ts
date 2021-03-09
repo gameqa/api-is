@@ -15,6 +15,7 @@ import { Types } from "mongoose";
 const validAnswer = {
 	firstWord: 1,
 	lastWord: 5,
+	submittedBy: "",
 };
 
 const validQuestion = {
@@ -69,6 +70,7 @@ beforeAll(async (done) => {
 	validQuestion.paragraphId = paragraph._id;
 	// @ts-ignore
 	question = await Questions.create(validQuestion);
+	validAnswer.submittedBy = user._id;
 	done();
 });
 
@@ -174,6 +176,70 @@ describe("Creating Answer", () => {
 				}
 			};
 			await expect(throwsError()).rejects.toEqual(new Error("test"));
+			done();
+		});
+	});
+
+	describe("Selecting submittedBy", () => {
+		it("Should fail without submittedBy is missing", async (done) => {
+			const throwsError = async () => {
+				try {
+					await Answers.create({
+						...validAnswer,
+						submittedBy: null,
+					});
+				} catch (error) {
+					throw Error("test");
+				}
+			};
+
+			await expect(throwsError()).rejects.toEqual(new Error("test"));
+			done();
+		});
+
+		it("Should fail if submittedBy is not objectId", async (done) => {
+			const throwsError = async () => {
+				try {
+					await Answers.create({
+						...validAnswer,
+						submittedBy: "asdf",
+					});
+				} catch (error) {
+					throw Error("test");
+				}
+			};
+			await expect(throwsError()).rejects.toEqual(new Error("test"));
+			done();
+		});
+
+		it("Should fail if submittedBy is not a valid user id", async (done) => {
+			const throwsError = async () => {
+				try {
+					await Answers.create({
+						...validAnswer,
+						submittedBy: Types.ObjectId(),
+					});
+				} catch (error) {
+					throw Error("test");
+				}
+			};
+			await expect(throwsError()).rejects.toEqual(new Error("test"));
+			done();
+		});
+
+		it("Should work if submittedId is a valid user ", async (done) => {
+			const throwsError = async () => {
+				try {
+					await Answers.create({
+						...validAnswer,
+						submittedBy: user._id,
+					});
+					return "works";
+				} catch (error) {
+					throw Error("test");
+				}
+			};
+			await expect(throwsError()).resolves.toEqual("works");
 			done();
 		});
 	});

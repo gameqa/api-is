@@ -1,5 +1,6 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Types } from "mongoose";
 import { AnswerInterface, AnswerCollectionInterface } from "./interface";
+import { Users } from "../";
 
 const answerSchema = new Schema(
 	{
@@ -11,8 +12,10 @@ const answerSchema = new Schema(
 			type: String,
 			required: true,
 		},
-		// lastWord
-		// submittedBy
+		submittedBy: {
+			type: Types.ObjectId,
+			required: true,
+		},
 		// questionId
 		// ^ firstWord in range of questions para
 		// ^ lastwordInRange of questions para
@@ -26,6 +29,10 @@ answerSchema.pre<AnswerInterface>("save", async function (next) {
 	if (this.isModified("firstWord") || this.isModified("lastWord")) {
 		if (this.firstWord >= this.lastWord)
 			throw new Error("Word range must have positive span");
+	}
+	if (this.isModified("submittedBy")) {
+		const user = await Users.findById(this.submittedBy);
+		if (!user) throw new Error("No user found with this id");
 	}
 	next();
 });

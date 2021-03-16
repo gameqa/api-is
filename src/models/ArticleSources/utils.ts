@@ -9,3 +9,12 @@ export const mapHostToArticleSourceIdentifier: {
 	"www.visir.is": "__visir__",
 	"www.visindavefurinn.is": "__visindavef__",
 };
+
+export const mapArticleSourceIdentifierToArticleKeyRegex: {
+	[key in ArticleSourceIdentifier]: RegExp;
+} = {
+	__visindavef__: /(?<=id=)\d*/g,
+	__mbl__: /(?<=mbl\.is\/)[^#?]*/g,
+	__wiki__: /(?<=org\/wiki\/)[^#?]*/g,
+	__visir__: /(?<=is\/g\/)[^#?]*/g,
+};

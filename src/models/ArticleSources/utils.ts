@@ -6,6 +6,6 @@ export const mapHostToArticleSourceIdentifier: {
 	visindavefur: "__visindavef__",
 	mbl: "__mbl__",
 	wikipedia: "__wiki__",
-	visir: "__visir__",
+	"www.visir.is": "__visir__",
 	visindavefurinn: "__visindavef__",
 };

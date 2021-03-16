@@ -5,6 +5,10 @@
 	"main": "app.ts",
 	"scripts": {
 		"dev": "nodemon src/server.ts",
+		"start": "npm run build && npm run serve",
+		"build": "npm run build-ts",
+		"build-ts": "tsc",
+		"serve": "env NODE_ENV=production node dist/src/server.js",
 		"test": "env NODE_ENV=test jest --testRegex .*\\.-test\\.* --coverage --maxWorkers=10",
 		"test:unit": "env NODE_ENV=test jest --testRegex .*\\.unit-test\\.* --coverage --maxWorkers=10",
 		"test:api": "env NODE_ENV=test jest --testRegex .*\\.api-test\\.* --coverage --maxWorkers=10"

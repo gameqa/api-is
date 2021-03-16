@@ -19,7 +19,6 @@ export default async (req: RegisterRequest, res: Response) => {
 			.status(200)
 			.send(user);
 	} catch (error) {
-		console.log(error);
-		res.status(400).send({ message: "Authentication failed" });
+		res.status(400).send({ message: "Innskráning gekk ekki" });
 	}
 };

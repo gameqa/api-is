@@ -20,6 +20,6 @@ export default async (req: RegisterRequest, res: Response) => {
 			.send(user.getPublic());
 	} catch (error) {
 		console.log(error);
-		res.status(400).send({ message: "Sign up failed" });
+		res.status(400).send({ message: "Nýskráning gekk ekki" });
 	}
 };

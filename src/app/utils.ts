@@ -33,7 +33,12 @@ export default class AppUtils {
 	 */
 	private static setupMiddleware = (app: Application) => {
 		// Enable cors
-		app.use(cors());
+		app.use(
+			cors({
+				credentials: true,
+				origin: ["http://localhost:3000"],
+			})
+		);
 
 		// request rate limits from same ip adddress
 		app.use(

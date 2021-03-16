@@ -23,4 +23,5 @@ export interface ArticleSourcesInterface extends Document {
 export interface ArticleSourcesCollectionInterface
 	extends Model<ArticleSourcesInterface> {
 	getIdentifier: (url: string) => ArticleSourceIdentifier;
+	getArticleKey: (url: string) => string;
 }

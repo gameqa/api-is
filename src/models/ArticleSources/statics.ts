@@ -3,7 +3,10 @@ import {
 	ArticleSourcesCollectionInterface,
 } from "./interface";
 import url from "url";
-import { mapHostToArticleSourceIdentifier } from "./utils";
+import {
+	mapArticleSourceIdentifierToArticleKeyRegex,
+	mapHostToArticleSourceIdentifier,
+} from "./utils";
 
 /**
  * Gets the identifier for the webpage given an url
@@ -21,4 +24,16 @@ export const getIdentifier = async function (
 	if (!identifier)
 		throw new Error(`No identifier found for hostname of url: ${URL}`);
 	return identifier;
+};
+
+export const getArticleKey = async function (
+	this: ArticleSourcesCollectionInterface,
+	URL: string
+) {
+	const identifier = this.getIdentifier(URL);
+	const pattern = mapArticleSourceIdentifierToArticleKeyRegex[identifier];
+	const regex = RegExp(pattern, "g");
+	const key = regex.exec(URL);
+	if (!key) throw new Error(`Unable to find article key in url ${URL}`);
+	return key;
 };

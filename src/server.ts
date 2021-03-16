@@ -90,8 +90,15 @@ class MblScraper extends ArticleScraperBase implements ArticleScraper {
 			`https://www.mbl.is/${this.sourceArticleKey}`
 		);
 		const $ = cheerio.load(data);
-		const mainLayout = cheerio.load($(".main-layout").get(0));
-		console.log(mainLayout);
+		$(".main-layout p").each((i, element) => {
+			const text = $(element)
+				.text()
+				.replace(/(\n|\t|\r)/g, "");
+			if (!text) return;
+			this.paragraphs.push(text);
+		});
+
+		this.title = $("h1").get(0).children.pop().data.replace(/„|“/g, "");
 		return {
 			extract: this.paragraphs[0],
 			title: this.title,

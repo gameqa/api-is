@@ -7,11 +7,11 @@ export type ArticleSourceIdentifier =
 	| "__visindavef__";
 
 export type ArticleHostnames =
-	| "visindavefur"
-	| "visindavefurinn"
-	| "mbl"
-	| "visir"
-	| "wikipedia";
+	| "www.visindavefur.is"
+	| "www.visindavefurinn.is"
+	| "www.mbl.is"
+	| "www.visir.is"
+	| "is.wikipedia.org";
 
 export interface ArticleSourcesInterface extends Document {
 	identifider: ArticleSourceIdentifier;

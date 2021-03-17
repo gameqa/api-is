@@ -2,6 +2,7 @@ import { GameRounds, GameRoundsInterface } from "../../";
 
 const validGameRound = {
 	currentRound: 1,
+	totalRounds: 10,
 };
 
 let round: GameRoundsInterface;
@@ -34,6 +35,25 @@ describe("Creating gamerounds", () => {
 				currentRound: 2,
 			});
 			expect(round).toHaveProperty("currentRound", 1);
+			done();
+		});
+	});
+	describe("the initial value of totalRounds", () => {
+		it("should have a default value of 10 when no val passed in", async (done) => {
+			round = await GameRounds.create({
+				...validGameRound,
+				totalRounds: undefined,
+			});
+			expect(round).toHaveProperty("totalRounds", 10);
+			done();
+		});
+
+		it("should have a default value of 1 even when other value passed in creation", async (done) => {
+			round = await GameRounds.create({
+				...validGameRound,
+				totalRounds: 2,
+			});
+			expect(round).toHaveProperty("totalRounds", 2);
 			done();
 		});
 	});

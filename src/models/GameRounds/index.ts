@@ -3,11 +3,16 @@ import {
 	GameRoundsInterface,
 	GameRoundsCollectionInterface,
 } from "./interface";
+import * as utils from "./utils";
 
 const gameRoundsSchema = new Schema({
 	currentRound: {
 		type: Number,
 		default: 1,
+	},
+	totalRounds: {
+		type: Number,
+		default: utils.DEFAULT_GAME_ROUNDS,
 	},
 });
 

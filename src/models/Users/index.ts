@@ -1,9 +1,9 @@
 import { Schema, model } from "mongoose";
-import { UserInterface, UserCollectionInterface } from "./interface";
+import { UserInterface, UserCollectionInterface, UserTypes } from "./interface";
 import validator from "validator";
 import * as methods from "./methods";
 import * as statics from "./statics";
-import { DEFAULT_USER_TYPE } from "./utils";
+import { DEFAULT_USER_TYPE, USER_TYPES } from "./utils";
 
 const userSchema = new Schema(
 	{
@@ -45,6 +45,8 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	if (this.isModified("password"))
 		this.password = await this.hashString(this.password);
 	if (this.isNew) this.type = DEFAULT_USER_TYPE;
+	if (!USER_TYPES.includes(this.type as UserTypes))
+		throw new Error("Invalid user type");
 	next();
 });
 

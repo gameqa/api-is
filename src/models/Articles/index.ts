@@ -7,6 +7,21 @@ const articleSchema = new Schema(
 			type: String,
 			required: true,
 		},
+		extract: {
+			type: String,
+			required: true,
+		},
+		key: {
+			type: String,
+			required: true,
+		},
+		paragraphs: {
+			type: [String],
+			required: true,
+			validate: {
+				validator: (v: string[]) => v.length > 0,
+			},
+		},
 	},
 	{ timestamps: true }
 );
@@ -18,4 +33,5 @@ export const Articles = model<ArticlesInterface, ArticlesCollectionInterface>(
 	articleSchema,
 	"articles"
 );
+
 export * from "./interface";

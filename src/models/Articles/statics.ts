@@ -1,4 +1,5 @@
 import { ArticlesCollectionInterface, ArticleSources } from "../";
+import { ArticlesInterface } from "./interface";
 import { ScraperFactory } from "./ScrapingService";
 
 export const findArticleByUrl = async function (

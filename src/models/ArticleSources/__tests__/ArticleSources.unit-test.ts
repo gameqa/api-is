@@ -134,13 +134,18 @@ describe("Creating an ArticleSource", () => {
 						hostname: validArticle1.hostname,
 					});
 				} catch (error) {
-					console.log(error);
 					throw new Error("failed test");
 				}
 			};
 			await expect(shouldFail()).rejects.toEqual(
 				new Error("failed test")
 			);
+			done();
+		});
+
+		it("should have hostname property after creation", async (done) => {
+			source = await ArticleSources.create(validArticle1);
+			expect(source).toHaveProperty("hostname", "www.ru.is");
 			done();
 		});
 	});

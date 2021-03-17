@@ -1,10 +1,12 @@
-import { Articles, ArticlesInterface } from "../../";
+import { Types } from "mongoose";
+import { Articles, ArticlesInterface, ArticleSources } from "../../";
 
 const validArticle1 = {
 	title: "Article title",
 	extract: "abc",
 	key: "1",
 	paragraphs: ["abcd"],
+	sourceId: Types.ObjectId(),
 };
 
 const validArticle2 = {
@@ -12,9 +14,33 @@ const validArticle2 = {
 	extract: "def",
 	key: "1",
 	paragraphs: ["abcd"],
+	sourceId: Types.ObjectId(),
+};
+
+// without logo
+const validArticleSource1 = {
+	identifier: "__visir__",
+	displayName: "qa web",
+	hostname: "www.ru.is",
+};
+
+// with logo
+const validArticleSource2 = {
+	identifier: "__mbl__",
+	logo: "logostring",
+	displayName: "qa web",
+	hostname: "www.ru.com",
 };
 
 let article: ArticlesInterface;
+
+beforeAll(async (done) => {
+	const s1 = await ArticleSources.create(validArticleSource1);
+	const s2 = await ArticleSources.create(validArticleSource2);
+	validArticle1.sourceId = s1._id;
+	validArticle2.sourceId = s2._id;
+	done();
+});
 
 beforeEach(async (done) => {
 	try {
@@ -143,6 +169,25 @@ describe("Creating Articles", () => {
 				...validArticle1,
 			});
 			await expect([...article.paragraphs]).toEqual(["abcd"]);
+			done();
+		});
+	});
+
+	describe("Selecting sourceId", () => {
+		it("Should fail without it", async (done) => {
+			const shouldFail = async () => {
+				try {
+					await Articles.create({
+						...validArticle1,
+						sourceId: undefined,
+					});
+				} catch (error) {
+					throw new Error("Failed Test");
+				}
+			};
+			await expect(shouldFail()).rejects.toEqual(
+				new Error("Failed Test")
+			);
 			done();
 		});
 	});

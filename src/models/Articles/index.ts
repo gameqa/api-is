@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Types } from "mongoose";
 import { ArticlesCollectionInterface, ArticlesInterface } from "./interface";
 
 const articleSchema = new Schema(
@@ -22,9 +22,19 @@ const articleSchema = new Schema(
 				validator: (v: string[]) => v.length > 0,
 			},
 		},
+		sourceId: {
+			type: Types.ObjectId,
+			required: true,
+		},
 	},
 	{ timestamps: true }
 );
+
+// articleSchema.pre<ArticlesInterface>("save", async function (next) {
+//     if (this.isModified("sourceId"));
+
+// 	next();
+// });
 
 // schema.index({projectName:1, authorName:1}, { unique: true });
 

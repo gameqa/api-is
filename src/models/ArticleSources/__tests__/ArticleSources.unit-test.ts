@@ -4,6 +4,7 @@ import { ArticleSources, ArticleSourcesInterface } from "../../";
 const validArticle1 = {
 	identifier: "__visir__",
 	displayName: "qa web",
+	hostname: "www.ru.is",
 };
 
 // with logo
@@ -11,6 +12,7 @@ const validArticle2 = {
 	identifier: "__mbl__",
 	logo: "logostring",
 	displayName: "qa web",
+	hostname: "www.ru.com",
 };
 
 let source: ArticleSourcesInterface;
@@ -101,6 +103,44 @@ describe("Creating an ArticleSource", () => {
 		it("should have display name as property", async (done) => {
 			source = await ArticleSources.create(validArticle1);
 			expect(source).toHaveProperty("displayName", "qa web");
+			done();
+		});
+	});
+
+	describe("selecting hostname", () => {
+		it("Should fail without hostname", async (done) => {
+			const shouldFail = async () => {
+				try {
+					await ArticleSources.create({
+						...validArticle1,
+						hostname: undefined,
+					});
+				} catch (error) {
+					throw new Error("Failed test");
+				}
+			};
+			await expect(shouldFail()).rejects.toEqual(
+				new Error("Failed test")
+			);
+			done();
+		});
+
+		it("should fail with duplicate values", async (done) => {
+			source = await ArticleSources.create(validArticle1);
+			const shouldFail = async () => {
+				try {
+					await ArticleSources.create({
+						...validArticle2,
+						hostname: validArticle1.hostname,
+					});
+				} catch (error) {
+					console.log(error);
+					throw new Error("failed test");
+				}
+			};
+			await expect(shouldFail()).rejects.toEqual(
+				new Error("failed test")
+			);
 			done();
 		});
 	});

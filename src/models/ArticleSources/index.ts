@@ -18,6 +18,11 @@ const articleSourcesSchema = new Schema({
 		type: String,
 		required: true,
 	},
+	hostname: {
+		type: String,
+		required: true,
+		unique: true,
+	},
 });
 
 export const ArticleSources = model<

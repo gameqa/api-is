@@ -7,12 +7,12 @@ import {
 const gameRoundsSchema = new Schema({
 	currentRound: {
 		type: Number,
-		default: 0,
+		default: 1,
 	},
 });
 
 gameRoundsSchema.pre<GameRoundsInterface>("save", async function (next) {
-	if (this.isNew) this.currentRound = 0;
+	if (this.isNew) this.currentRound = 1;
 	next();
 });
 

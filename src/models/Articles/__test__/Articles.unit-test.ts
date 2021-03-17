@@ -223,4 +223,28 @@ describe("Creating Articles", () => {
 			done();
 		});
 	});
+
+	describe("Selecting (key, sourceId)", () => {
+		it("Should not work for duplicate pairs", async (done) => {
+			article = await Articles.create({
+				...validArticle1,
+			});
+
+			const shouldFail = async () => {
+				try {
+					await Articles.create({
+						...validArticle2,
+						sourceId: validArticle1.sourceId,
+						key: validArticle1.key,
+					});
+				} catch (error) {
+					throw new Error("Failed Test");
+				}
+			};
+			await expect(shouldFail()).rejects.toEqual(
+				new Error("Failed Test")
+			);
+			done();
+		});
+	});
 });

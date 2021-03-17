@@ -40,7 +40,7 @@ articleSchema.pre<ArticlesInterface>("save", async function (next) {
 	next();
 });
 
-// schema.index({projectName:1, authorName:1}, { unique: true });
+articleSchema.index({ sourceId: 1, key: 1 }, { unique: true });
 
 export const Articles = model<ArticlesInterface, ArticlesCollectionInterface>(
 	"articles",

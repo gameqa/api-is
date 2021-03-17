@@ -50,10 +50,6 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	next();
 });
 
-userSchema.post<UserInterface>("init", async function (doc) {
-	doc.type = DEFAULT_USER_TYPE;
-});
-
 export const Users = model<UserInterface, UserCollectionInterface>(
 	"users",
 	userSchema,

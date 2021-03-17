@@ -6,9 +6,8 @@ import { ArticleSources } from "../../../../../models";
 export default async (req: Request, res: Response) => {
 	try {
 		const doc = await ArticleSources.create(req.body);
-		res.send(doc);
+		res.status(201).send(doc);
 	} catch (error) {
-		console.log(error);
 		res.status(400).send({ message: error.message });
 	}
 };

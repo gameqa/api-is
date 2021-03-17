@@ -3,12 +3,14 @@ import { ArticleSources, ArticleSourcesInterface } from "../../";
 // without logo
 const validArticle1 = {
 	identifier: "__visir__",
+	displayName: "qa web",
 };
 
 // with logo
 const validArticle2 = {
 	identifier: "__mbl__",
 	logo: "logostring",
+	displayName: "qa web",
 };
 
 let source: ArticleSourcesInterface;
@@ -69,6 +71,25 @@ describe("Creating an ArticleSource", () => {
 		it("should retain logo string if given", async (done) => {
 			source = await ArticleSources.create(validArticle2);
 			await expect(source).toHaveProperty("logo", "logostring");
+			done();
+		});
+	});
+
+	describe("Selecting display name", () => {
+		it("Should fail without display name", async (done) => {
+			const shouldFail = async () => {
+				try {
+					await ArticleSources.create({
+						...validArticle1,
+						displayName: undefined,
+					});
+				} catch (error) {
+					throw new Error("Failed test");
+				}
+			};
+			await expect(shouldFail()).rejects.toEqual(
+				new Error("Failed test")
+			);
 			done();
 		});
 	});

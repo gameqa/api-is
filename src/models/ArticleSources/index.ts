@@ -14,6 +14,10 @@ const articleSourcesSchema = new Schema({
 		type: String,
 		default: "",
 	},
+	displayName: {
+		type: String,
+		required: true,
+	},
 });
 
 export const ArticleSources = model<

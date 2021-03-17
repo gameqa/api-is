@@ -1,7 +1,7 @@
 import { Schema, model, Types } from "mongoose";
 import { ArticleSources } from "..";
 import { ArticlesCollectionInterface, ArticlesInterface } from "./interface";
-
+import * as statics from "./statics";
 const articleSchema = new Schema(
 	{
 		title: {
@@ -30,6 +30,8 @@ const articleSchema = new Schema(
 	},
 	{ timestamps: true }
 );
+
+articleSchema.statics = statics;
 
 articleSchema.pre<ArticlesInterface>("save", async function (next) {
 	if (this.isModified("sourceId")) {

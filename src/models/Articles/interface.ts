@@ -8,4 +8,9 @@ export interface ArticlesInterface extends Document {
 	sourceId: Types.ObjectId;
 }
 
-export interface ArticlesCollectionInterface extends Model<ArticlesInterface> {}
+export interface ArticlesCollectionInterface extends Model<ArticlesInterface> {
+	findArticleByUrl: (
+		url: string,
+		upsert?: boolean
+	) => Promise<ArticlesInterface>;
+}

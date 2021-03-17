@@ -14,7 +14,7 @@ export type ArticleHostnames =
 	| "is.wikipedia.org";
 
 export interface ArticleSourcesInterface extends Document {
-	identifider: ArticleSourceIdentifier;
+	identifier: ArticleSourceIdentifier;
 	logo: string;
 	displayName: string;
 	hostname: string;

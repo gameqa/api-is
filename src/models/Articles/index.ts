@@ -1,4 +1,5 @@
 import { Schema, model, Types } from "mongoose";
+import { ArticleSources } from "..";
 import { ArticlesCollectionInterface, ArticlesInterface } from "./interface";
 
 const articleSchema = new Schema(
@@ -30,11 +31,14 @@ const articleSchema = new Schema(
 	{ timestamps: true }
 );
 
-// articleSchema.pre<ArticlesInterface>("save", async function (next) {
-//     if (this.isModified("sourceId"));
+articleSchema.pre<ArticlesInterface>("save", async function (next) {
+	if (this.isModified("sourceId")) {
+		const doc = await ArticleSources.findById(this.sourceId);
+		if (!doc) throw new Error("Article source not found");
+	}
 
-// 	next();
-// });
+	next();
+});
 
 // schema.index({projectName:1, authorName:1}, { unique: true });
 

@@ -42,6 +42,12 @@ beforeAll(async (done) => {
 	done();
 });
 
+afterAll(async (done) => {
+	await ArticleSources.findByIdAndDelete(validArticle1.sourceId);
+	await ArticleSources.findByIdAndDelete(validArticle2.sourceId);
+	done();
+});
+
 beforeEach(async (done) => {
 	try {
 		await Articles.findByIdAndDelete(article._id);
@@ -187,6 +193,32 @@ describe("Creating Articles", () => {
 			};
 			await expect(shouldFail()).rejects.toEqual(
 				new Error("Failed Test")
+			);
+			done();
+		});
+		it("Should fail without if source does not exist", async (done) => {
+			const shouldFail = async () => {
+				try {
+					await Articles.create({
+						...validArticle1,
+						sourceId: Types.ObjectId(),
+					});
+				} catch (error) {
+					throw new Error("Failed Test");
+				}
+			};
+			await expect(shouldFail()).rejects.toEqual(
+				new Error("Failed Test")
+			);
+			done();
+		});
+
+		it("Should have sourceId as property on saved instance", async (done) => {
+			article = await Articles.create({
+				...validArticle1,
+			});
+			expect(article.sourceId.toString()).toEqual(
+				validArticle1.sourceId.toString()
 			);
 			done();
 		});

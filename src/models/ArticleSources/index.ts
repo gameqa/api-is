@@ -3,6 +3,7 @@ import {
 	ArticleSourcesCollectionInterface,
 	ArticleSourcesInterface,
 } from "./interface";
+import * as statics from "./statics";
 
 const articleSourcesSchema = new Schema({
 	identifier: {
@@ -24,6 +25,8 @@ const articleSourcesSchema = new Schema({
 		unique: true,
 	},
 });
+
+articleSourcesSchema.statics = statics;
 
 export const ArticleSources = model<
 	ArticleSourcesInterface,

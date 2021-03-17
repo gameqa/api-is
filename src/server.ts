@@ -1,5 +1,5 @@
 import server from "./app";
-import url from "url";
+import { Articles } from "./models";
 
 /**
  * Start Express server.
@@ -12,3 +12,7 @@ server.listen(server.get("port"), () => {
 	);
 	console.log("  Press CTRL-C to stop\n");
 });
+
+Articles.findArticleByUrl("https://www.visindavefur.is/svar.php?id=106", true)
+	.then((res) => console.log(res))
+	.catch((e) => console.log(e));

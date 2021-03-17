@@ -15,12 +15,17 @@ export const findArticleByUrl = async function (
 		);
 	const doc = await this.findOne({ key, sourceId: source._id });
 	if (doc) return doc;
-
 	const scrapeData = await new ScraperFactory(
 		identifier,
 		key
 	).scrapeArticle();
-	const article = new this({ ...scrapeData, sourceId: source._id });
+	const article = new this({
+		title: scrapeData.title,
+		paragraphs: scrapeData.paragraphs,
+		extract: scrapeData.extract,
+		sourceId: source._id,
+		key,
+	});
 	if (upsert) await article.save();
 	return article;
 };

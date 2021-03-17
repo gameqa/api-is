@@ -13,7 +13,7 @@ import {
  * @param this for type decleration
  * @param URL
  */
-export const getIdentifier = async function (
+export const getIdentifier = function (
 	this: ArticleSourcesCollectionInterface,
 	URL: string
 ) {
@@ -26,7 +26,7 @@ export const getIdentifier = async function (
 	return identifier;
 };
 
-export const getArticleKey = async function (
+export const getArticleKey = function (
 	this: ArticleSourcesCollectionInterface,
 	URL: string
 ) {
@@ -35,5 +35,5 @@ export const getArticleKey = async function (
 	const regex = RegExp(pattern, "g");
 	const key = regex.exec(URL);
 	if (!key) throw new Error(`Unable to find article key in url ${URL}`);
-	return key;
+	return key[0];
 };

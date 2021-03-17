@@ -10,6 +10,10 @@ const articleSourcesSchema = new Schema({
 		required: true,
 		unique: true,
 	},
+	logo: {
+		type: String,
+		default: "",
+	},
 });
 
 export const ArticleSources = model<

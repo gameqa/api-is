@@ -61,6 +61,12 @@ describe("Creating an ArticleSource", () => {
 			);
 			done();
 		});
+
+		it("Should have given identifier as property", async (done) => {
+			source = await ArticleSources.create(validArticle1);
+			expect(source).toHaveProperty("identifier", "__visir__");
+			done();
+		});
 	});
 	describe("Selecting logo", () => {
 		it("should fail not fail if logo is missing", async (done) => {
@@ -68,7 +74,7 @@ describe("Creating an ArticleSource", () => {
 			await expect(source).toHaveProperty("logo", "");
 			done();
 		});
-		it("should retain logo string if given", async (done) => {
+		it("should retain logo string if given as a property", async (done) => {
 			source = await ArticleSources.create(validArticle2);
 			await expect(source).toHaveProperty("logo", "logostring");
 			done();
@@ -90,6 +96,11 @@ describe("Creating an ArticleSource", () => {
 			await expect(shouldFail()).rejects.toEqual(
 				new Error("Failed test")
 			);
+			done();
+		});
+		it("should have display name as property", async (done) => {
+			source = await ArticleSources.create(validArticle1);
+			expect(source).toHaveProperty("displayName", "qa web");
 			done();
 		});
 	});

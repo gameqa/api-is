@@ -16,8 +16,8 @@ export type ArticleHostnames =
 export interface ArticleSourcesInterface extends Document {
 	identifider: ArticleSourceIdentifier;
 	logo: string;
-	name: string;
-	baseURL: string;
+	displayName: string;
+	hostname: string;
 }
 
 export interface ArticleSourcesCollectionInterface

@@ -4,7 +4,7 @@ export interface GameRoundsInterface extends Document {
 	userId: Types.ObjectId;
 	currentRound: number;
 	totalRounds: number;
-	completedAt: Date;
+	completedAt?: Date;
 }
 
 export interface GameRoundsCollectionInterface

@@ -56,5 +56,24 @@ describe("Creating gamerounds", () => {
 			expect(round).toHaveProperty("totalRounds", 2);
 			done();
 		});
+		it("can not be less than currentRound", async (done) => {
+			const willReject = async () => {
+				try {
+					await GameRounds.create({
+						...validGameRound,
+						totalRounds: 0,
+					});
+				} catch (error) {
+					throw new Error("Test failure");
+				}
+			};
+			await expect(willReject()).rejects.toEqual(
+				new Error("Test failure")
+			);
+			done();
+		});
 	});
 });
+
+// total rounds >= currentRound
+// completedAt is undefined on definition

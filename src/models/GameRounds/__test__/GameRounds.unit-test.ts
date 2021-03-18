@@ -191,7 +191,21 @@ describe("Advance", () => {
 	});
 
 	it("Should stop at total rounds and mark completedAt", async (done) => {
-		expect(3).toBe(3);
+		const TOTAL_ROUNDS = 3;
+		round = await GameRounds.create({
+			...validGameRound,
+			totalRounds: TOTAL_ROUNDS,
+		});
+
+		await round.advance();
+		await round.advance();
+		await round.advance();
+		round = await GameRounds.findById(round._id);
+		expect(round).toHaveProperty("currentRound", TOTAL_ROUNDS);
+		expect(round).toHaveProperty("completedAt");
+		expect(round.completedAt).toBeInstanceOf(Date);
 		done();
 	});
+
+	// get by user id gefur nytt instance ef buid
 });

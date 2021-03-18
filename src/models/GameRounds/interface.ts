@@ -16,7 +16,7 @@ export interface GameRoundsInterface extends Document {
 	totalRounds: number;
 	completedAt?: Date;
 	getTask: () => Promise<TaskInfo>;
-	completeRound: () => Promise<TaskInfo>;
+	advance: () => Promise<void>;
 }
 
 export interface GameRoundsCollectionInterface

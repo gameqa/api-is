@@ -160,7 +160,7 @@ describe("Creating gamerounds", () => {
 	});
 });
 
-describe("getByUserId", () => {
+describe(".getByUserId(userId)", () => {
 	it("should return round that has been created for user", async (done) => {
 		round = await GameRounds.create(validGameRound);
 		const foundRound = await GameRounds.findByUserId(validGameRound.userId);
@@ -172,6 +172,19 @@ describe("getByUserId", () => {
 		const foundRound = await GameRounds.findByUserId(user2._id);
 		expect(foundRound).toHaveProperty("_id");
 		expect(round._id).not.toBe(foundRound._id);
+		done();
+	});
+});
+
+describe("Advance", () => {
+	it("Should increase currentRound", async (done) => {
+		round = await GameRounds.create(validGameRound);
+		const currRound = round.currentRound;
+		const roundId = round._id;
+		await round.advance();
+		round = await GameRounds.findByUserId(validGameRound.userId);
+		expect(round).toHaveProperty("currentRound", currRound + 1);
+		expect(round).toHaveProperty("_id", roundId);
 		done();
 	});
 });

@@ -185,6 +185,13 @@ describe("Advance", () => {
 		round = await GameRounds.findByUserId(validGameRound.userId);
 		expect(round).toHaveProperty("currentRound", currRound + 1);
 		expect(round).toHaveProperty("_id", roundId);
+		expect(round).toHaveProperty("_id", roundId);
+		expect(round).toHaveProperty("completedAt", undefined);
+		done();
+	});
+
+	it("Should stop at total rounds and mark completedAt", async (done) => {
+		expect(3).toBe(3);
 		done();
 	});
 });

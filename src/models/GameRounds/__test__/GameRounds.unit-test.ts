@@ -1,11 +1,14 @@
-import { GameRounds, GameRoundsInterface } from "../../";
+import { GameRounds, GameRoundsInterface, Users, UserInterface } from "../../";
+import { Types } from "mongoose";
 
 const validGameRound = {
 	currentRound: 1,
 	totalRounds: 10,
+	userId: "",
 };
 
 let round: GameRoundsInterface;
+let user: UserInterface;
 
 beforeEach(async (done) => {
 	try {
@@ -16,6 +19,22 @@ beforeEach(async (done) => {
 		//
 	}
 	return done();
+});
+
+beforeAll(async (done) => {
+	user = await Users.register({
+		email: "game.rounds@unit.test.com",
+		password: "somepass12300a-",
+		username: "game.rounds.unit.test",
+	});
+	validGameRound.userId = user._id;
+	done();
+});
+
+afterAll(async (done) => {
+	await Users.findByIdAndDelete(user._id);
+	await GameRounds.findByIdAndDelete(round._id);
+	done();
 });
 
 describe("Creating gamerounds", () => {
@@ -89,6 +108,48 @@ describe("Creating gamerounds", () => {
 			done();
 		});
 	});
-});
 
-// completedAt is undefined on definition
+	describe("Selecting UserId", () => {
+		it("Should fail if userId is undefined", async (done) => {
+			const shouldFail = async () => {
+				try {
+					await GameRounds.create({
+						...validGameRound,
+						userId: undefined,
+					});
+				} catch (error) {
+					throw new Error("Test rejection");
+				}
+			};
+			await expect(shouldFail()).rejects.toEqual(
+				new Error("Test rejection")
+			);
+			done();
+		});
+
+		it("Should give property userId if successful", async (done) => {
+			round = await GameRounds.create({
+				...validGameRound,
+			});
+			expect(round.userId.toString()).toEqual(user._id.toString());
+			done();
+		});
+
+		it("Should err if objectId is not from a valid user", async (done) => {
+			const shouldFail = async () => {
+				try {
+					await GameRounds.create({
+						...validGameRound,
+						userId: Types.ObjectId(),
+					});
+				} catch (error) {
+					throw new Error("Test rejection");
+				}
+			};
+			await expect(shouldFail()).rejects.toEqual(
+				new Error("Test rejection")
+			);
+			done();
+		});
+	});
+});

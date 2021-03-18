@@ -1,9 +1,10 @@
-import { model, Schema } from "mongoose";
+import { model, Schema, Types } from "mongoose";
 import {
 	GameRoundsInterface,
 	GameRoundsCollectionInterface,
 } from "./interface";
 import * as utils from "./utils";
+import { Users } from "../";
 
 const gameRoundsSchema = new Schema({
 	currentRound: {
@@ -17,6 +18,10 @@ const gameRoundsSchema = new Schema({
 	completedAt: {
 		type: Date,
 	},
+	userId: {
+		type: Types.ObjectId,
+		required: true,
+	},
 });
 
 gameRoundsSchema.pre<GameRoundsInterface>("save", async function (next) {
@@ -26,6 +31,10 @@ gameRoundsSchema.pre<GameRoundsInterface>("save", async function (next) {
 	}
 	if (this.currentRound > this.totalRounds)
 		throw new Error("Current round can not be greater then totalrounds");
+	if (this.isModified("userId")) {
+		const user = await Users.findById(this.userId);
+		if (!user) throw new Error(`No user with the id ${this.userId}`);
+	}
 	next();
 });
 

@@ -10,7 +10,6 @@ export const findByUserId = async function (
 		userId,
 		completedAt: { $exists: false },
 	});
-	console.log(doc);
 	if (doc) return doc;
 	return await this.create({ userId });
 };

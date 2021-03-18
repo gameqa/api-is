@@ -20,6 +20,10 @@ const questionSchema = new Schema({
 		type: Array,
 		default: [],
 	},
+	verifiedAt: {
+		type: Date,
+		default: undefined,
+	},
 });
 
 questionSchema.pre<QuestionsInterface>("save", async function (next) {
@@ -42,6 +46,7 @@ questionSchema.pre<QuestionsInterface>("save", async function (next) {
 
 	if (this.isNew) {
 		this.verifycationRoundIds = [];
+		// this.verifiedAt = undefined;
 	}
 	next();
 });

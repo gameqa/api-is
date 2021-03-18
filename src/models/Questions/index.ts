@@ -1,15 +1,24 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Types } from "mongoose";
 import {
 	QuestionsCollectionInterface,
 	QuestionsInterface,
 } from "./interface";
 import * as utils from "./utils";
+import { GameRounds } from "../";
 
 const questionSchema = new Schema({
 	text: {
 		type: String,
 		required: true,
 		trim: true,
+	},
+	creationRoundId: {
+		type: Types.ObjectId,
+		required: true,
+	},
+	verifycationRoundIds: {
+		type: Array,
+		default: [],
 	},
 });
 
@@ -23,6 +32,17 @@ questionSchema.pre<QuestionsInterface>("save", async function (next) {
 			throw new Error("Question must end in question mark");
 	}
 
+	if (this.isModified("creationRoundId")) {
+		const doc = await GameRounds.findById(this.creationRoundId);
+		if (!doc)
+			throw new Error(
+				`Game round not found with id ${this.creationRoundId} to create question ${this.text}`
+			);
+	}
+
+	if (this.isNew) {
+		this.verifycationRoundIds = [];
+	}
 	next();
 });
 

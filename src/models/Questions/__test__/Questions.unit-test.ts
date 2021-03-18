@@ -1,9 +1,27 @@
-import { Questions, QuestionsInterface } from "../../";
+import { Types } from "mongoose";
+import {
+	Questions,
+	QuestionsInterface,
+	Users,
+	UserInterface,
+	GameRoundsInterface,
+	GameRounds,
+} from "../../";
 
 const validQuestion = {
 	text: "What day was Obama elected president?",
+	creationRoundId: "",
 };
+
+const validGameRound = {
+	currentRound: 1,
+	totalRounds: 3,
+	userId: "",
+};
+
 let question: QuestionsInterface;
+let user: UserInterface;
+let round: GameRoundsInterface;
 
 beforeEach(async (done) => {
 	try {
@@ -11,6 +29,24 @@ beforeEach(async (done) => {
 	} catch (error) {
 		//
 	}
+	done();
+});
+
+beforeAll(async (done) => {
+	user = await Users.register({
+		email: "game.rounds@unit.test.com",
+		password: "somepass12300a-",
+		username: "game.rounds.unit.test",
+	});
+	validGameRound.userId = user._id;
+	round = await GameRounds.create(validGameRound);
+	validQuestion.creationRoundId = round._id;
+	done();
+});
+
+afterAll(async (done) => {
+	await Users.findByIdAndDelete(user._id);
+	await GameRounds.findByIdAndDelete(round._id);
 	done();
 });
 
@@ -61,7 +97,7 @@ describe("Creating Questions", () => {
 			done();
 		});
 
-		it("Should NOT fail without if question is hree words", async (done) => {
+		it("Should NOT fail without if question is three words", async (done) => {
 			const shouldNotFail = async () => {
 				try {
 					await Questions.create({
@@ -94,11 +130,64 @@ describe("Creating Questions", () => {
 			done();
 		});
 	});
+
+	describe("Selecting creationRoundId", () => {
+		it("Should have creationRoundId as parameter on saved instance", async (done) => {
+			question = await Questions.create({
+				...validQuestion,
+			});
+			expect(question).toHaveProperty("creationRoundId");
+			done();
+		});
+
+		it("Should fail without creationRoundId", async (done) => {
+			const shouldFail = async () => {
+				try {
+					await Questions.create({
+						...validQuestion,
+						creationRoundId: undefined,
+					});
+				} catch (error) {
+					throw new Error("rejected promise");
+				}
+			};
+			await expect(shouldFail()).rejects.toEqual(
+				new Error("rejected promise")
+			);
+			done();
+		});
+
+		it("Should fail without creationRoundId", async (done) => {
+			const shouldFail = async () => {
+				try {
+					await Questions.create({
+						...validQuestion,
+						creationRoundId: Types.ObjectId(),
+					});
+				} catch (error) {
+					throw new Error("rejected promise");
+				}
+			};
+			await expect(shouldFail()).rejects.toEqual(
+				new Error("rejected promise")
+			);
+			done();
+		});
+
+		it("Should force verifycationRoundIDs to be an empty array on creation", async (done) => {
+			question = await Questions.create({
+				...validQuestion,
+				verifycationRoundIds: [Types.ObjectId(), Types.ObjectId],
+			});
+			expect(question.verifycationRoundIds.length).toBe(0);
+			done();
+		});
+	});
 });
 
 /**
  * 
- * // spurning 3 ord
+ * // ensure verifiedAt = ekki til on create
  * // spurning endar a spurningamerki
         it("", async (done) => {
 

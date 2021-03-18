@@ -21,7 +21,7 @@ export interface GameRoundsInterface extends Document {
 
 export interface GameRoundsCollectionInterface
 	extends Model<GameRoundsInterface> {
-	getByUserId: (
+	findByUserId: (
 		userId: Types.ObjectId | string
 	) => Promise<GameRoundsInterface>;
 }

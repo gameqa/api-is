@@ -5,6 +5,7 @@ import {
 } from "./interface";
 import * as utils from "./utils";
 import { Users } from "../";
+import * as statics from "./statics";
 
 const gameRoundsSchema = new Schema({
 	currentRound: {
@@ -23,6 +24,8 @@ const gameRoundsSchema = new Schema({
 		required: true,
 	},
 });
+
+gameRoundsSchema.statics = statics;
 
 gameRoundsSchema.pre<GameRoundsInterface>("save", async function (next) {
 	if (this.isNew) {

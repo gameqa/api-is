@@ -9,6 +9,7 @@ const validGameRound = {
 
 let round: GameRoundsInterface;
 let user: UserInterface;
+let user2: UserInterface;
 
 beforeEach(async (done) => {
 	try {
@@ -26,6 +27,11 @@ beforeAll(async (done) => {
 		email: "game.rounds@unit.test.com",
 		password: "somepass12300a-",
 		username: "game.rounds.unit.test",
+	});
+	user2 = await Users.register({
+		email: "game.rounds2@unit.test.com",
+		password: "somepass12300a-",
+		username: "game.rounds2.unit.test",
 	});
 	validGameRound.userId = user._id;
 	done();
@@ -151,5 +157,21 @@ describe("Creating gamerounds", () => {
 			);
 			done();
 		});
+	});
+});
+
+describe("getByUserId", () => {
+	it("should return round that has been created for user", async (done) => {
+		round = await GameRounds.create(validGameRound);
+		const foundRound = await GameRounds.findByUserId(validGameRound.userId);
+		expect(round._id).toEqual(foundRound._id);
+		done();
+	});
+	it("should create round if none has been created ", async (done) => {
+		round = await GameRounds.create(validGameRound);
+		const foundRound = await GameRounds.findByUserId(user2._id);
+		expect(foundRound).toHaveProperty("_id");
+		expect(round._id).not.toBe(foundRound._id);
+		done();
 	});
 });

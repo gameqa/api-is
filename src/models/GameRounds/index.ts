@@ -14,10 +14,16 @@ const gameRoundsSchema = new Schema({
 		type: Number,
 		default: utils.DEFAULT_GAME_ROUNDS,
 	},
+	completedAt: {
+		type: Date,
+	},
 });
 
 gameRoundsSchema.pre<GameRoundsInterface>("save", async function (next) {
-	if (this.isNew) this.currentRound = 1;
+	if (this.isNew) {
+		this.currentRound = 1;
+		this.completedAt = undefined;
+	}
 	if (this.currentRound > this.totalRounds)
 		throw new Error("Current round can not be greater then totalrounds");
 	next();

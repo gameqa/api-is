@@ -56,6 +56,7 @@ describe("Creating gamerounds", () => {
 			expect(round).toHaveProperty("totalRounds", 2);
 			done();
 		});
+
 		it("can not be less than currentRound", async (done) => {
 			const willReject = async () => {
 				try {
@@ -73,7 +74,21 @@ describe("Creating gamerounds", () => {
 			done();
 		});
 	});
+
+	describe("Selecting completedAt", () => {
+		it("Should be undefined even if a date is passed in", async (done) => {
+			try {
+				round = await GameRounds.create({
+					...validGameRound,
+					completedAt: new Date(),
+				});
+			} catch (e) {
+				console.log(e);
+			}
+			expect(round.completedAt).toBe(undefined);
+			done();
+		});
+	});
 });
 
-// total rounds >= currentRound
 // completedAt is undefined on definition

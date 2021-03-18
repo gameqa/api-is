@@ -19,6 +19,7 @@ const gameRoundsSchema = new Schema({
 	},
 	completedAt: {
 		type: Date,
+		default: undefined,
 	},
 	userId: {
 		type: Types.ObjectId,
@@ -35,7 +36,9 @@ gameRoundsSchema.pre<GameRoundsInterface>("save", async function (next) {
 		this.completedAt = undefined;
 	}
 	if (this.currentRound > this.totalRounds)
-		throw new Error("Current round can not be greater then totalrounds");
+		throw new Error(
+			"Current round can not be greater then totalrounds"
+		);
 	if (this.isModified("userId")) {
 		const user = await Users.findById(this.userId);
 		if (!user) throw new Error(`No user with the id ${this.userId}`);

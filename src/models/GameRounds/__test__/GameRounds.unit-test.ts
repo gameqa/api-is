@@ -1,4 +1,9 @@
-import { GameRounds, GameRoundsInterface, Users, UserInterface } from "../../";
+import {
+	GameRounds,
+	GameRoundsInterface,
+	Users,
+	UserInterface,
+} from "../../";
 import { Types } from "mongoose";
 
 const validGameRound = {
@@ -17,6 +22,11 @@ beforeEach(async (done) => {
 	} catch (e) {
 		//
 	} finally {
+		//
+	}
+	try {
+		await GameRounds.deleteMany();
+	} catch (error) {
 		//
 	}
 	return done();
@@ -163,7 +173,9 @@ describe("Creating gamerounds", () => {
 describe(".getByUserId(userId)", () => {
 	it("should return round that has been created for user", async (done) => {
 		round = await GameRounds.create(validGameRound);
-		const foundRound = await GameRounds.findByUserId(validGameRound.userId);
+		const foundRound = await GameRounds.findByUserId(
+			validGameRound.userId
+		);
 		expect(round._id).toEqual(foundRound._id);
 		done();
 	});
@@ -172,6 +184,24 @@ describe(".getByUserId(userId)", () => {
 		const foundRound = await GameRounds.findByUserId(user2._id);
 		expect(foundRound).toHaveProperty("_id");
 		expect(round._id).not.toBe(foundRound._id);
+		done();
+	});
+
+	it("Should give new round if old round has been completed", async (done) => {
+		const TOTAL_ROUNDS = 3;
+		round = await GameRounds.create({
+			...validGameRound,
+			totalRounds: TOTAL_ROUNDS,
+		});
+
+		await round.advance();
+		await round.advance();
+		await round.advance();
+		const found = await GameRounds.findByUserId(round.userId);
+		expect(round).toHaveProperty("currentRound", TOTAL_ROUNDS);
+		expect(round).toHaveProperty("completedAt");
+		expect(round.completedAt).toBeInstanceOf(Date);
+		expect(found._id).not.toBe(round._id);
 		done();
 	});
 });
@@ -183,9 +213,8 @@ describe("Advance", () => {
 		const roundId = round._id;
 		await round.advance();
 		round = await GameRounds.findByUserId(validGameRound.userId);
+		expect(round).toHaveProperty("_id", roundId);
 		expect(round).toHaveProperty("currentRound", currRound + 1);
-		expect(round).toHaveProperty("_id", roundId);
-		expect(round).toHaveProperty("_id", roundId);
 		expect(round).toHaveProperty("completedAt", undefined);
 		done();
 	});
@@ -206,6 +235,4 @@ describe("Advance", () => {
 		expect(round.completedAt).toBeInstanceOf(Date);
 		done();
 	});
-
-	// get by user id gefur nytt instance ef buid
 });

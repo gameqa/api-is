@@ -8,11 +8,16 @@ import {
 	GameRounds,
 	AnswersInterface,
 	Answers,
+	Articles,
+	ArticlesInterface,
+	ArticleSources,
+	ArticleSourcesInterface,
 } from "../../";
 
 const validAnswer = {
 	questionId: "",
 	creationRoundId: "",
+	articleId: "",
 };
 
 const validArticleSource = {
@@ -50,6 +55,8 @@ let answer: AnswersInterface;
 let question: QuestionsInterface;
 let user: UserInterface;
 let round: GameRoundsInterface;
+let article: ArticlesInterface;
+let source: ArticleSourcesInterface;
 
 beforeEach(async (done) => {
 	try {
@@ -66,6 +73,10 @@ beforeAll(async (done) => {
 		password: "somepass12300a-",
 		username: "game.rounds.unit.test",
 	});
+	source = await ArticleSources.create(validArticleSource);
+	validArticle.sourceId = source._id;
+	article = await Articles.create(validArticle);
+	validAnswer.articleId = article._id;
 	validGameRound.userId = user._id;
 	round = await GameRounds.create(validGameRound);
 	validQuestion.creationRoundId = round._id;
@@ -79,6 +90,8 @@ afterAll(async (done) => {
 	await Users.findByIdAndDelete(user._id);
 	await GameRounds.findByIdAndDelete(round._id);
 	await Questions.findByIdAndDelete(question._id);
+	await ArticleSources.findByIdAndDelete(source._id);
+	await Articles.findByIdAndDelete(article._id);
 	done();
 });
 
@@ -170,5 +183,11 @@ describe("Creating Answers", () => {
 		});
 	});
 
-	// describe("selecting articleId")
+	describe("selecting articleId", () => {
+		it("should have articleId as key on object", async (done) => {
+			answer = await Answers.create(validAnswer);
+			expect(answer).toHaveProperty("articleId", article._id);
+			done();
+		});
+	});
 });

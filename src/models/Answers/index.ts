@@ -11,6 +11,9 @@ const answerSchema = new Schema({
 		type: Types.ObjectId,
 		required: true,
 	},
+	articleId: {
+		type: Types.ObjectId,
+	},
 });
 
 answerSchema.pre<AnswersInterface>("save", async function (next) {

@@ -14,6 +14,26 @@ const validAnswer = {
 	questionId: "",
 };
 
+const validArticleSource = {
+	identifier: "__nytimes__",
+	logo: "logo",
+	displayName: "New York Times",
+	hostname: "www.nytimes.com",
+};
+
+const validArticle = {
+	title: "Unit tests on the rise",
+	extract:
+		"with the resent surge in unit testing, who knows what will happen",
+	paragraphs: [
+		"one two three four five six seven eight nine ten",
+		"one two three four five six seven eight",
+		"one two three four five six seven eight nine ten eleven twelve thirteen",
+	],
+	key: "123abc",
+	sourceId: "",
+};
+
 const validQuestion = {
 	text: "What day was Obama elected president?",
 	creationRoundId: "",

@@ -3,6 +3,7 @@ import { Type } from "typescript";
 
 export interface AnswersInterface extends Document {
 	articleId: Types.ObjectId;
+	questionId: Types.ObjectId;
 	paragraphIndex: number;
 	firstWord?: number;
 	lastWord?: number;
@@ -13,4 +14,5 @@ export interface AnswersInterface extends Document {
 	answeredAt?: Date;
 }
 
-export interface AnswersCollectionInterface extends Model<AnswersInterface> {}
+export interface AnswersCollectionInterface
+	extends Model<AnswersInterface> {}

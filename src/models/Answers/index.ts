@@ -1,6 +1,6 @@
 import { Schema, model, Types } from "mongoose";
 import { AnswersCollectionInterface, AnswersInterface } from "./interface";
-import { Questions, GameRounds } from "../";
+import { Questions, GameRounds, Articles } from "../";
 
 const answerSchema = new Schema({
 	questionId: {
@@ -13,6 +13,7 @@ const answerSchema = new Schema({
 	},
 	articleId: {
 		type: Types.ObjectId,
+		required: true,
 	},
 });
 
@@ -29,6 +30,13 @@ answerSchema.pre<AnswersInterface>("save", async function (next) {
 		if (!doc)
 			throw new Error(
 				`Round with id ${this.creationRoundId} not found when creating answer`
+			);
+	}
+	if (this.isModified("articleId")) {
+		const doc = await Articles.findById(this.articleId);
+		if (!doc)
+			throw new Error(
+				`Article with id ${this.articleId} not found when creating answer`
 			);
 	}
 	next();

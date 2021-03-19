@@ -189,5 +189,22 @@ describe("Creating Answers", () => {
 			expect(answer).toHaveProperty("articleId", article._id);
 			done();
 		});
+
+		it("Should fail without articleId", async (done) => {
+			const shouldFail = async () => {
+				try {
+					await Answers.create({
+						...validAnswer,
+						articleId: undefined,
+					});
+				} catch (error) {
+					throw new Error("Rejected promise");
+				}
+			};
+			await expect(shouldFail()).rejects.toEqual(
+				new Error("Rejected promise")
+			);
+			done();
+		});
 	});
 });

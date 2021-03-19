@@ -5,6 +5,7 @@ export interface QuestionsInterface extends Document {
 	creationRoundId: Types.ObjectId;
 	verifycationRoundIds: Types.ObjectId[];
 	verifiedAt: Date;
+	verify: (user: Types.ObjectId) => Promise<void>;
 }
 
 export interface QuestionsCollectionInterface

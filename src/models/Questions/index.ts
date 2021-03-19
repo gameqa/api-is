@@ -5,6 +5,7 @@ import {
 } from "./interface";
 import * as utils from "./utils";
 import { GameRounds } from "../";
+import * as methods from "./methods";
 
 const questionSchema = new Schema({
 	text: {
@@ -25,6 +26,8 @@ const questionSchema = new Schema({
 		default: undefined,
 	},
 });
+
+questionSchema.methods = methods;
 
 questionSchema.pre<QuestionsInterface>("save", async function (next) {
 	if (this.isModified("text")) {

@@ -196,12 +196,13 @@ describe("Creating Questions", () => {
 	});
 });
 
-/**
- * 
- * // ensure verifiedAt = ekki til on create
- * // spurning endar a spurningamerki
-        it("", async (done) => {
-
-		});
-		
- */
+describe("Verification logic", () => {
+	it("Should add userId to array", async (done) => {
+		question = await Questions.create(validQuestion);
+		await question.verify(user._id);
+		const found = await Questions.findById(question._id);
+		expect(found.verifycationRoundIds.includes(user._id)).toBe(true);
+		expect(found).toHaveProperty("verifiedAt", undefined);
+		done();
+	});
+});

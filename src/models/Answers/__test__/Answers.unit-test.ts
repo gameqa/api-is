@@ -12,6 +12,7 @@ import {
 
 const validAnswer = {
 	questionId: "",
+	creationRoundId: "",
 };
 
 const validArticleSource = {
@@ -68,6 +69,7 @@ beforeAll(async (done) => {
 	validGameRound.userId = user._id;
 	round = await GameRounds.create(validGameRound);
 	validQuestion.creationRoundId = round._id;
+	validAnswer.creationRoundId = round._id;
 	question = await Questions.create(validQuestion);
 	validAnswer.questionId = question._id;
 	done();
@@ -114,6 +116,48 @@ describe("Creating Answers", () => {
 					await Answers.create({
 						...validAnswer,
 						questionId: Types.ObjectId(),
+					});
+				} catch (error) {
+					throw new Error("Rejected promise");
+				}
+			};
+			await expect(shouldFail()).rejects.toEqual(
+				new Error("Rejected promise")
+			);
+			done();
+		});
+	});
+
+	describe("selecting creationRoundId", () => {
+		it("should have creationRoundId as key on object", async (done) => {
+			answer = await Answers.create(validAnswer);
+			expect(answer).toHaveProperty("creationRoundId", round._id);
+			done();
+		});
+
+		it("Should fail without creationRoundId", async (done) => {
+			const shouldFail = async () => {
+				try {
+					await Answers.create({
+						...validAnswer,
+						creationRoundId: undefined,
+					});
+				} catch (error) {
+					throw new Error("Rejected promise");
+				}
+			};
+			await expect(shouldFail()).rejects.toEqual(
+				new Error("Rejected promise")
+			);
+			done();
+		});
+
+		it("Should fail with an objectId that does not belong to a round", async (done) => {
+			const shouldFail = async () => {
+				try {
+					await Answers.create({
+						...validAnswer,
+						creationRoundId: Types.ObjectId(),
 					});
 				} catch (error) {
 					throw new Error("Rejected promise");

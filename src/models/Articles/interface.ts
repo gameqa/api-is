@@ -17,6 +17,7 @@ export interface ArticlePreview {
 	snippet: string;
 	url: string;
 	source: ArticleSourcesInterface;
+	key: string;
 }
 
 export interface ArticlesCollectionInterface

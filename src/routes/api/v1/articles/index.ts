@@ -9,4 +9,10 @@ export default RouteBuilder.routerForEndpoints([
 		method: "get",
 		middleware: [auth],
 	},
+	{
+		route: "/",
+		controller: readQuery,
+		method: "get",
+		middleware: [auth],
+	},
 ]);

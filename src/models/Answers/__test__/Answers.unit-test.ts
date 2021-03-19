@@ -18,6 +18,7 @@ const validAnswer = {
 	questionId: "",
 	creationRoundId: "",
 	articleId: "",
+	paragraphIndex: 1,
 };
 
 const validArticleSource = {
@@ -213,6 +214,85 @@ describe("Creating Answers", () => {
 					await Answers.create({
 						...validAnswer,
 						articleId: Types.ObjectId(),
+					});
+				} catch (error) {
+					throw new Error("Rejected promise");
+				}
+			};
+			await expect(shouldFail()).rejects.toEqual(
+				new Error("Rejected promise")
+			);
+			done();
+		});
+	});
+
+	describe("Selecting paragraphIndex", () => {
+		it("should have paragraphIndex as key on object", async (done) => {
+			answer = await Answers.create(validAnswer);
+			expect(answer).toHaveProperty(
+				"paragraphIndex",
+				validAnswer.paragraphIndex
+			);
+			done();
+		});
+
+		it("Should fail without paragraphIndex", async (done) => {
+			const shouldFail = async () => {
+				try {
+					await Answers.create({
+						...validAnswer,
+						paragraphIndex: undefined,
+					});
+				} catch (error) {
+					throw new Error("Rejected promise");
+				}
+			};
+			await expect(shouldFail()).rejects.toEqual(
+				new Error("Rejected promise")
+			);
+			done();
+		});
+
+		it("Should fail without paragraphIndex", async (done) => {
+			const shouldFail = async () => {
+				try {
+					await Answers.create({
+						...validAnswer,
+						paragraphIndex: undefined,
+					});
+				} catch (error) {
+					throw new Error("Rejected promise");
+				}
+			};
+			await expect(shouldFail()).rejects.toEqual(
+				new Error("Rejected promise")
+			);
+			done();
+		});
+
+		it("Should fail if paragraph index is negative", async (done) => {
+			const shouldFail = async () => {
+				try {
+					await Answers.create({
+						...validAnswer,
+						paragraphIndex: -1,
+					});
+				} catch (error) {
+					throw new Error("Rejected promise");
+				}
+			};
+			await expect(shouldFail()).rejects.toEqual(
+				new Error("Rejected promise")
+			);
+			done();
+		});
+
+		it("Should fail if paragraph index is out of bounds", async (done) => {
+			const shouldFail = async () => {
+				try {
+					await Answers.create({
+						...validAnswer,
+						paragraphIndex: 3,
 					});
 				} catch (error) {
 					throw new Error("Rejected promise");

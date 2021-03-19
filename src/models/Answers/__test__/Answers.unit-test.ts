@@ -206,5 +206,22 @@ describe("Creating Answers", () => {
 			);
 			done();
 		});
+
+		it("Should fail with an objectId that does not belong to an article", async (done) => {
+			const shouldFail = async () => {
+				try {
+					await Answers.create({
+						...validAnswer,
+						articleId: Types.ObjectId(),
+					});
+				} catch (error) {
+					throw new Error("Rejected promise");
+				}
+			};
+			await expect(shouldFail()).rejects.toEqual(
+				new Error("Rejected promise")
+			);
+			done();
+		});
 	});
 });

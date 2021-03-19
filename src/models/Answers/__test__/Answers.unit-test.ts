@@ -314,6 +314,22 @@ describe("Creating Answers", () => {
 			expect(answer).toHaveProperty("firstWord", undefined);
 			done();
 		});
+		it("Should fail if firstWord is negative ", async (done) => {
+			const shouldReject = async () => {
+				try {
+					await Answers.create({
+						...validAnswer,
+						firstWord: -1,
+					});
+				} catch (error) {
+					throw new Error("Failed promise");
+				}
+			};
+			await expect(shouldReject()).rejects.toEqual(
+				new Error("Failed promise")
+			);
+			done();
+		});
 	});
 
 	describe("Selecting lastWord", () => {
@@ -325,10 +341,29 @@ describe("Creating Answers", () => {
 			expect(answer).toHaveProperty("lastWord", undefined);
 			done();
 		});
+		it("Should fail if lastWord is OOB", async (done) => {
+			const shouldReject = async () => {
+				try {
+					await Answers.create({
+						...validAnswer,
+						lastWord:
+							validArticle.paragraphs[
+								validAnswer.paragraphIndex
+							].length,
+					});
+				} catch (error) {
+					throw new Error("Failed promise");
+				}
+			};
+			await expect(shouldReject()).rejects.toEqual(
+				new Error("Failed promise")
+			);
+			done();
+		});
 	});
 
 	describe("Selecting answerRoundId", () => {
-		it("Should be undefined even if a answerRoundId is passed in", async (done) => {
+		it("Should be undefined even if answerRoundId is passed in", async (done) => {
 			answer = await Answers.create({
 				...validAnswer,
 				answerRoundId: round._id,
@@ -348,11 +383,46 @@ describe("Creating Answers", () => {
 			done();
 		});
 	});
+
+	describe("Selecting verifiedAt", () => {
+		it("Should be undefined even if a date is passed in", async (done) => {
+			answer = await Answers.create({
+				...validAnswer,
+				verifiedAt: new Date(),
+			});
+			expect(answer).toHaveProperty("verifiedAt", undefined);
+			done();
+		});
+	});
+
+	describe("Selecting answeredAt", () => {
+		it("Should be undefined even if a date is passed in", async (done) => {
+			answer = await Answers.create({
+				...validAnswer,
+				answeredAt: new Date(),
+			});
+			expect(answer).toHaveProperty("answeredAt", undefined);
+			done();
+		});
+	});
+
+	describe("Selecting (firstWord, lastWord) ", () => {
+		it("Should fail if firstWord is > lastWord", async (done) => {
+			const shouldReject = async () => {
+				try {
+					await Answers.create({
+						...validAnswer,
+						firstWord: 1,
+						lastWord: 0,
+					});
+				} catch (error) {
+					throw new Error("Failed promise");
+				}
+			};
+			await expect(shouldReject()).rejects.toEqual(
+				new Error("Failed promise")
+			);
+			done();
+		});
+	});
 });
-
-// verifiedAt undefined
-// answeredAt undefined
-
-// bounds check for firstWord
-// boudns check for lastWord
-// bounds check for firstWord relative to lastWord

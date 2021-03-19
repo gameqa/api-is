@@ -38,6 +38,12 @@ const answerSchema = new Schema({
 	verificationRoundIds: {
 		type: [Types.ObjectId],
 	},
+	verifiedAt: {
+		type: Date,
+	},
+	answeredAt: {
+		type: Date,
+	},
 });
 
 answerSchema.pre<AnswersInterface>("save", async function (next) {
@@ -61,7 +67,8 @@ answerSchema.pre<AnswersInterface>("save", async function (next) {
 	}
 	if (
 		this.isModified("articleId") ||
-		this.isModified("paragraphIndex")
+		this.isModified("paragraphIndex") ||
+		this.isModified("lastWord")
 	) {
 		article = await Articles.findById(this.articleId);
 		if (!article)
@@ -73,6 +80,19 @@ answerSchema.pre<AnswersInterface>("save", async function (next) {
 			throw new Error("Paragraph index is out of bounds");
 		if (this.paragraphIndex < 0)
 			throw new Error("Paragraph index can not be negative");
+		if (
+			article.paragraphs[this.paragraphIndex].length - 1 <
+				this.lastWord &&
+			!!this.lastWord
+		)
+			throw new Error("Last word can not be OOB for paragraph");
+	}
+
+	if (this.isModified("firstWord") || this.isModified("lastWord")) {
+		if (this.firstWord > this.lastWord)
+			throw new Error("Span can not have negative range");
+		if (this.firstWord < 0)
+			throw new Error("first word of span can not be negative");
 	}
 
 	if (this.isNew) {
@@ -80,6 +100,8 @@ answerSchema.pre<AnswersInterface>("save", async function (next) {
 		this.lastWord = undefined;
 		this.answerRoundId = undefined;
 		this.verificationRoundIds = [];
+		this.verifiedAt = undefined;
+		this.answeredAt = undefined;
 	}
 	next();
 });

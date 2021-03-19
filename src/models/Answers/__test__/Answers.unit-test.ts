@@ -304,4 +304,55 @@ describe("Creating Answers", () => {
 			done();
 		});
 	});
+
+	describe("Selecting firstWord", () => {
+		it("Should be undefined even if a number is passed in", async (done) => {
+			answer = await Answers.create({
+				...validAnswer,
+				firstWord: 0,
+			});
+			expect(answer).toHaveProperty("firstWord", undefined);
+			done();
+		});
+	});
+
+	describe("Selecting lastWord", () => {
+		it("Should be undefined even if a number is passed in", async (done) => {
+			answer = await Answers.create({
+				...validAnswer,
+				lastWord: 2,
+			});
+			expect(answer).toHaveProperty("lastWord", undefined);
+			done();
+		});
+	});
+
+	describe("Selecting answerRoundId", () => {
+		it("Should be undefined even if a answerRoundId is passed in", async (done) => {
+			answer = await Answers.create({
+				...validAnswer,
+				answerRoundId: round._id,
+			});
+			expect(answer).toHaveProperty("answerRoundId", undefined);
+			done();
+		});
+	});
+
+	describe("Selecting verificationRoundIds", () => {
+		it("Should be empty array even if a verificationRoundId is passed in", async (done) => {
+			answer = await Answers.create({
+				...validAnswer,
+				verificationRoundIds: [round._id],
+			});
+			expect(answer.verificationRoundIds.length).toBe(0);
+			done();
+		});
+	});
 });
+
+// verifiedAt undefined
+// answeredAt undefined
+
+// bounds check for firstWord
+// boudns check for lastWord
+// bounds check for firstWord relative to lastWord

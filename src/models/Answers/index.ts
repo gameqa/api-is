@@ -26,6 +26,18 @@ const answerSchema = new Schema({
 		type: Number,
 		required: true,
 	},
+	firstWord: {
+		type: Number,
+	},
+	lastWord: {
+		type: Number,
+	},
+	answerRoundId: {
+		type: Types.ObjectId,
+	},
+	verificationRoundIds: {
+		type: [Types.ObjectId],
+	},
 });
 
 answerSchema.pre<AnswersInterface>("save", async function (next) {
@@ -61,6 +73,13 @@ answerSchema.pre<AnswersInterface>("save", async function (next) {
 			throw new Error("Paragraph index is out of bounds");
 		if (this.paragraphIndex < 0)
 			throw new Error("Paragraph index can not be negative");
+	}
+
+	if (this.isNew) {
+		this.firstWord = undefined;
+		this.lastWord = undefined;
+		this.answerRoundId = undefined;
+		this.verificationRoundIds = [];
 	}
 	next();
 });

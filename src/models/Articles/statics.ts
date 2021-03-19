@@ -1,4 +1,8 @@
-import { ArticlesCollectionInterface, ArticleSources } from "../";
+import {
+	ArticlesCollectionInterface,
+	ArticleSourceIdentifier,
+	ArticleSources,
+} from "../";
 import { ArticlePreview, ArticlesInterface } from "./interface";
 import { ScraperFactory } from "./ScrapingService";
 import Google from "./GoogleSearchApi";
@@ -10,6 +14,16 @@ export const findArticleByUrl = async function (
 ) {
 	const identifier = ArticleSources.getIdentifier(decodedURL);
 	const key = ArticleSources.getArticleKey(decodedURL);
+	const source = await ArticleSources.findOne({ identifier });
+	return await this.findArticleByKey(identifier, key, upsert);
+};
+
+export const findArticleByKey = async function (
+	this: ArticlesCollectionInterface,
+	identifier: ArticleSourceIdentifier,
+	key: string,
+	upsert?: boolean
+) {
 	const source = await ArticleSources.findOne({ identifier });
 	if (!source)
 		throw new Error(
@@ -41,6 +55,7 @@ export const webSearch = async function (
 	const identifiers = urls.map((url) =>
 		ArticleSources.getIdentifier(url)
 	);
+	const keys = urls.map((url) => ArticleSources.getArticleKey(url));
 	const sources = await Promise.all(
 		identifiers.map((identifier) =>
 			ArticleSources.findOne({ identifier })
@@ -51,5 +66,6 @@ export const webSearch = async function (
 		snippet: item.snippet,
 		title: item.title,
 		source: sources[i],
+		key: keys[i],
 	}));
 };

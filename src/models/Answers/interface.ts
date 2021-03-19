@@ -1,5 +1,4 @@
 import { Document, Model, Types } from "mongoose";
-import { Type } from "typescript";
 
 export interface AnswersInterface extends Document {
 	// required objectIds not relevant to article

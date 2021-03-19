@@ -1,6 +1,7 @@
 import { ArticlesCollectionInterface, ArticleSources } from "../";
-import { ArticlesInterface } from "./interface";
+import { ArticlePreview, ArticlesInterface } from "./interface";
 import { ScraperFactory } from "./ScrapingService";
+import Google from "./GoogleSearchApi";
 
 export const findArticleByUrl = async function (
 	this: ArticlesCollectionInterface,
@@ -29,4 +30,26 @@ export const findArticleByUrl = async function (
 	});
 	if (upsert) await article.save();
 	return article;
+};
+
+export const webSearch = async function (
+	this: ArticlesCollectionInterface,
+	query: string
+): Promise<ArticlePreview[]> {
+	const items = await Google.search(query);
+	const urls = items.map((item) => item.link);
+	const identifiers = urls.map((url) =>
+		ArticleSources.getIdentifier(url)
+	);
+	const sources = await Promise.all(
+		identifiers.map((identifier) =>
+			ArticleSources.findOne({ identifier })
+		)
+	);
+	return items.map((item, i) => ({
+		url: item.link,
+		snippet: item.snippet,
+		title: item.title,
+		source: sources[i],
+	}));
 };

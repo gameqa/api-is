@@ -1,4 +1,5 @@
 import { Document, Model, Types } from "mongoose";
+import { ArticleSourcesInterface } from "../ArticleSources";
 
 export interface ArticlesInterface extends Document {
 	title: string;
@@ -8,9 +9,18 @@ export interface ArticlesInterface extends Document {
 	sourceId: Types.ObjectId;
 }
 
-export interface ArticlesCollectionInterface extends Model<ArticlesInterface> {
+export interface ArticlePreview {
+	title: string;
+	snippet: string;
+	url: string;
+	source: ArticleSourcesInterface;
+}
+
+export interface ArticlesCollectionInterface
+	extends Model<ArticlesInterface> {
 	findArticleByUrl: (
 		url: string,
 		upsert?: boolean
 	) => Promise<ArticlesInterface>;
+	webSearch: (query: string) => Promise<ArticlePreview[]>;
 }

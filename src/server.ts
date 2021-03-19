@@ -1,6 +1,6 @@
 import axios from "axios";
 import server from "./app";
-import { Articles } from "./models";
+import { ArticlePreview, Articles } from "./models";
 
 /**
  * Start Express server.

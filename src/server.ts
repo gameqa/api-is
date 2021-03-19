@@ -1,3 +1,4 @@
+import axios from "axios";
 import server from "./app";
 import { Articles } from "./models";
 
@@ -12,14 +13,3 @@ server.listen(server.get("port"), () => {
 	);
 	console.log("  Press CTRL-C to stop\n");
 });
-
-Articles.findArticleByUrl("https://www.visindavefur.is/svar.php?id=106", true)
-	.then((res) => console.log(res))
-	.catch((e) => console.log(e));
-
-/**
- * TODO: make the functionality be like below, not findArticleByUrl
- */
-
-// http://api.spurningar.is/api/v1/article_sources/__visir__/106
-// http://api.spurningar.is/api/v1/articles/web_search?query_string="asdf"

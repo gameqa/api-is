@@ -182,16 +182,16 @@ describe("Creating Questions", () => {
 			expect(question.verifycationRoundIds.length).toBe(0);
 			done();
 		});
+	});
 
-		describe("Selecting verifiedAt", () => {
-			it("Should be undefined even if a date is passed in", async (done) => {
-				question = await Questions.create({
-					...validQuestion,
-					verifiedAt: new Date(),
-				});
-				expect(question).toHaveProperty("verifiedAt", undefined);
-				done();
+	describe("Selecting verifiedAt", () => {
+		it("Should be undefined even if a date is passed in", async (done) => {
+			question = await Questions.create({
+				...validQuestion,
+				verifiedAt: new Date(),
 			});
+			expect(question).toHaveProperty("verifiedAt", undefined);
+			done();
 		});
 	});
 });

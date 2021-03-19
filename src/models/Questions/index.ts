@@ -46,7 +46,7 @@ questionSchema.pre<QuestionsInterface>("save", async function (next) {
 
 	if (this.isNew) {
 		this.verifycationRoundIds = [];
-		// this.verifiedAt = undefined;
+		this.verifiedAt = undefined;
 	}
 	next();
 });

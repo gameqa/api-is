@@ -4,3 +4,4 @@ export * from "./ArticleSources";
 export * from "./Articles";
 export * from "./GameRounds";
 export * from "./Questions";
+export * from "./Answers";

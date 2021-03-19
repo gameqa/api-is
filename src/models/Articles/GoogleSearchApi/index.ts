@@ -14,7 +14,14 @@ class GoogleSearchApi {
 
 	public async search(query: string): Promise<SearchItem[]> {
 		const { data } = await axios.get<SearchResponse>(
-			`${this.baseURL}?cx=${this.programmableSearchEngineID}&key=${this.apiKey}&q=${query}&num=10&gl=is`
+			`${this.baseURL}`,
+			{
+				params: {
+					cx: this.programmableSearchEngineID,
+					key: this.apiKey,
+					q: query,
+				},
+			}
 		);
 		return data.items;
 	}

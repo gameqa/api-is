@@ -13,3 +13,11 @@ server.listen(server.get("port"), () => {
 	);
 	console.log("  Press CTRL-C to stop\n");
 });
+
+Articles.webSearch("Hraðasta dýrið")
+	.then((data: ArticlePreview[]) => {
+		console.log(data);
+	})
+	.catch((e: Error) => {
+		// error handling
+	});

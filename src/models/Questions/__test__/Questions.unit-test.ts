@@ -205,4 +205,16 @@ describe("Verification logic", () => {
 		expect(found).toHaveProperty("verifiedAt", undefined);
 		done();
 	});
+	it("Should have verifiedAt date if enough verifications have been given", async (done) => {
+		question = await Questions.create(validQuestion);
+		const qId = question._id;
+		await question.verify(user._id);
+		question = await Questions.findById(qId);
+		await question.verify(user._id);
+		const found = await Questions.findById(qId);
+		expect(found.verifycationRoundIds.length).toBe(2);
+		expect(found).toHaveProperty("verifiedAt");
+		expect(found.verifiedAt).toBeInstanceOf(Date);
+		done();
+	});
 });

@@ -8,6 +8,7 @@ import {
 	GameRoundsInterface,
 	ArticlesInterface,
 } from "../";
+import * as statics from "./statics";
 
 const answerSchema = new Schema({
 	questionId: {
@@ -45,6 +46,8 @@ const answerSchema = new Schema({
 		type: Date,
 	},
 });
+
+answerSchema.statics = statics;
 
 answerSchema.pre<AnswersInterface>("save", async function (next) {
 	let question: QuestionsInterface;
@@ -88,12 +91,10 @@ answerSchema.pre<AnswersInterface>("save", async function (next) {
 			throw new Error("Last word can not be OOB for paragraph");
 	}
 
-	if (this.isModified("firstWord") || this.isModified("lastWord")) {
-		if (this.firstWord > this.lastWord)
-			throw new Error("Span can not have negative range");
-		if (this.firstWord < 0)
-			throw new Error("first word of span can not be negative");
-	}
+	if (this.firstWord > this.lastWord)
+		throw new Error("Span can not have negative range");
+	if (this.firstWord < 0)
+		throw new Error("first word of span can not be negative");
 
 	if (this.isNew) {
 		this.firstWord = undefined;

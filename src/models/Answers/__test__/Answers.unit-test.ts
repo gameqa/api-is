@@ -426,3 +426,49 @@ describe("Creating Answers", () => {
 		});
 	});
 });
+
+describe("findByIdAndSetSpan()", () => {
+	it("Should update first and lastWord", async (done) => {
+		answer = await Answers.create(validAnswer);
+		await Answers.findByIdAndSetSpan(answer._id, {
+			firstWord: 1,
+			lastWord: 2,
+			roundId: round._id,
+		});
+		const found = await Answers.findById(answer._id);
+		expect(found.firstWord).toBe(1);
+		expect(found.lastWord).toBe(2);
+		expect(found.answeredAt).toBeInstanceOf(Date);
+		expect(found.answerRoundId.toString()).toBe(round._id.toString());
+		done();
+	});
+
+	it("Should return null if no answer found by id", async (done) => {
+		const ret = await Answers.findByIdAndSetSpan(answer._id, {
+			firstWord: 1,
+			lastWord: 2,
+			roundId: Types.ObjectId(),
+		});
+		expect(ret).toBeNull();
+		done();
+	});
+
+	it("Should fail if firstWord and lostWord cross", async (done) => {
+		answer = await Answers.create(validAnswer);
+		const shouldReject = async () => {
+			try {
+				await Answers.findByIdAndSetSpan(answer._id, {
+					firstWord: 1,
+					lastWord: 0,
+					roundId: round._id,
+				});
+			} catch (error) {
+				throw new Error("Failed promise");
+			}
+		};
+		await expect(shouldReject()).rejects.toEqual(
+			new Error("Failed promise")
+		);
+		done();
+	});
+});

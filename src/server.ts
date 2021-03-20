@@ -14,12 +14,11 @@ server.listen(server.get("port"), () => {
 	console.log("  Press CTRL-C to stop\n");
 });
 
-// .findByIdAndArchive()
-// verify logic for Q
-// answer logic for span (and answerRoundID)
-// verification logic for A span
-// archive answer model
-// .findByIdAndArchive()
+//   .archive answer
+// verifyIds for span
+//    insert
+//    verifiedAt on threshold
 
 // nice to have
 // on archive, inc count for user
+// mark question as impossible

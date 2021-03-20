@@ -17,5 +17,16 @@ export interface AnswersInterface extends Document {
 	answeredAt?: Date;
 }
 
+export interface SpanAnswer {
+	roundId: Types.ObjectId;
+	firstWord: number;
+	lastWord: number;
+}
+
 export interface AnswersCollectionInterface
-	extends Model<AnswersInterface> {}
+	extends Model<AnswersInterface> {
+	findByIdAndSetSpan: (
+		id: string | Types.ObjectId,
+		answer: SpanAnswer
+	) => Promise<AnswersInterface | null>;
+}

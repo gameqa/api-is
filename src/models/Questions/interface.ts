@@ -5,6 +5,7 @@ export interface QuestionsInterface extends Document {
 	creationRoundId: Types.ObjectId;
 	verifycationRoundIds: Types.ObjectId[];
 	verifiedAt: Date;
+	archived: boolean;
 	verify: (user: Types.ObjectId) => Promise<void>;
 }
 

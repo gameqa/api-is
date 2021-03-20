@@ -14,10 +14,12 @@ server.listen(server.get("port"), () => {
 	console.log("  Press CTRL-C to stop\n");
 });
 
-Articles.findArticleByKey("__visindavef__", "109")
-	.then((res) => {
-		console.log(res);
-	})
-	.catch((e) => {
-		console.log(e);
-	});
+// .findByIdAndArchive()
+// verify logic for Q
+// answer logic for span (and answerRoundID)
+// verification logic for A span
+// archive answer model
+// .findByIdAndArchive()
+
+// nice to have
+// on archive, inc count for user

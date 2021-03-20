@@ -194,6 +194,17 @@ describe("Creating Questions", () => {
 			done();
 		});
 	});
+
+	describe("Selecthing 'archived'", () => {
+		it("Should be false even if true ", async (done) => {
+			question = await Questions.create({
+				...validQuestion,
+				archived: true,
+			});
+			expect(question).toHaveProperty("archived", false);
+			done();
+		});
+	});
 });
 
 describe("Verification logic", () => {

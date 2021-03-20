@@ -25,6 +25,9 @@ const questionSchema = new Schema({
 		type: Date,
 		default: undefined,
 	},
+	archived: {
+		type: Boolean,
+	},
 });
 
 questionSchema.methods = methods;
@@ -50,6 +53,7 @@ questionSchema.pre<QuestionsInterface>("save", async function (next) {
 	if (this.isNew) {
 		this.verifycationRoundIds = [];
 		this.verifiedAt = undefined;
+		this.archived = false;
 	}
 	next();
 });

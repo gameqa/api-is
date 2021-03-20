@@ -15,6 +15,7 @@ export interface AnswersInterface extends Document {
 	// records
 	verifiedAt?: Date;
 	answeredAt?: Date;
+	archived: boolean;
 }
 
 export interface SpanAnswer {

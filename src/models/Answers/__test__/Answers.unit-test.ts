@@ -406,6 +406,17 @@ describe("Creating Answers", () => {
 		});
 	});
 
+	describe("Selecting archived", () => {
+		it("Should be false true is passed into creation", async (done) => {
+			answer = await Answers.create({
+				...validAnswer,
+				archived: true,
+			});
+			expect(answer).toHaveProperty("archived", false);
+			done();
+		});
+	});
+
 	describe("Selecting (firstWord, lastWord) ", () => {
 		it("Should fail if firstWord is > lastWord", async (done) => {
 			const shouldReject = async () => {

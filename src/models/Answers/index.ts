@@ -45,6 +45,9 @@ const answerSchema = new Schema({
 	answeredAt: {
 		type: Date,
 	},
+	archived: {
+		type: Boolean,
+	},
 });
 
 answerSchema.statics = statics;
@@ -103,6 +106,7 @@ answerSchema.pre<AnswersInterface>("save", async function (next) {
 		this.verificationRoundIds = [];
 		this.verifiedAt = undefined;
 		this.answeredAt = undefined;
+		this.archived = false;
 	}
 	next();
 });

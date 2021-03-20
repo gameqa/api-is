@@ -9,6 +9,7 @@ import {
 	ArticlesInterface,
 } from "../";
 import * as statics from "./statics";
+import * as methods from "./methods";
 
 const answerSchema = new Schema({
 	questionId: {
@@ -50,6 +51,7 @@ const answerSchema = new Schema({
 	},
 });
 
+answerSchema.methods = methods;
 answerSchema.statics = statics;
 
 answerSchema.pre<AnswersInterface>("save", async function (next) {

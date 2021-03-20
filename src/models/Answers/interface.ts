@@ -16,6 +16,7 @@ export interface AnswersInterface extends Document {
 	verifiedAt?: Date;
 	answeredAt?: Date;
 	archived: boolean;
+	verify: (userId: Types.ObjectId) => Promise<void>;
 }
 
 export interface SpanAnswer {

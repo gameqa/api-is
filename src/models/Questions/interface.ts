@@ -10,4 +10,8 @@ export interface QuestionsInterface extends Document {
 }
 
 export interface QuestionsCollectionInterface
-	extends Model<QuestionsInterface> {}
+	extends Model<QuestionsInterface> {
+	findByIdAndArchive: (
+		id: string | Types.ObjectId
+	) => Promise<void | QuestionsInterface>;
+}

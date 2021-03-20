@@ -229,3 +229,22 @@ describe("Verification logic", () => {
 		done();
 	});
 });
+
+describe("FindByIdAndArchive", () => {
+	it("Should set archived to true", async (done) => {
+		question = await Questions.create(validQuestion);
+		await Questions.findByIdAndArchive(question._id);
+		const found = await Questions.findById(question._id);
+		expect(found).toHaveProperty("archived", true);
+		done();
+	});
+
+	// this is inline with mongoose behaviour
+	it("Should return null if invalid id", async (done) => {
+		const returned = await Questions.findByIdAndArchive(
+			Types.ObjectId()
+		);
+		expect(returned).toBeNull();
+		done();
+	});
+});

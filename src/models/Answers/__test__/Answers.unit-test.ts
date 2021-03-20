@@ -483,3 +483,22 @@ describe("findByIdAndSetSpan()", () => {
 		done();
 	});
 });
+
+describe("FindByIdAndArchive", () => {
+	it("Should set archived to true", async (done) => {
+		answer = await Answers.create(validAnswer);
+		await Answers.findByIdAndArchive(answer._id);
+		const found = await Answers.findById(answer._id);
+		expect(found).toHaveProperty("archived", true);
+		done();
+	});
+
+	// this is inline with mongoose behaviour
+	it("Should return null if invalid id", async (done) => {
+		const returned = await Answers.findByIdAndArchive(
+			Types.ObjectId()
+		);
+		expect(returned).toBeNull();
+		done();
+	});
+});

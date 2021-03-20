@@ -1,5 +1,4 @@
 import { Types } from "mongoose";
-import { Articles } from "..";
 import {
 	AnswersCollectionInterface,
 	AnswersInterface,
@@ -18,4 +17,13 @@ export const findByIdAndSetSpan = async function (
 	doc.lastWord = answer.lastWord;
 	doc.answeredAt = new Date();
 	await doc.save();
+};
+
+export const findByIdAndArchive = async function (
+	this: AnswersCollectionInterface,
+	id: Types.ObjectId
+) {
+	return await this.findByIdAndUpdate(id, {
+		$set: { archived: true },
+	});
 };

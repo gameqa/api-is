@@ -30,4 +30,7 @@ export interface AnswersCollectionInterface
 		id: string | Types.ObjectId,
 		answer: SpanAnswer
 	) => Promise<AnswersInterface | null>;
+	findByIdAndArchive: (
+		id: string | Types.ObjectId
+	) => Promise<AnswersInterface | null>;
 }

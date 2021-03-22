@@ -12,10 +12,9 @@ server.listen(server.get("port"), () => {
 	console.log("  Press CTRL-C to stop\n");
 });
 
-// round task logic
-// get task i api call
-// post task completed api call
-
-// nice to have
-// on archive, inc count for user
-// mark question as impossible
+// bua til game master class
+// bua til AggregateAdapter interface, class
+// count unverified questions
+// count verified questions
+// count answers without spans
+// count unverified answers

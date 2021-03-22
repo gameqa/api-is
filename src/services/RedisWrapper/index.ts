@@ -53,6 +53,16 @@ class RedisWrapper {
 		if (process.env.NODE_ENV === "test") return undefined;
 		this.__redis.expireat(key, time);
 	}
+
+	public async increment(key: string): Promise<number> {
+		if (process.env.NODE_ENV === "test") return undefined;
+		return new Promise((resolve, reject) => {
+			this.__redis.incr(key, (err, res) => {
+				if (err) return reject(`Failed to increment '${key}'`);
+				return resolve(res);
+			});
+		});
+	}
 }
 
 export { RedisWrapper as Redis };

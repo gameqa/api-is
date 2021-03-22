@@ -2,6 +2,7 @@ import { RouteBuilder } from "../../utils";
 import users from "./users";
 import articleSources from "./article_sources";
 import articles from "./articles";
+import gameRounds from "./game_rounds";
 
 export default RouteBuilder.joinRouters([
 	{
@@ -15,5 +16,9 @@ export default RouteBuilder.joinRouters([
 	{
 		route: "/articles/",
 		controller: articles,
+	},
+	{
+		route: "/game_rounds/",
+		controller: gameRounds,
 	},
 ]);

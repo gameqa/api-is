@@ -1,27 +1,34 @@
 import { Document, Model, Types } from "mongoose";
 
-type TaskTypes =
-	| "ask-question"
-	| "qa-question"
-	| "submit-article"
-	| "select-span"
-	| "qa-answer-span"
-	| "done";
+export enum TaskTypes {
+	askQuestion,
+}
 
-interface TaskInfo {}
+export interface GameRoundWithTask {
+	_id: string | Types.ObjectId;
+	currentRound: number;
+	totalRounds: number;
+	taskInfo: Tasks;
+}
+
+interface AskQuestionTask {
+	ideaWords: string[];
+	type: TaskTypes.askQuestion;
+	deadline: Date;
+}
+
+type Tasks = AskQuestionTask;
 
 export interface GameRoundsInterface extends Document {
 	userId: Types.ObjectId;
 	currentRound: number;
 	totalRounds: number;
 	completedAt?: Date;
-	getTask: () => Promise<TaskInfo>;
-	advance: () => Promise<void>;
 }
 
 export interface GameRoundsCollectionInterface
 	extends Model<GameRoundsInterface> {
 	findByUserId: (
 		userId: Types.ObjectId | string
-	) => Promise<GameRoundsInterface>;
+	) => Promise<GameRoundWithTask>;
 }

@@ -35,7 +35,8 @@ bower_components
 .DS_Store
 Thumbs.db
 
-
+# helper script
+./startd.sh
 
 # Ignore built ts files
 dist/**/*

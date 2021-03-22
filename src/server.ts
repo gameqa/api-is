@@ -12,10 +12,9 @@ server.listen(server.get("port"), () => {
 	console.log("  Press CTRL-C to stop\n");
 });
 
-//   .archive answer
-// verifyIds for span
-//    insert
-//    verifiedAt on threshold
+// round task logic
+// get task i api call
+// post task completed api call
 
 // nice to have
 // on archive, inc count for user

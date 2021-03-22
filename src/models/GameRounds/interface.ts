@@ -24,6 +24,7 @@ export interface GameRoundsInterface extends Document {
 	currentRound: number;
 	totalRounds: number;
 	completedAt?: Date;
+	advance: () => Promise<void>;
 }
 
 export interface GameRoundsCollectionInterface

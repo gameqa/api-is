@@ -212,10 +212,10 @@ describe("Advance", () => {
 		const currRound = round.currentRound;
 		const roundId = round._id;
 		await round.advance();
-		round = await GameRounds.findByUserId(validGameRound.userId);
-		expect(round).toHaveProperty("_id", roundId);
-		expect(round).toHaveProperty("currentRound", currRound + 1);
-		expect(round).toHaveProperty("completedAt", undefined);
+		const found = await GameRounds.findByUserId(validGameRound.userId);
+		expect(found).toHaveProperty("_id", roundId);
+		expect(found).toHaveProperty("currentRound", currRound + 1);
+		expect(found).toHaveProperty("completedAt", undefined);
 		done();
 	});
 

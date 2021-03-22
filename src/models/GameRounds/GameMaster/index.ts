@@ -7,8 +7,14 @@ import {
 	CountableTask,
 } from "./interface";
 
-class GameMaster {
+export class GameMaster {
 	private adapter: GameMasterAggregator;
+
+	public constructor(Adapter: { new (): GameMasterAggregator }) {
+		this.adapter = new Adapter();
+	}
+
+	static readonly MAX_TO_DO_PER_TASK = 100;
 
 	readonly MAP_TO_PREV: CountableTask2Task = {
 		"verify-question": "make-question",
@@ -31,13 +37,15 @@ class GameMaster {
 		"verify-span": "countAnswersNotVerified",
 	};
 
-	private async getAvailableTasks(): Promise<Task[]> {
+	public async getAvailableTasks(): Promise<Task[]> {
 		const taskList: Task[] = [];
 		for (const task of this.COUNT_SEQUENCE) {
-			taskList.push(this.MAP_TO_PREV[task as CountableTask]);
-			const count = await this.adapter[
-				this.MAP_COUNTABLE_TO_OP[task as CountableTask]
-			]();
+			const prev = this.MAP_TO_PREV[task as CountableTask];
+			const countAction = this.MAP_COUNTABLE_TO_OP[
+				task as CountableTask
+			];
+			const count = await this.adapter[countAction]();
+			if (count < GameMaster.MAX_TO_DO_PER_TASK) taskList.push(prev);
 			if (count == 0) return taskList;
 		}
 		return taskList;
@@ -48,3 +56,5 @@ class GameMaster {
 		return tasks[Math.floor(Math.random() * tasks.length)];
 	}
 }
+
+export * from "./interface";

@@ -7,6 +7,9 @@ export interface QuestionsInterface extends Document {
 	verifiedAt: Date;
 	archived: boolean;
 	verify: (user: Types.ObjectId) => Promise<void>;
+	answeredAt?: Date;
+	markAsAnswered: () => Promise<void>;
+	markAsUnAnswered: () => Promise<void>;
 }
 
 export interface QuestionsCollectionInterface

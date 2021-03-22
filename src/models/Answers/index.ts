@@ -65,6 +65,7 @@ answerSchema.pre<AnswersInterface>("save", async function (next) {
 			throw new Error(
 				`Question with id ${this.questionId} not found when creating answer`
 			);
+		await question.markAsAnswered();
 	}
 	if (this.isModified("creationRoundId")) {
 		round = await GameRounds.findById(this.creationRoundId);

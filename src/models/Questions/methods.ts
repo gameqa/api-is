@@ -19,3 +19,15 @@ export const verify = async function (
 		},
 	});
 };
+
+export const markAsAnswered = async function (this: QuestionsInterface) {
+	await this.update({
+		$set: { answeredAt: new Date() },
+	});
+};
+
+export const markAsUnAnswered = async function (this: QuestionsInterface) {
+	await this.update({
+		$unset: { answeredAt: "" },
+	});
+};

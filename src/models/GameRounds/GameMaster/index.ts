@@ -6,6 +6,7 @@ import {
 	CountableTaskList,
 	CountableTask,
 } from "./interface";
+import { MongooseAdapter } from "./MongooseAdapter";
 
 export class GameMaster {
 	private adapter: GameMasterAggregator;
@@ -48,7 +49,7 @@ export class GameMaster {
 			if (count < GameMaster.MAX_TO_DO_PER_TASK) taskList.push(prev);
 			if (count == 0) return taskList;
 		}
-		return taskList;
+		return [...taskList, "verify-span"];
 	}
 
 	public async getTask(): Promise<Task> {
@@ -56,5 +57,7 @@ export class GameMaster {
 		return tasks[Math.floor(Math.random() * tasks.length)];
 	}
 }
+
+export const game = new GameMaster(MongooseAdapter);
 
 export * from "./interface";

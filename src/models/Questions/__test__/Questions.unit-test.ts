@@ -184,6 +184,17 @@ describe("Creating Questions", () => {
 		});
 	});
 
+	describe("Selecting answerId", () => {
+		it("Should be undefined even if a value is passed in", async (done) => {
+			question = await Questions.create({
+				...validQuestion,
+				answerId: Types.ObjectId(),
+			});
+			expect(question).toHaveProperty("answerId", undefined);
+			done();
+		});
+	});
+
 	describe("Selecting verifiedAt", () => {
 		it("Should be undefined even if a date is passed in", async (done) => {
 			question = await Questions.create({
@@ -245,6 +256,31 @@ describe("FindByIdAndArchive", () => {
 			Types.ObjectId()
 		);
 		expect(returned).toBeNull();
+		done();
+	});
+});
+
+describe("markAsAnswered", () => {
+	it("Should be marked as unanswered on creation", async (done) => {
+		question = await Questions.create(validQuestion);
+		expect(question).toHaveProperty("answeredAt", undefined);
+		done();
+	});
+	it("Should be marked with date when called", async (done) => {
+		question = await Questions.create(validQuestion);
+		await question.markAsAnswered();
+		question = await Questions.findById(question._id);
+		expect(question.answeredAt).toBeInstanceOf(Date);
+		done();
+	});
+	it("Should not be marked with date when called with markAsUnAnswered", async (done) => {
+		question = await Questions.create(validQuestion);
+		await question.markAsAnswered();
+		question = await Questions.findById(question._id);
+		expect(question.answeredAt).toBeInstanceOf(Date);
+		await question.markAsUnAnswered();
+		question = await Questions.findById(question._id);
+		expect(question).toHaveProperty("answeredAt", undefined);
 		done();
 	});
 });

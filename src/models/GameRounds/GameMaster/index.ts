@@ -58,6 +58,6 @@ export class GameMaster {
 	}
 }
 
-export const game = new GameMaster(MongooseAdapter);
+export default new GameMaster(MongooseAdapter);
 
 export * from "./interface";

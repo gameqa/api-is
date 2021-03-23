@@ -16,7 +16,15 @@ export const advance = async function (
 	let isCompleted = false;
 
 	switch (userPayload.type) {
+		/**
+		 * switch through possible tasks
+		 * that user could have been solving
+		 */
 		case "make-question":
+			/**
+			 * If user just made a question, we create it
+			 * and if it fails we throw a new error
+			 */
 			try {
 				await Questions.create({
 					...userPayload,
@@ -25,6 +33,28 @@ export const advance = async function (
 			} catch (error) {
 				throw new Error(
 					`Unable to create question with payload sent: ${error.message}`
+				);
+			}
+			break;
+		case "verify-question":
+			/**
+			 * If the user was verifying a question
+			 * we check if the 'archive' property exists
+			 * in the payload, if not then we verify it..
+			 * otherwise we mark it as archived
+			 */
+			try {
+				const question = await Questions.findById(
+					userPayload.questionId
+				);
+				if (!question)
+					throw new Error("Question not found with this _id");
+				if (userPayload.archive)
+					await question.update({ $set: { archived: true } });
+				else await question.verify(this._id);
+			} catch (error) {
+				throw new Error(
+					`Unable to verify question with payload sent: ${error.message}`
 				);
 			}
 			break;

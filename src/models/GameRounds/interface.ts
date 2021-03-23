@@ -18,6 +18,7 @@ export interface GameRoundWithTask {
 interface AskQuestionTask {
 	ideaWords: string[];
 	type: "make-question";
+	questionType: string;
 }
 interface AskQuestionUserPayload {
 	type: "make-question";
@@ -30,12 +31,21 @@ interface VerifyQuestionTask {
 	text: string;
 	type: "verify-question";
 }
+interface VerifyQuestionUserPayload {
+	type: "verify-question";
+	archive: boolean;
+	questionId: string | Types.ObjectId;
+}
 
 // find article interfaces
 interface FindArticleTask {
 	_id: Types.ObjectId;
 	text: string;
 	type: "find-article";
+}
+interface FindArticleUserPayload {
+	type: "find-article";
+	// add more properties
 }
 
 // locate span task interfaces
@@ -58,7 +68,10 @@ export type TaskInfo =
 	| LocateSpanTask
 	| CompletedGameRound;
 
-export type TaskUserPayload = AskQuestionUserPayload;
+export type TaskUserPayload =
+	| AskQuestionUserPayload
+	| VerifyQuestionUserPayload
+	| FindArticleUserPayload;
 
 export interface GameRoundsInterface extends Document {
 	userId: Types.ObjectId;

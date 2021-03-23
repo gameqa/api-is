@@ -17,4 +17,5 @@ export interface QuestionsCollectionInterface
 	findByIdAndArchive: (
 		id: string | Types.ObjectId
 	) => Promise<void | QuestionsInterface>;
+	getQuestionWord: () => string;
 }

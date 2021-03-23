@@ -52,6 +52,7 @@ export const findByUserId = async function (
 			taskInfo = {
 				type: "make-question",
 				ideaWords: Faker.random.words(7).split(" "),
+				questionType: Questions.getQuestionWord(),
 			};
 			break;
 		}
@@ -68,6 +69,7 @@ export const findByUserId = async function (
 			 */
 			const docs = await Questions.find({
 				verifiedAt: { $exists: false },
+				archived: false,
 			});
 			const doc = docs[Math.floor(Math.random() * docs.length)];
 			taskInfo = {
@@ -90,6 +92,7 @@ export const findByUserId = async function (
 			 */
 			const docs = await Questions.find({
 				answeredAt: { $exists: false },
+				archived: false,
 			});
 			const doc = docs[Math.floor(Math.random() * docs.length)];
 			taskInfo = {

@@ -1,5 +1,6 @@
 import { Types } from "mongoose";
-import { Questions, GameRounds } from "..";
+import { Questions, GameRounds, Articles, Answers } from "..";
+import { ArticleSourceIdentifier } from "../ArticleSources";
 import {
 	GameRoundsInterface,
 	TaskUserPayload,
@@ -51,13 +52,41 @@ export const advance = async function (
 					throw new Error("Question not found with this _id");
 				if (userPayload.archive)
 					await question.update({ $set: { archived: true } });
-				else await question.verify(this._id);
+				else await question.verify(this.userId);
 			} catch (error) {
 				throw new Error(
 					`Unable to verify question with payload sent: ${error.message}`
 				);
 			}
 			break;
+		case "find-article":
+			try {
+				const {
+					identifier,
+					key,
+					questionId,
+					paragraphIndex,
+				} = userPayload;
+				const article = await Articles.findArticleByKey(
+					identifier as ArticleSourceIdentifier,
+					key,
+					true
+				);
+				if (!article)
+					throw new Error(
+						`Article not found for ${identifier} ${key}`
+					);
+				await Answers.create({
+					creationRound: this._id,
+					articleId: article._id,
+					questionId,
+					paragraphIndex,
+				});
+			} catch (error) {
+				throw new Error(
+					`Unable to create answer with article/question for payload sent: ${error.message}`
+				);
+			}
 		default:
 			throw new Error(
 				`Advance logic not implemented for ${userPayload.type}`

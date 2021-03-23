@@ -45,7 +45,10 @@ interface FindArticleTask {
 }
 interface FindArticleUserPayload {
 	type: "find-article";
-	// add more properties
+	key: string;
+	identifier: string;
+	paragraphIndex: number;
+	questionId: string;
 }
 
 // locate span task interfaces

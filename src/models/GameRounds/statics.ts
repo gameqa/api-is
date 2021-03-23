@@ -47,8 +47,6 @@ export const findByUserId = async function (
 			 * which tells the front end to ask a question
 			 * and the relevant ideawords
 			 */
-			// TODO[ ]: add real ideaWords
-			const ideaWords = [];
 			taskInfo = {
 				type: "make-question",
 				ideaWords: Faker.random.words(7).split(" "),
@@ -69,6 +67,7 @@ export const findByUserId = async function (
 			 */
 			const docs = await Questions.find({
 				verifiedAt: { $exists: false },
+				answeredAt: { $exists: false },
 				archived: false,
 			});
 			const doc = docs[Math.floor(Math.random() * docs.length)];
@@ -92,6 +91,7 @@ export const findByUserId = async function (
 			 */
 			const docs = await Questions.find({
 				answeredAt: { $exists: false },
+				verifiedAt: { $exists: true },
 				archived: false,
 			});
 			const doc = docs[Math.floor(Math.random() * docs.length)];

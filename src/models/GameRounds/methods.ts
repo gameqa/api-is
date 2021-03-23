@@ -48,5 +48,6 @@ export const advance = async function (
 	}
 	this.currentRound++;
 	await this.update({ $set: { currentRound: this.currentRound } });
+	// reuse logic to get game round
 	return await GameRounds.findByUserId(this.userId);
 };

@@ -194,9 +194,20 @@ describe(".getByUserId(userId)", () => {
 			totalRounds: TOTAL_ROUNDS,
 		});
 
-		await round.advance();
-		await round.advance();
-		await round.advance();
+		await round.advance({
+			type: "make-question",
+			text: "abcd efg yellow blue green?",
+		});
+
+		await round.advance({
+			type: "make-question",
+			text: "abcd efg yellow blue green?",
+		});
+
+		await round.advance({
+			type: "make-question",
+			text: "abcd efg yellow blue green?",
+		});
 		const found = await GameRounds.findByUserId(round.userId);
 		expect(round).toHaveProperty("currentRound", TOTAL_ROUNDS);
 		expect(round).toHaveProperty("completedAt");
@@ -211,7 +222,11 @@ describe("Advance", () => {
 		round = await GameRounds.create(validGameRound);
 		const currRound = round.currentRound;
 		const roundId = round._id;
-		await round.advance();
+
+		await round.advance({
+			type: "make-question",
+			text: "abcd efg yellow blue green?",
+		});
 		const found = await GameRounds.findByUserId(validGameRound.userId);
 		expect(found).toHaveProperty("_id", roundId);
 		expect(found).toHaveProperty("currentRound", currRound + 1);
@@ -226,9 +241,20 @@ describe("Advance", () => {
 			totalRounds: TOTAL_ROUNDS,
 		});
 
-		await round.advance();
-		await round.advance();
-		await round.advance();
+		await round.advance({
+			type: "make-question",
+			text: "abcd efg yellow blue green?",
+		});
+
+		await round.advance({
+			type: "make-question",
+			text: "abcd efg yellow blue green?",
+		});
+
+		await round.advance({
+			type: "make-question",
+			text: "abcd efg yellow blue green?",
+		});
 		round = await GameRounds.findById(round._id);
 		expect(round).toHaveProperty("currentRound", TOTAL_ROUNDS);
 		expect(round).toHaveProperty("completedAt");

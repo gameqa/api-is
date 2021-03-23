@@ -12,6 +12,7 @@ export class MongooseAdapter implements GameMasterAggregator {
 	public async countQuestionsWithoutAnswers() {
 		const docs = await Questions.find({
 			answeredAt: { $exists: false },
+			verifiedAt: { $exists: true },
 		});
 		return docs.length;
 	}
@@ -26,6 +27,7 @@ export class MongooseAdapter implements GameMasterAggregator {
 	public async countAnswersNotVerified() {
 		const docs = await Answers.find({
 			verifiedAt: { $exists: false },
+			answeredAt: { $exists: true },
 		});
 		return docs.length;
 	}

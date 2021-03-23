@@ -1,11 +1,12 @@
 import { Types } from "mongoose";
-import Game, { GameMaster } from "./GameMaster";
+import Game from "./GameMaster";
 import {
 	GameRoundsCollectionInterface,
 	GameRoundWithTask,
 	TaskInfo,
 } from "./interface";
 import { Answers, Questions } from "../";
+import Faker from "faker";
 
 export const findByUserId = async function (
 	this: GameRoundsCollectionInterface,
@@ -46,9 +47,11 @@ export const findByUserId = async function (
 			 * which tells the front end to ask a question
 			 * and the relevant ideawords
 			 */
+			// TODO[ ]: add real ideaWords
+			const ideaWords = [];
 			taskInfo = {
 				type: "make-question",
-				ideaWords: ["abc", "dec", "fegh", "fegh"],
+				ideaWords: Faker.random.words(7).split(" "),
 			};
 			break;
 		}
@@ -111,13 +114,14 @@ export const findByUserId = async function (
 			const doc = docs[Math.floor(Math.random() * docs.length)];
 			// TODO[ ]: finish implementation fo this
 			taskInfo = {
-				type: "find-article",
+				type: "locate-span",
 				text: "Why is this hardcoded?",
 				paragraph: "Lorem Ipsum",
 				_id: Types.ObjectId(),
 			};
 			break;
 		}
+		// TODO[ ]: finish implementation of verifySpan
 		default:
 			throw new Error("Task selected that was not recognized");
 	}

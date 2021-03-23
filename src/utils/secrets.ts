@@ -13,6 +13,8 @@ const exitProcess = (msg: string) => {
 
 if (!fs.existsSync(".env")) {
 	exitProcess("No .env file supplied");
+} else if (isProd) {
+	console.log("Using HEROKU to supply config variables");
 } else {
 	dotenv.config({ path: ".env" });
 }

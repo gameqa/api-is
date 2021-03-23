@@ -11,12 +11,12 @@ const exitProcess = (msg: string) => {
 	process.exit(0);
 };
 
-if (!fs.existsSync(".env")) {
-	exitProcess("No .env file supplied");
+if (fs.existsSync(".env")) {
+	dotenv.config({ path: ".env" });
 } else if (isProd) {
 	console.log("Using HEROKU to supply config variables");
 } else {
-	dotenv.config({ path: ".env" });
+	exitProcess("No .env file supplied");
 }
 
 export const MONGODB_URI = isProd

@@ -143,7 +143,7 @@ describe("Creating Answers", () => {
 	});
 
 	describe("selecting creationRoundId", () => {
-		it("should have creationRoundId as key on object", async (done) => {
+		it("should have crtionRoundId as key on object", async (done) => {
 			answer = await Answers.create(validAnswer);
 			expect(answer).toHaveProperty("creationRoundId", round._id);
 			done();

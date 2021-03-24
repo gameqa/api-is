@@ -8,9 +8,8 @@ export default class VisirScraper
 	implements ArticleScraper {
 	public async scrapeArticle(): Promise<ScrapeData> {
 		const { data } = await axios.get<string>(
-			`https://www.visir.is/${this.sourceArticleKey}`
+			`https://www.visir.is/g/${this.sourceArticleKey}`
 		);
-
 		const $ = cheerio.load(data);
 		this.title = $("article header h1").get(0).children[0].data;
 		$(".article-single__content p").each((_, element) => {

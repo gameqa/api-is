@@ -3,7 +3,7 @@ import {
 	ArticleSourceIdentifier,
 	ArticleSources,
 } from "../";
-import { ArticlePreview, ArticlesInterface } from "./interface";
+import { ArticlePreview } from "./interface";
 import { ScraperFactory } from "./ScrapingService";
 import Google from "./GoogleSearchApi";
 
@@ -42,6 +42,7 @@ export const findArticleByKey = async function (
 		sourceId: source._id,
 		key,
 	});
+	await article.getSource();
 	if (upsert) await article.save();
 	return article;
 };

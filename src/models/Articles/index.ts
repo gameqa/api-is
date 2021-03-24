@@ -1,7 +1,12 @@
 import { Schema, model, Types } from "mongoose";
 import { ArticleSources } from "..";
-import { ArticlesCollectionInterface, ArticlesInterface } from "./interface";
+import {
+	ArticlesCollectionInterface,
+	ArticlesInterface,
+} from "./interface";
 import * as statics from "./statics";
+import * as methods from "./methods";
+
 const articleSchema = new Schema(
 	{
 		title: {
@@ -32,6 +37,7 @@ const articleSchema = new Schema(
 );
 
 articleSchema.statics = statics;
+articleSchema.methods = methods;
 
 articleSchema.pre<ArticlesInterface>("save", async function (next) {
 	if (this.isModified("sourceId")) {
@@ -44,10 +50,9 @@ articleSchema.pre<ArticlesInterface>("save", async function (next) {
 
 articleSchema.index({ sourceId: 1, key: 1 }, { unique: true });
 
-export const Articles = model<ArticlesInterface, ArticlesCollectionInterface>(
-	"articles",
-	articleSchema,
-	"articles"
-);
+export const Articles = model<
+	ArticlesInterface,
+	ArticlesCollectionInterface
+>("articles", articleSchema, "articles");
 
 export * from "./interface";

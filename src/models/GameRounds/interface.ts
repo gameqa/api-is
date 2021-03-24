@@ -43,6 +43,7 @@ interface FindArticleTask {
 	text: string;
 	type: "find-article";
 }
+
 interface FindArticleUserPayload {
 	type: "find-article";
 	key: string;
@@ -58,6 +59,26 @@ interface LocateSpanTask {
 	type: "locate-span";
 	paragraph: string;
 }
+interface LocateSpanUserPayload {
+	type: "locate-span";
+	answerId: string;
+	firstWord: number;
+	lastWord: number;
+}
+interface ArchiveAnswerUserPayload {
+	type: "archive-answer";
+	answerId: string;
+}
+
+// verify span interfaces
+interface VerifySpanTask {
+	_id: Types.ObjectId;
+	text: string;
+	type: "verify-span";
+	paragraph: string;
+	firstWord: number;
+	lastWord: number;
+}
 
 // completed interface
 interface CompletedGameRound {
@@ -69,12 +90,16 @@ export type TaskInfo =
 	| VerifyQuestionTask
 	| FindArticleTask
 	| LocateSpanTask
-	| CompletedGameRound;
+	| CompletedGameRound
+	| VerifySpanTask;
 
 export type TaskUserPayload =
 	| AskQuestionUserPayload
 	| VerifyQuestionUserPayload
-	| FindArticleUserPayload;
+	| FindArticleUserPayload
+	| ArchiveAnswerUserPayload
+	| LocateSpanUserPayload
+	| { type: "bad-type" };
 
 export interface GameRoundsInterface extends Document {
 	userId: Types.ObjectId;

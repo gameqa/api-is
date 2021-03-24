@@ -5,7 +5,7 @@ import {
 	GameRoundWithTask,
 	TaskInfo,
 } from "./interface";
-import { Answers, Questions } from "../";
+import { Answers, Articles, Questions } from "../";
 import Faker from "faker";
 
 export const findByUserId = async function (
@@ -113,20 +113,71 @@ export const findByUserId = async function (
 			const docs = await Answers.find({
 				answeredAt: { $exists: false },
 				questionId: { $exists: true },
+				archived: false,
 			});
 			const doc = docs[Math.floor(Math.random() * docs.length)];
-			// TODO[ ]: finish implementation fo this
+			const article = await Articles.findById(doc.articleId);
+			if (!article)
+				throw new Error(
+					`Article not found with id ${doc.articleId} to create 'locate-span' task`
+				);
+			const question = await Questions.findById(doc.questionId);
+			if (!question)
+				throw new Error(
+					`Question not found with id ${doc.questionId} to create 'locate-span' task`
+				);
 			taskInfo = {
 				type: "locate-span",
-				text: "Why is this hardcoded?",
-				paragraph: "Lorem Ipsum",
-				_id: Types.ObjectId(),
+				paragraph: article.paragraphs[doc.paragraphIndex],
+				text: question.text,
+				_id: doc._id,
 			};
 			break;
 		}
-		// TODO[ ]: finish implementation of verifySpan
+		case "verify-span": {
+			/**
+			 * If the 'verify-span' was chosen
+			 * then the user should be instructed to verify
+			 * a random span of an answer that has
+			 * had its span submitted
+			 *
+			 * */
+			const docs = await Answers.find({
+				answeredAt: { $exists: true },
+				verifiedAt: { $exists: false },
+				firstWord: { $exists: true }, // makes sure this has been submitted
+				lastWord: { $exists: true }, // makes sure this has been submitted
+				archived: false,
+			});
+			const doc = docs[Math.floor(Math.random() * docs.length)];
+			if (!doc)
+				throw new Error(
+					`Unable to find article for answer that needs verifiecation`
+				);
+			const article = await Articles.findById(doc.articleId);
+			if (!article)
+				throw new Error(
+					`Article not found with id ${doc.articleId} to verify span task`
+				);
+			const question = await Questions.findById(doc.questionId);
+			if (!question)
+				throw new Error(
+					`Question not found with id ${doc.questionId} for 'verify-span' task`
+				);
+			taskInfo = {
+				type: "verify-span",
+				paragraph: article.paragraphs[doc.paragraphIndex],
+				text: question.text,
+				_id: doc._id,
+				firstWord: doc.firstWord!,
+				lastWord: doc.lastWord!,
+			};
+			break;
+		}
 		default:
-			throw new Error("Task selected that was not recognized");
+			throw new Error(
+				`Task ${task} selected that was not recognized`
+			);
 	}
 
 	return {

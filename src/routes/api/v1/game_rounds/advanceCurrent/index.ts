@@ -10,8 +10,7 @@ export default async (
 	res: Response
 ) => {
 	try {
-		const { roundId } = req.params;
-		const round = await GameRounds.findById(roundId);
+		const round = req.body.round;
 		if (round.userId.toString() !== req.body.user._id.toString())
 			throw new Error("Unable to edit round for another user");
 		req.body.user = undefined;

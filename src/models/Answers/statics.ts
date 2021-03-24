@@ -1,4 +1,5 @@
 import { Types } from "mongoose";
+import { Questions } from "../Questions";
 import {
 	AnswersCollectionInterface,
 	AnswersInterface,
@@ -9,21 +10,26 @@ export const findByIdAndSetSpan = async function (
 	this: AnswersCollectionInterface,
 	id: string | Types.ObjectId,
 	answer: SpanAnswer
-): Promise<AnswersInterface | null> {
+): Promise<AnswersInterface> {
 	const doc = await this.findById(id);
-	if (!doc) return null;
+	if (!doc) throw new Error(`No Answer found with id ${id}`);
 	doc.answerRoundId = answer.roundId;
 	doc.firstWord = answer.firstWord;
 	doc.lastWord = answer.lastWord;
 	doc.answeredAt = new Date();
-	await doc.save();
+	return await doc.save();
 };
 
 export const findByIdAndArchive = async function (
 	this: AnswersCollectionInterface,
 	id: Types.ObjectId
 ) {
-	return await this.findByIdAndUpdate(id, {
+	const res = await this.findByIdAndUpdate(id, {
 		$set: { archived: true },
 	});
+	if (!!res)
+		await Questions.findByIdAndUpdate(res.questionId, {
+			$unset: { answeredAt: "" },
+		});
+	return res;
 };

@@ -10,12 +10,14 @@ export interface ArticlesInterface extends Document {
 	key: string;
 	paragraphs: string[];
 	sourceId: Types.ObjectId;
+	getSource: () => Promise<void>;
+	source?: ArticleSourcesInterface;
 }
 
 export interface ArticlePreview {
 	title: string;
 	snippet: string;
-	url: string;
+	url?: string;
 	source: ArticleSourcesInterface;
 	key: string;
 }

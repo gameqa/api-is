@@ -60,6 +60,12 @@ export const advance = async function (
 			}
 			break;
 		case "find-article":
+			/**
+			 * If the user just found an article
+			 * for a question then we need to start
+			 * by finding said article, and then create
+			 * an answer that links those two together
+			 */
 			try {
 				const {
 					identifier,
@@ -67,17 +73,20 @@ export const advance = async function (
 					questionId,
 					paragraphIndex,
 				} = userPayload;
+				// find the article, and set upsert to true
 				const article = await Articles.findArticleByKey(
 					identifier as ArticleSourceIdentifier,
 					key,
 					true
 				);
+				// throw error if no article found
 				if (!article)
 					throw new Error(
 						`Article not found for ${identifier} ${key}`
 					);
+				// create an article
 				await Answers.create({
-					creationRound: this._id,
+					creationRoundId: this._id,
 					articleId: article._id,
 					questionId,
 					paragraphIndex,
@@ -87,6 +96,44 @@ export const advance = async function (
 					`Unable to create answer with article/question for payload sent: ${error.message}`
 				);
 			}
+			break;
+		case "archive-answer":
+			/**
+			 * If user selects to archive answer then he is marking the answer as
+			 * archived, this means that the answer which links paragraphs in articles
+			 * and questions together does not contain relevant information
+			 * to answer the question
+			 */
+			try {
+				await Answers.findByIdAndArchive(userPayload.answerId);
+			} catch (error) {
+				throw new Error(
+					`Unable to archive answer with _id ${userPayload.answerId} in advance gameRound`
+				);
+			}
+			break;
+		case "locate-span":
+			/**
+			 * If the user chose to locate span then
+			 * he has found a span inside a paragraph in a article
+			 * which answers a certain question
+			 *
+			 * the findByIdAndSetSpan methods handles relevant
+			 * logic and is aclled directly
+			 */
+			try {
+				console.log(userPayload);
+				await Answers.findByIdAndSetSpan(userPayload.answerId, {
+					roundId: this._id,
+					...userPayload,
+				});
+			} catch (error) {
+				throw new Error(
+					`Unable to save span in advance logic due to '${error.message}'`
+				);
+			}
+
+			break;
 		default:
 			throw new Error(
 				`Advance logic not implemented for ${userPayload.type}`

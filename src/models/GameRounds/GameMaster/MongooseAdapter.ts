@@ -21,7 +21,10 @@ export class MongooseAdapter implements GameMasterAggregator {
 
 	public async countAnswersWithoutSpan() {
 		const docs = await Answers.find({
-			answeredAt: { $exists: false },
+			questionId: { $exists: true },
+			firstWord: { $exists: false },
+			lastWord: { $exists: false },
+			archived: false,
 		});
 		return docs.length;
 	}
@@ -29,7 +32,9 @@ export class MongooseAdapter implements GameMasterAggregator {
 	public async countAnswersNotVerified() {
 		const docs = await Answers.find({
 			verifiedAt: { $exists: false },
-			answeredAt: { $exists: true },
+			firstWord: { $exists: true }, // makes sure this has been submitted
+			lastWord: { $exists: true }, // makes sure this has been submitted
+			archived: false,
 		});
 		return docs.length;
 	}

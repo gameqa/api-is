@@ -36,7 +36,10 @@ export default class AppUtils {
 		app.use(
 			cors({
 				credentials: true,
-				origin: ["http://localhost:3000"],
+				origin: [
+					"http://localhost:3000",
+					"http://spurningar.herokuapp.com",
+				],
 			})
 		);
 

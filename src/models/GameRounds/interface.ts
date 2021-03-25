@@ -65,6 +65,7 @@ interface LocateSpanUserPayload {
 	firstWord: number;
 	lastWord: number;
 }
+
 interface ArchiveAnswerUserPayload {
 	type: "archive-answer";
 	answerId: string;
@@ -78,6 +79,11 @@ interface VerifySpanTask {
 	paragraph: string;
 	firstWord: number;
 	lastWord: number;
+}
+interface VerifySpanUserPayload {
+	_id: Types.ObjectId;
+	type: "verify-span";
+	canBeShortened?: boolean;
 }
 
 // completed interface
@@ -99,6 +105,7 @@ export type TaskUserPayload =
 	| FindArticleUserPayload
 	| ArchiveAnswerUserPayload
 	| LocateSpanUserPayload
+	| VerifySpanUserPayload
 	| { type: "bad-type" };
 
 export interface GameRoundsInterface extends Document {

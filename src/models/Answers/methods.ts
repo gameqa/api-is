@@ -14,7 +14,9 @@ export const verify = async function (
 	await this.update({
 		$push: { verificationRoundIds: userId },
 		$set: {
-			canBeShortened: canBeShortened ?? false,
+			canBeShortened:
+				(canBeShortened ?? false) || this.canBeShortened,
+			// spread out object with  verifiedAt if we want to verify
 			...(this.verificationRoundIds.length + 1 ===
 			VERIFICATION_COUNTS
 				? { verifiedAt: new Date() }

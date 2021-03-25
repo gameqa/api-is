@@ -122,7 +122,6 @@ export const advance = async function (
 			 * logic and is aclled directly
 			 */
 			try {
-				console.log(userPayload);
 				await Answers.findByIdAndSetSpan(userPayload.answerId, {
 					roundId: this._id,
 					...userPayload,
@@ -133,6 +132,19 @@ export const advance = async function (
 				);
 			}
 
+			break;
+		case "verify-span":
+			try {
+				const answer = await Answers.findById(userPayload._id);
+				await answer.verify(
+					this.userId,
+					userPayload.canBeShortened
+				);
+			} catch (error) {
+				throw new Error(
+					`Unable to verify span in answer due to '${error.message}'`
+				);
+			}
 			break;
 		default:
 			throw new Error(

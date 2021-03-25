@@ -48,9 +48,10 @@ export const findByUserId = async function (
 			 * which tells the front end to ask a question
 			 * and the relevant ideawords
 			 */
+			const IDEA_WORD_COUNT = 7;
 			taskInfo = {
 				type: "make-question",
-				ideaWords: IdeaWords.get(7),
+				ideaWords: IdeaWords.get(IDEA_WORD_COUNT),
 				questionType: Questions.getQuestionWord(),
 			};
 			break;

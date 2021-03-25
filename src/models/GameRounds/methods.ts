@@ -134,8 +134,21 @@ export const advance = async function (
 
 			break;
 		case "verify-span":
+			/**
+			 * If the user choses to verify a span
+			 * then we expect the payload to include the
+			 * _id of the answer and a boolean flag wether
+			 * or not the span can be shortened
+			 *
+			 * we call the verify method on the answer found
+			 * which updates the answer
+			 */
 			try {
 				const answer = await Answers.findById(userPayload._id);
+				if (!answer)
+					throw new Error(
+						`${userPayload._id} is not a pkey of an answer`
+					);
 				await answer.verify(
 					this.userId,
 					userPayload.canBeShortened

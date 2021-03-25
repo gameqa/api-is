@@ -16,7 +16,10 @@ export interface AnswersInterface extends Document {
 	verifiedAt?: Date;
 	answeredAt?: Date;
 	archived: boolean;
-	verify: (userId: Types.ObjectId) => Promise<void>;
+	verify: (
+		userId: Types.ObjectId,
+		canBeShortened?: boolean
+	) => Promise<void>;
 	// flags
 	canBeShortened: boolean;
 }

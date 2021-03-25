@@ -508,6 +508,7 @@ describe("Verification logic", () => {
 		const found = await Answers.findById(answer._id);
 		expect(found.verificationRoundIds.includes(user._id)).toBe(true);
 		expect(found).toHaveProperty("verifiedAt", undefined);
+		expect(found).toHaveProperty("canBeShortened", false);
 		done();
 	});
 	it("Should have verifiedAt date if enough verifications have been given", async (done) => {
@@ -519,6 +520,15 @@ describe("Verification logic", () => {
 		expect(found.verificationRoundIds.length).toBe(2);
 		expect(found).toHaveProperty("verifiedAt");
 		expect(found.verifiedAt).toBeInstanceOf(Date);
+		done();
+	});
+	it("Should add userId to array and set canBeShortenedFlag", async (done) => {
+		answer = await Answers.create(validAnswer);
+		await answer.verify(user._id, true);
+		const found = await Answers.findById(answer._id);
+		expect(found.verificationRoundIds.includes(user._id)).toBe(true);
+		expect(found).toHaveProperty("verifiedAt", undefined);
+		expect(found).toHaveProperty("canBeShortened", true);
 		done();
 	});
 });

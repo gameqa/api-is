@@ -38,7 +38,7 @@ export default class AppUtils {
 				credentials: true,
 				origin: [
 					"http://localhost:3000",
-					"https://spurningarnlp.web.app/",
+					"https://spurningarnlp.web.app",
 				],
 			})
 		);

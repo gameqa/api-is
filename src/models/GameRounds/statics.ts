@@ -7,6 +7,7 @@ import {
 } from "./interface";
 import { Answers, Articles, Questions } from "../";
 import Faker from "faker";
+import * as IdeaWords from "./IdeaWords";
 
 export const findByUserId = async function (
 	this: GameRoundsCollectionInterface,
@@ -49,7 +50,7 @@ export const findByUserId = async function (
 			 */
 			taskInfo = {
 				type: "make-question",
-				ideaWords: Faker.random.words(7).split(" "),
+				ideaWords: IdeaWords.get(7),
 				questionType: Questions.getQuestionWord(),
 			};
 			break;

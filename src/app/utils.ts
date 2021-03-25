@@ -38,7 +38,7 @@ export default class AppUtils {
 				credentials: true,
 				origin: [
 					"http://localhost:3000",
-					"http://spurningar.herokuapp.com",
+					"https://spurningar.herokuapp.com",
 				],
 			})
 		);

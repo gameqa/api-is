@@ -417,6 +417,17 @@ describe("Creating Answers", () => {
 		});
 	});
 
+	describe("Selecting canBeShortened", () => {
+		it("Should be false even when true is passed into creation", async (done) => {
+			answer = await Answers.create({
+				...validAnswer,
+				canBeShortened: true,
+			});
+			expect(answer).toHaveProperty("canBeShortened", false);
+			done();
+		});
+	});
+
 	describe("Selecting (firstWord, lastWord) ", () => {
 		it("Should fail if firstWord is > lastWord", async (done) => {
 			const shouldReject = async () => {
@@ -455,12 +466,18 @@ describe("findByIdAndSetSpan()", () => {
 	});
 
 	it("Should return null if no answer found by id", async (done) => {
-		const ret = await Answers.findByIdAndSetSpan(answer._id, {
-			firstWord: 1,
-			lastWord: 2,
-			roundId: Types.ObjectId(),
-		});
-		expect(ret).toBeNull();
+		const shouldFail = async () => {
+			try {
+				await Answers.findByIdAndSetSpan(answer._id, {
+					firstWord: 1,
+					lastWord: 2,
+					roundId: Types.ObjectId(),
+				});
+			} catch (error) {
+				throw new Error("Exception");
+			}
+		};
+		await expect(shouldFail()).rejects.toEqual(new Error("Exception"));
 		done();
 	});
 

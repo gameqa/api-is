@@ -49,6 +49,9 @@ const answerSchema = new Schema({
 	archived: {
 		type: Boolean,
 	},
+	canBeShortened: {
+		type: Boolean,
+	},
 });
 
 answerSchema.methods = methods;
@@ -110,6 +113,7 @@ answerSchema.pre<AnswersInterface>("save", async function (next) {
 		this.verifiedAt = undefined;
 		this.answeredAt = undefined;
 		this.archived = false;
+		this.canBeShortened = false;
 	}
 	next();
 });

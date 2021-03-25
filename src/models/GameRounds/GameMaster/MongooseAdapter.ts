@@ -21,9 +21,9 @@ export class MongooseAdapter implements GameMasterAggregator {
 
 	public async countAnswersWithoutSpan() {
 		const docs = await Answers.find({
-			questionId: { $exists: true },
 			firstWord: { $exists: false },
 			lastWord: { $exists: false },
+			verifiedAt: { $exists: false },
 			archived: false,
 		});
 		return docs.length;

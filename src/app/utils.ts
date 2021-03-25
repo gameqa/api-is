@@ -37,9 +37,8 @@ export default class AppUtils {
 			cors({
 				credentials: true,
 				origin: [
-					// "http://localhost:3000",
-					// "https://spurningar.herokuapp.com",
-					"*",
+					"http://localhost:3000",
+					"https://spurningarnlp.web.app/",
 				],
 			})
 		);

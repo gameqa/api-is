@@ -6,8 +6,9 @@ export interface QuestionsInterface extends Document {
 	verifycationRoundIds: Types.ObjectId[];
 	verifiedAt: Date;
 	archived: boolean;
-	verify: (user: Types.ObjectId) => Promise<void>;
 	answeredAt?: Date;
+	isImpossible: boolean;
+	verify: (user: Types.ObjectId) => Promise<void>;
 	markAsAnswered: () => Promise<void>;
 	markAsUnAnswered: () => Promise<void>;
 }
@@ -18,4 +19,7 @@ export interface QuestionsCollectionInterface
 		id: string | Types.ObjectId
 	) => Promise<void | QuestionsInterface>;
 	getQuestionWord: () => string;
+	findByIdAndMarkAsImpossible: (
+		id: string | Types.ObjectId
+	) => Promise<void | QuestionsInterface>;
 }

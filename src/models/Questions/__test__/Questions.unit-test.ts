@@ -216,6 +216,17 @@ describe("Creating Questions", () => {
 			done();
 		});
 	});
+
+	describe("Selecthing 'isImpossible'", () => {
+		it("Should be false even if true is passed in", async (done) => {
+			question = await Questions.create({
+				...validQuestion,
+				isImpossible: true,
+			});
+			expect(question).toHaveProperty("isImpossible", false);
+			done();
+		});
+	});
 });
 
 describe("Verification logic", () => {
@@ -281,6 +292,16 @@ describe("markAsAnswered", () => {
 		await question.markAsUnAnswered();
 		question = await Questions.findById(question._id);
 		expect(question).toHaveProperty("answeredAt", undefined);
+		done();
+	});
+});
+
+describe("findByIdAndMarkAsImpossible", () => {
+	it("Should mark question as impossible", async (done) => {
+		question = await Questions.create(validQuestion);
+		await Questions.findByIdAndMarkAsImpossible(question._id);
+		question = await Questions.findById(question._id);
+		expect(question.isImpossible).toBe(true);
 		done();
 	});
 });

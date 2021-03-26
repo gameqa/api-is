@@ -32,6 +32,9 @@ const questionSchema = new Schema({
 	archived: {
 		type: Boolean,
 	},
+	isImpossible: {
+		type: Boolean,
+	},
 });
 
 questionSchema.methods = methods;
@@ -59,6 +62,7 @@ questionSchema.pre<QuestionsInterface>("save", async function (next) {
 		this.verifycationRoundIds = [];
 		this.verifiedAt = undefined;
 		this.archived = false;
+		this.isImpossible = false;
 		this.answeredAt = undefined;
 	}
 	next();

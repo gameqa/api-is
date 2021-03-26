@@ -23,3 +23,19 @@ export const getQuestionWord = function (
 	else if (sample < 0.99) return "Hvor";
 	else return "Afhverju";
 };
+
+export const findByIdAndMarkAsImpossible = async function (
+	this: QuestionsCollectionInterface,
+	_id: string | Types.ObjectId
+) {
+	const doc = await this.findByIdAndUpdate(_id, {
+		$set: {
+			isImpossible: true,
+		},
+	});
+	if (!doc)
+		throw new Error(
+			`No question with _id ${_id} found to mark as impossible`
+		);
+	return doc;
+};

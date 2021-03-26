@@ -196,7 +196,7 @@ export const advance = async function (
 				);
 				if (!question)
 					throw new Error(
-						`can not find question by Id ${question._id}`
+						`can not find question by Id ${userPayload.answerId}`
 					);
 				if (!question.isYesOrNo)
 					throw new Error(

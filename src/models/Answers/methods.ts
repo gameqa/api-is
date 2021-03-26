@@ -48,7 +48,9 @@ export const setYesOrNoAnswer = async function (
 		 * should be archived
 		 */
 		await Answers.findByIdAndArchive(this._id);
-		return;
+		throw new Error(
+			"Changin yes or no asnwer indiciates that paragraph does not contain question"
+		);
 	}
 
 	await this.update({ $set: { yesOrNoAnswer: answer } });

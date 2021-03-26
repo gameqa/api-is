@@ -607,7 +607,7 @@ describe("setYesOrNoAnswer", () => {
 		done();
 	});
 
-	it("Selecting false then true results in archiving", async (done) => {
+	it("Selecting false then true results in archiving and throws error", async (done) => {
 		const question = await Questions.create({
 			...validQuestion,
 			isYesOrNo: true,
@@ -618,13 +618,20 @@ describe("setYesOrNoAnswer", () => {
 		});
 		await answer.setYesOrNoAnswer(false);
 		let found = await Answers.findById(answer._id);
-		await found.setYesOrNoAnswer(true);
+		const shouldFail = async () => {
+			try {
+				await found.setYesOrNoAnswer(true);
+			} catch (error) {
+				throw new Error("error");
+			}
+		};
+		await expect(shouldFail()).rejects.toEqual(new Error("error"));
 		found = await Answers.findById(answer._id);
 		await expect(found).toHaveProperty("archived", true);
 		done();
 	});
 
-	it("Selecting true then false results in archiving", async (done) => {
+	it("Selecting true then false results in archiving and throws error", async (done) => {
 		const question = await Questions.create({
 			...validQuestion,
 			isYesOrNo: true,
@@ -635,7 +642,14 @@ describe("setYesOrNoAnswer", () => {
 		});
 		await answer.setYesOrNoAnswer(true);
 		let found = await Answers.findById(answer._id);
-		await found.setYesOrNoAnswer(false);
+		const shouldFail = async () => {
+			try {
+				await found.setYesOrNoAnswer(false);
+			} catch (error) {
+				throw new Error("error");
+			}
+		};
+		await expect(shouldFail()).rejects.toEqual(new Error("error"));
 		found = await Answers.findById(answer._id);
 		await expect(found).toHaveProperty("archived", true);
 		done();

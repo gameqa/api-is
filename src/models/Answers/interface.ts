@@ -20,8 +20,6 @@ export interface AnswersInterface extends Document {
 		userId: Types.ObjectId,
 		canBeShortened?: boolean
 	) => Promise<void>;
-	markAsYesOrNo: () => Promise<void>;
-	isYesOrNo: boolean;
 	// flags
 	canBeShortened: boolean;
 }

@@ -84,6 +84,11 @@ export const advance = async function (
 					throw new Error(
 						`Article not found for ${identifier} ${key}`
 					);
+				const question = await Questions.findById(questionId);
+				if (!question)
+					throw new Error(
+						`Unable to find question with id ${questionId}`
+					);
 				// create an article
 				await Answers.create({
 					creationRoundId: this._id,

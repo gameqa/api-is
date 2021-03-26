@@ -72,6 +72,10 @@ answerSchema.pre<AnswersInterface>("save", async function (next) {
 				`Question with id ${this.questionId} not found when creating answer`
 			);
 		await question.markAsAnswered();
+		if (question.isYesOrNo) {
+			this.firstWord = 0;
+			this.lastWord = 0;
+		}
 	}
 	if (this.isModified("creationRoundId")) {
 		round = await GameRounds.findById(this.creationRoundId);
@@ -116,12 +120,6 @@ answerSchema.pre<AnswersInterface>("save", async function (next) {
 		this.answeredAt = undefined;
 		this.archived = false;
 		this.canBeShortened = false;
-		this.isYesOrNo = false;
-	}
-
-	if (this.isYesOrNo) {
-		this.firstWord = 0;
-		this.lastWord = 0;
 	}
 
 	next();

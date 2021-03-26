@@ -24,8 +24,3 @@ export const verify = async function (
 		},
 	});
 };
-
-export const markAsYesOrNo = async function (this: AnswersInterface) {
-	this.isYesOrNo = true;
-	await this.save();
-};

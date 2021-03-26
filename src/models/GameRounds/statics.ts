@@ -175,6 +175,7 @@ export const findByUserId = async function (
 				_id: doc._id,
 				firstWord: doc.firstWord!,
 				lastWord: doc.lastWord!,
+				isYesOrNo: question.isYesOrNo,
 			};
 			break;
 		}

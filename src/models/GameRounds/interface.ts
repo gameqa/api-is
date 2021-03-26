@@ -83,6 +83,7 @@ interface VerifySpanTask {
 	paragraph: string;
 	firstWord: number;
 	lastWord: number;
+	isYesOrNo: boolean;
 }
 interface VerifySpanUserPayload {
 	_id: Types.ObjectId;

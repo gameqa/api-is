@@ -110,6 +110,7 @@ export type TaskUserPayload =
 	| ArchiveAnswerUserPayload
 	| LocateSpanUserPayload
 	| VerifySpanUserPayload
+	| MarkQuestionAsImpossible
 	| { type: "bad-type" };
 
 export interface GameRoundsInterface extends Document {

@@ -159,6 +159,25 @@ export const advance = async function (
 				);
 			}
 			break;
+		case "mark-question-impossible":
+			/**
+			 * If user decides to mark question as
+			 * impossible then he is essentially saying
+			 * that he is not able to find the answer anywhere
+			 *
+			 * we call the Questions model api and mark the question
+			 * with the _id present in userPayload as impossible
+			 */
+			try {
+				await Questions.findByIdAndMarkAsImpossible(
+					userPayload.questionId
+				);
+			} catch (error) {
+				throw new Error(
+					`Not able to mark question as impossible in advance due to ${error.message}`
+				);
+			}
+			break;
 		default:
 			throw new Error(
 				`Advance logic not implemented for ${userPayload.type}`

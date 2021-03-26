@@ -51,6 +51,10 @@ interface FindArticleUserPayload {
 	paragraphIndex: number;
 	questionId: string;
 }
+interface MarkQuestionAsImpossible {
+	type: "mark-question-impossible";
+	questionId: string;
+}
 
 // locate span task interfaces
 interface LocateSpanTask {

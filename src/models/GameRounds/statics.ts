@@ -78,6 +78,7 @@ export const findByUserId = async function (
 				type: "verify-question",
 				text: doc.text,
 				_id: doc._id,
+				isYesOrNo: doc.isYesOrNo,
 			};
 			break;
 		}

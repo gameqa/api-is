@@ -23,6 +23,7 @@ interface AskQuestionTask {
 interface AskQuestionUserPayload {
 	type: "make-question";
 	text: string;
+	isYesOrNo: boolean;
 }
 
 // verify question interfaces
@@ -30,6 +31,7 @@ interface VerifyQuestionTask {
 	_id: Types.ObjectId;
 	text: string;
 	type: "verify-question";
+	isYesOrNo: boolean;
 }
 interface VerifyQuestionUserPayload {
 	type: "verify-question";

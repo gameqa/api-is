@@ -36,7 +36,6 @@ interface VerifyQuestionUserPayload {
 	archive: boolean;
 	questionId: string | Types.ObjectId;
 }
-
 // find article interfaces
 interface FindArticleTask {
 	_id: Types.ObjectId;
@@ -90,6 +89,11 @@ interface VerifySpanUserPayload {
 	type: "verify-span";
 	canBeShortened?: boolean;
 }
+interface VerifyYesNoAnswerParagraphUserPayload {
+	type: "verify-yes-no-answer-paragraph";
+	answerId: string | Types.ObjectId;
+	answer: boolean;
+}
 
 // completed interface
 interface CompletedGameRound {
@@ -112,6 +116,7 @@ export type TaskUserPayload =
 	| LocateSpanUserPayload
 	| VerifySpanUserPayload
 	| MarkQuestionAsImpossible
+	| VerifyYesNoAnswerParagraphUserPayload
 	| { type: "bad-type" };
 
 export interface GameRoundsInterface extends Document {

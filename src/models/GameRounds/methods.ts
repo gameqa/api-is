@@ -154,6 +154,17 @@ export const advance = async function (
 					throw new Error(
 						`${userPayload._id} is not a pkey of an answer`
 					);
+				const question = await Questions.findById(
+					answer.questionId
+				);
+				if (!question)
+					throw new Error(
+						`can not find question by Id ${question._id}`
+					);
+				if (question.isYesOrNo)
+					throw new Error(
+						"Can not user 'verify-span' on yes or no questions"
+					);
 				await answer.verify(
 					this.userId,
 					userPayload.canBeShortened
@@ -161,6 +172,41 @@ export const advance = async function (
 			} catch (error) {
 				throw new Error(
 					`Unable to verify span in answer due to '${error.message}'`
+				);
+			}
+			break;
+		case "verify-yes-no-answer-paragraph":
+			/**
+			 * if the user chose this as the type
+			 * then he is verifying an yes or no question with answer
+			 * and verifying that the question is indeed answere by
+			 * the paragraph marked in the answer
+			 *
+			 */
+			try {
+				const answer = await Answers.findById(
+					userPayload.answerId
+				);
+				if (!answer)
+					throw new Error(
+						`${userPayload.answerId} is not a pkey of an answer`
+					);
+				const question = await Questions.findById(
+					answer.questionId
+				);
+				if (!question)
+					throw new Error(
+						`can not find question by Id ${question._id}`
+					);
+				if (!question.isYesOrNo)
+					throw new Error(
+						"Can only use 'verify-yes-no-answer-paragraph' on yes or no questions"
+					);
+				await answer.setYesOrNoAnswer(userPayload.answer);
+				await answer.verify(this.userId);
+			} catch (error) {
+				throw new Error(
+					`Unable to verify yes or no answer due to '${error.message}'`
 				);
 			}
 			break;

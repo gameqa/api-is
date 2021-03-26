@@ -35,6 +35,10 @@ const questionSchema = new Schema({
 	isImpossible: {
 		type: Boolean,
 	},
+	isYesOrNo: {
+		type: Boolean,
+		default: false,
+	},
 });
 
 questionSchema.methods = methods;

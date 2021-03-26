@@ -8,6 +8,7 @@ export interface QuestionsInterface extends Document {
 	archived: boolean;
 	answeredAt?: Date;
 	isImpossible: boolean;
+	isYesOrNo: boolean;
 	verify: (user: Types.ObjectId) => Promise<void>;
 	markAsAnswered: () => Promise<void>;
 	markAsUnAnswered: () => Promise<void>;

@@ -227,6 +227,24 @@ describe("Creating Questions", () => {
 			done();
 		});
 	});
+
+	describe("Selecting isYesOrNo", () => {
+		it("Should be false if nothing is given by defualt", async (done) => {
+			question = await Questions.create({
+				...validQuestion,
+			});
+			expect(question).toHaveProperty("isYesOrNo", false);
+			done();
+		});
+		it("Should be true if true is given on create", async (done) => {
+			question = await Questions.create({
+				...validQuestion,
+				isYesOrNo: true,
+			});
+			expect(question).toHaveProperty("isYesOrNo", true);
+			done();
+		});
+	});
 });
 
 describe("Verification logic", () => {

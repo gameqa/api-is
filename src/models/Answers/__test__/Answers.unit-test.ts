@@ -427,6 +427,16 @@ describe("Creating Answers", () => {
 			done();
 		});
 	});
+	describe("Selecting isYesOrNo", () => {
+		it("Should be false even when true is passed into creation", async (done) => {
+			answer = await Answers.create({
+				...validAnswer,
+				isYesOrNo: true,
+			});
+			expect(answer).toHaveProperty("isYesOrNo", false);
+			done();
+		});
+	});
 
 	describe("Selecting (firstWord, lastWord) ", () => {
 		it("Should fail if firstWord is > lastWord", async (done) => {
@@ -548,6 +558,19 @@ describe("FindByIdAndArchive", () => {
 			Types.ObjectId()
 		);
 		expect(returned).toBeNull();
+		done();
+	});
+});
+
+describe("markAsYesOrNo", () => {
+	it("Should set the boolean property and set span to zero values", async (done) => {
+		answer = await Answers.create(validAnswer);
+		expect(answer).toHaveProperty("isYesOrNo", false);
+		await answer.markAsYesOrNo();
+		const found = await Answers.findById(answer._id);
+		expect(found).toHaveProperty("isYesOrNo", true);
+		expect(found).toHaveProperty("firstWord", 0);
+		expect(found).toHaveProperty("lastWord", 0);
 		done();
 	});
 });

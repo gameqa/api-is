@@ -52,6 +52,9 @@ const answerSchema = new Schema({
 	canBeShortened: {
 		type: Boolean,
 	},
+	isYesOrNo: {
+		type: Boolean,
+	},
 });
 
 answerSchema.methods = methods;
@@ -104,7 +107,6 @@ answerSchema.pre<AnswersInterface>("save", async function (next) {
 		throw new Error("Span can not have negative range");
 	if (this.firstWord < 0)
 		throw new Error("first word of span can not be negative");
-
 	if (this.isNew) {
 		this.firstWord = undefined;
 		this.lastWord = undefined;
@@ -114,7 +116,14 @@ answerSchema.pre<AnswersInterface>("save", async function (next) {
 		this.answeredAt = undefined;
 		this.archived = false;
 		this.canBeShortened = false;
+		this.isYesOrNo = false;
 	}
+
+	if (this.isYesOrNo) {
+		this.firstWord = 0;
+		this.lastWord = 0;
+	}
+
 	next();
 });
 

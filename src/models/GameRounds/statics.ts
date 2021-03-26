@@ -70,6 +70,7 @@ export const findByUserId = async function (
 			const docs = await Questions.find({
 				verifiedAt: { $exists: false },
 				answeredAt: { $exists: false },
+				isImpossible: false,
 				archived: false,
 			});
 			const doc = docs[Math.floor(Math.random() * docs.length)];
@@ -94,6 +95,7 @@ export const findByUserId = async function (
 			const docs = await Questions.find({
 				answeredAt: { $exists: false },
 				verifiedAt: { $exists: true },
+				isImpossible: false,
 				archived: false,
 			});
 			const doc = docs[Math.floor(Math.random() * docs.length)];

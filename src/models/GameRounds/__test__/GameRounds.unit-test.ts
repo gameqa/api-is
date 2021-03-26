@@ -197,16 +197,19 @@ describe(".getByUserId(userId)", () => {
 		await round.advance({
 			type: "make-question",
 			text: "abcd efg yellow blue green?",
+			isYesOrNo: false,
 		});
 
 		await round.advance({
 			type: "make-question",
 			text: "abcd efg yellow blue green?",
+			isYesOrNo: false,
 		});
 
 		await round.advance({
 			type: "make-question",
 			text: "abcd efg yellow blue green?",
+			isYesOrNo: false,
 		});
 		const found = await GameRounds.findByUserId(round.userId);
 		expect(round).toHaveProperty("currentRound", TOTAL_ROUNDS);
@@ -226,6 +229,7 @@ describe("Advance", () => {
 		await round.advance({
 			type: "make-question",
 			text: "abcd efg yellow blue green?",
+			isYesOrNo: false,
 		});
 		const found = await GameRounds.findByUserId(validGameRound.userId);
 		expect(found).toHaveProperty("_id", roundId);
@@ -244,16 +248,19 @@ describe("Advance", () => {
 		await round.advance({
 			type: "make-question",
 			text: "abcd efg yellow blue green?",
+			isYesOrNo: false,
 		});
 
 		await round.advance({
 			type: "make-question",
 			text: "abcd efg yellow blue green?",
+			isYesOrNo: false,
 		});
 
 		await round.advance({
 			type: "make-question",
 			text: "abcd efg yellow blue green?",
+			isYesOrNo: false,
 		});
 		round = await GameRounds.findById(round._id);
 		expect(round).toHaveProperty("currentRound", TOTAL_ROUNDS);

@@ -427,6 +427,18 @@ describe("Creating Answers", () => {
 			done();
 		});
 	});
+
+	describe("Selecting canBeShortened", () => {
+		it("Should be false even when passed into creation", async (done) => {
+			answer = await Answers.create({
+				...validAnswer,
+				yesOrNoAnswer: true,
+			});
+			expect(answer).toHaveProperty("yesOrNoAnswer", undefined);
+			done();
+		});
+	});
+
 	describe("Selecting (firstWord, lastWord) ", () => {
 		it("Should fail if firstWord is > lastWord", async (done) => {
 			const shouldReject = async () => {
@@ -547,6 +559,119 @@ describe("FindByIdAndArchive", () => {
 			Types.ObjectId()
 		);
 		expect(returned).toBeNull();
+		done();
+	});
+});
+
+describe("setYesOrNoAnswer", () => {
+	it("Should throw error if question is not yesOrNo question", async (done) => {
+		answer = await Answers.create(validAnswer);
+		const rejects = async () => {
+			try {
+				await answer.setYesOrNoAnswer(true);
+			} catch (error) {
+				throw new Error("Test error");
+			}
+		};
+		await expect(rejects()).rejects.toEqual(new Error("Test error"));
+		done();
+	});
+
+	it("Selecting true sets flag as true", async (done) => {
+		const question = await Questions.create({
+			...validQuestion,
+			isYesOrNo: true,
+		});
+		answer = await Answers.create({
+			...validAnswer,
+			questionId: question._id,
+		});
+		await answer.setYesOrNoAnswer(true);
+		const found = await Answers.findById(answer._id);
+		await expect(found).toHaveProperty("yesOrNoAnswer", true);
+		done();
+	});
+
+	it("Selecting false sets flag as true", async (done) => {
+		const question = await Questions.create({
+			...validQuestion,
+			isYesOrNo: true,
+		});
+		answer = await Answers.create({
+			...validAnswer,
+			questionId: question._id,
+		});
+		await answer.setYesOrNoAnswer(false);
+		const found = await Answers.findById(answer._id);
+		await expect(found).toHaveProperty("yesOrNoAnswer", false);
+		done();
+	});
+
+	it("Selecting false then true results in archiving", async (done) => {
+		const question = await Questions.create({
+			...validQuestion,
+			isYesOrNo: true,
+		});
+		answer = await Answers.create({
+			...validAnswer,
+			questionId: question._id,
+		});
+		await answer.setYesOrNoAnswer(false);
+		let found = await Answers.findById(answer._id);
+		await found.setYesOrNoAnswer(true);
+		found = await Answers.findById(answer._id);
+		await expect(found).toHaveProperty("archived", true);
+		done();
+	});
+
+	it("Selecting true then false results in archiving", async (done) => {
+		const question = await Questions.create({
+			...validQuestion,
+			isYesOrNo: true,
+		});
+		answer = await Answers.create({
+			...validAnswer,
+			questionId: question._id,
+		});
+		await answer.setYesOrNoAnswer(true);
+		let found = await Answers.findById(answer._id);
+		await found.setYesOrNoAnswer(false);
+		found = await Answers.findById(answer._id);
+		await expect(found).toHaveProperty("archived", true);
+		done();
+	});
+
+	it("Selecting should not result in archiving if true is picked twice", async (done) => {
+		const question = await Questions.create({
+			...validQuestion,
+			isYesOrNo: true,
+		});
+		answer = await Answers.create({
+			...validAnswer,
+			questionId: question._id,
+		});
+		await answer.setYesOrNoAnswer(true);
+		let found = await Answers.findById(answer._id);
+		await found.setYesOrNoAnswer(true);
+		found = await Answers.findById(answer._id);
+		await expect(found).toHaveProperty("archived", false);
+		done();
+	});
+
+	it("Selecting should not result in archiving if false is picked twice", async (done) => {
+		const question = await Questions.create({
+			...validQuestion,
+			isYesOrNo: true,
+		});
+		answer = await Answers.create({
+			...validAnswer,
+			questionId: question._id,
+		});
+		await answer.setYesOrNoAnswer(false);
+		let found = await Answers.findById(answer._id);
+		await found.setYesOrNoAnswer(false);
+		found = await Answers.findById(answer._id);
+		await expect(found).toHaveProperty("archived", false);
 		done();
 	});
 });

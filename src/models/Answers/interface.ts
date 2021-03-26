@@ -16,12 +16,15 @@ export interface AnswersInterface extends Document {
 	verifiedAt?: Date;
 	answeredAt?: Date;
 	archived: boolean;
+	// flags
+	canBeShortened: boolean;
+	yesOrNoAnswer?: boolean;
+	// methods
 	verify: (
 		userId: Types.ObjectId,
 		canBeShortened?: boolean
 	) => Promise<void>;
-	// flags
-	canBeShortened: boolean;
+	setYesOrNoAnswer: (answer: boolean) => Promise<void>;
 }
 
 export interface SpanAnswer {

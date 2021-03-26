@@ -52,7 +52,7 @@ const answerSchema = new Schema({
 	canBeShortened: {
 		type: Boolean,
 	},
-	isYesOrNo: {
+	yesOrNoAnswer: {
 		type: Boolean,
 	},
 });
@@ -120,6 +120,7 @@ answerSchema.pre<AnswersInterface>("save", async function (next) {
 		this.answeredAt = undefined;
 		this.archived = false;
 		this.canBeShortened = false;
+		this.yesOrNoAnswer = undefined;
 	}
 
 	next();

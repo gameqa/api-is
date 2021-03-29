@@ -5,15 +5,27 @@ export interface PublicUser {
 	username: string;
 	type: string;
 	_id: string;
+	scoreCard: {
+		questions: number;
+		answers: number;
+		answerVerifications: number;
+		questionVerifications: number;
+		articles: number;
+	};
 }
 
 export interface UserInterface extends Document {
 	username: string;
 	email: string;
 	password: string;
-	hashString: (val: string) => Promise<string>;
 	type: string;
+	questionCount?: number;
+	answerCount?: number;
+	verifyAnswerCount?: number;
+	verifyQuestionCount?: number;
+	articlesFoundCount?: number;
 	getPublic: () => PublicUser;
+	hashString: (val: string) => Promise<string>;
 }
 
 export interface UserRegisterInfo {

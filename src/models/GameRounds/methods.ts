@@ -1,5 +1,11 @@
 import { Types } from "mongoose";
-import { Questions, GameRounds, Articles, Answers } from "..";
+import {
+	Questions,
+	GameRounds,
+	Articles,
+	Answers,
+	AnswersInterface,
+} from "..";
 import { ArticleSourceIdentifier } from "../ArticleSources";
 import {
 	GameRoundsInterface,
@@ -183,10 +189,9 @@ export const advance = async function (
 			 * the paragraph marked in the answer
 			 *
 			 */
+			let answer: AnswersInterface;
 			try {
-				const answer = await Answers.findById(
-					userPayload.answerId
-				);
+				answer = await Answers.findById(userPayload.answerId);
 				if (!answer)
 					throw new Error(
 						`${userPayload.answerId} is not a pkey of an answer`
@@ -202,12 +207,17 @@ export const advance = async function (
 					throw new Error(
 						"Can only use 'verify-yes-no-answer-paragraph' on yes or no questions"
 					);
-				await answer.setYesOrNoAnswer(userPayload.answer);
-				await answer.verify(this.userId);
 			} catch (error) {
 				throw new Error(
 					`Unable to verify yes or no answer due to '${error.message}'`
 				);
+			}
+
+			try {
+				await answer.setYesOrNoAnswer(userPayload.answer);
+				await answer.verify(this.userId);
+			} catch {
+				// catch error but do nothing
 			}
 			break;
 		case "mark-question-impossible":

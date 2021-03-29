@@ -194,23 +194,32 @@ describe(".getByUserId(userId)", () => {
 			totalRounds: TOTAL_ROUNDS,
 		});
 
-		await round.advance({
-			type: "make-question",
-			text: "abcd efg yellow blue green?",
-			isYesOrNo: false,
-		});
+		await round.advance(
+			{
+				type: "make-question",
+				text: "abcd efg yellow blue green?",
+				isYesOrNo: false,
+			},
+			user
+		);
 
-		await round.advance({
-			type: "make-question",
-			text: "abcd efg yellow blue green?",
-			isYesOrNo: false,
-		});
+		await round.advance(
+			{
+				type: "make-question",
+				text: "abcd efg yellow blue green?",
+				isYesOrNo: false,
+			},
+			user
+		);
 
-		await round.advance({
-			type: "make-question",
-			text: "abcd efg yellow blue green?",
-			isYesOrNo: false,
-		});
+		await round.advance(
+			{
+				type: "make-question",
+				text: "abcd efg yellow blue green?",
+				isYesOrNo: false,
+			},
+			user
+		);
 		const found = await GameRounds.findByUserId(round.userId);
 		expect(round).toHaveProperty("currentRound", TOTAL_ROUNDS);
 		expect(round).toHaveProperty("completedAt");
@@ -226,11 +235,14 @@ describe("Advance", () => {
 		const currRound = round.currentRound;
 		const roundId = round._id;
 
-		await round.advance({
-			type: "make-question",
-			text: "abcd efg yellow blue green?",
-			isYesOrNo: false,
-		});
+		await round.advance(
+			{
+				type: "make-question",
+				text: "abcd efg yellow blue green?",
+				isYesOrNo: false,
+			},
+			user
+		);
 		const found = await GameRounds.findByUserId(validGameRound.userId);
 		expect(found).toHaveProperty("_id", roundId);
 		expect(found).toHaveProperty("currentRound", currRound + 1);
@@ -245,23 +257,32 @@ describe("Advance", () => {
 			totalRounds: TOTAL_ROUNDS,
 		});
 
-		await round.advance({
-			type: "make-question",
-			text: "abcd efg yellow blue green?",
-			isYesOrNo: false,
-		});
+		await round.advance(
+			{
+				type: "make-question",
+				text: "abcd efg yellow blue green?",
+				isYesOrNo: false,
+			},
+			user
+		);
 
-		await round.advance({
-			type: "make-question",
-			text: "abcd efg yellow blue green?",
-			isYesOrNo: false,
-		});
+		await round.advance(
+			{
+				type: "make-question",
+				text: "abcd efg yellow blue green?",
+				isYesOrNo: false,
+			},
+			user
+		);
 
-		await round.advance({
-			type: "make-question",
-			text: "abcd efg yellow blue green?",
-			isYesOrNo: false,
-		});
+		await round.advance(
+			{
+				type: "make-question",
+				text: "abcd efg yellow blue green?",
+				isYesOrNo: false,
+			},
+			user
+		);
 		round = await GameRounds.findById(round._id);
 		expect(round).toHaveProperty("currentRound", TOTAL_ROUNDS);
 		expect(round).toHaveProperty("completedAt");

@@ -1,4 +1,5 @@
 import { Document, Model, Types } from "mongoose";
+import { UserInterface } from "../Users";
 
 export type TaskTypes =
 	| "make-question"
@@ -127,7 +128,8 @@ export interface GameRoundsInterface extends Document {
 	totalRounds: number;
 	completedAt?: Date;
 	advance: (
-		payload: AskQuestionUserPayload
+		payload: AskQuestionUserPayload,
+		user: UserInterface
 	) => Promise<GameRoundWithTask>;
 }
 

@@ -5,7 +5,6 @@ import {
 	Answers,
 	AnswersInterface,
 	UserInterface,
-	Users,
 } from "..";
 import { ArticleSourceIdentifier } from "../ArticleSources";
 import {

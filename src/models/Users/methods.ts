@@ -19,7 +19,7 @@ export const getPublic = function (this: UserInterface): PublicUser {
 			answers: this.answerCount ?? 0,
 			answerVerifications: this.verifyAnswerCount ?? 0,
 			questionVerifications: this.verifyQuestionCount ?? 0,
-			articles: this.answerCount ?? 0,
+			articles: this.articlesFoundCount ?? 0,
 		},
 	};
 };

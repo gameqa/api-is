@@ -1,10 +1,11 @@
-import { Types } from "mongoose";
 import {
 	Questions,
 	GameRounds,
 	Articles,
 	Answers,
 	AnswersInterface,
+	UserInterface,
+	Users,
 } from "..";
 import { ArticleSourceIdentifier } from "../ArticleSources";
 import {
@@ -15,7 +16,8 @@ import {
 
 export const advance = async function (
 	this: GameRoundsInterface,
-	userPayload: TaskUserPayload
+	userPayload: TaskUserPayload,
+	user: UserInterface
 ): Promise<GameRoundWithTask> {
 	if (this.completedAt)
 		throw new Error("Can not advance game round that is completed");
@@ -37,6 +39,7 @@ export const advance = async function (
 					...userPayload,
 					creationRoundId: this._id,
 				});
+				await user.update({ $inc: { questionCount: 1 } });
 			} catch (error) {
 				throw new Error(
 					`Unable to create question with payload sent: ${error.message}`
@@ -59,6 +62,7 @@ export const advance = async function (
 				if (userPayload.archive)
 					await question.update({ $set: { archived: true } });
 				else await question.verify(this.userId);
+				await user.update({ $inc: { verifyQuestionCount: 1 } });
 			} catch (error) {
 				throw new Error(
 					`Unable to verify question with payload sent: ${error.message}`
@@ -102,6 +106,7 @@ export const advance = async function (
 					questionId,
 					paragraphIndex,
 				});
+				await user.update({ $inc: { articlesFoundCount: 1 } });
 			} catch (error) {
 				throw new Error(
 					`Unable to create answer with article/question for payload sent: ${error.message}`
@@ -175,6 +180,7 @@ export const advance = async function (
 					this.userId,
 					userPayload.canBeShortened
 				);
+				await user.update({ $inc: { verifyAnswerCount: 1 } });
 			} catch (error) {
 				throw new Error(
 					`Unable to verify span in answer due to '${error.message}'`
@@ -216,6 +222,7 @@ export const advance = async function (
 			try {
 				await answer.setYesOrNoAnswer(userPayload.answer);
 				await answer.verify(this.userId);
+				await user.update({ $inc: { verifyAnswerCount: 1 } });
 			} catch {
 				// catch error but do nothing
 			}

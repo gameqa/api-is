@@ -36,6 +36,21 @@ const userSchema = new Schema(
 			type: String,
 			default: DEFAULT_USER_TYPE,
 		},
+		questionCount: {
+			type: Number,
+		},
+		answerCount: {
+			type: Number,
+		},
+		verifyAnswerCount: {
+			type: Number,
+		},
+		verifyQuestionCount: {
+			type: Number,
+		},
+		articlesFoundCount: {
+			type: Number,
+		},
 	},
 	{
 		timestamps: true,

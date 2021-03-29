@@ -46,7 +46,6 @@ export class GameMaster {
 				task as CountableTask
 			];
 			const count = await this.adapter[countAction]();
-			console.log(task, count);
 			if (count < GameMaster.MAX_TO_DO_PER_TASK) taskList.push(prev);
 			if (count == 0) return taskList;
 		}

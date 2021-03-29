@@ -141,6 +141,7 @@ export const advance = async function (
 					roundId: this._id,
 					...userPayload,
 				});
+				await user.update({ $inc: { answerCount: 1 } });
 			} catch (error) {
 				throw new Error(
 					`Unable to save span in advance logic due to '${error.message}'`

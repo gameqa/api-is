@@ -39,6 +39,8 @@ export default class AppUtils {
 				origin: [
 					"http://localhost:3000",
 					"https://spurningarnlp.web.app",
+					"https://spurningar.is",
+					"https://www.spurningar.is",
 				],
 			})
 		);

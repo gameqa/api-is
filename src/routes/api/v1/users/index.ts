@@ -31,7 +31,7 @@ export default RouteBuilder.routerForEndpoints([
 		middleware: [auth],
 	},
 	{
-		route: "/auth_token",
+		route: "/current/auth_token",
 		controller: deleteJWT,
 		method: "delete",
 	},

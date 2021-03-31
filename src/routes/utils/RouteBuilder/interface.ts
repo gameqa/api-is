@@ -12,6 +12,6 @@ export interface RouterObject {
 }
 
 export interface EndpointObject extends RouterObject {
-	method: "post" | "get" | "put" | "patch";
+	method: "post" | "get" | "put" | "patch" | "delete";
 	middleware?: Route[];
 }

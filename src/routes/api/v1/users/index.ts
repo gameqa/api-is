@@ -3,7 +3,7 @@ import currentScoreCard from "./currentScoreCard";
 import verificationCode from "./verificationCode";
 import generateVerificationCode from "./generateVerificationCode";
 import { RouteBuilder } from "../../../utils";
-import { auth } from "../utils";
+import { auth, deleteJWT } from "../utils";
 
 export default RouteBuilder.routerForEndpoints([
 	{
@@ -29,5 +29,10 @@ export default RouteBuilder.routerForEndpoints([
 		controller: generateVerificationCode,
 		method: "get",
 		middleware: [auth],
+	},
+	{
+		route: "/auth_token",
+		controller: deleteJWT,
+		method: "delete",
 	},
 ]);

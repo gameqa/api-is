@@ -404,6 +404,7 @@ describe("verify", () => {
 		};
 		await expect(shouldNotFail()).resolves.toEqual("works");
 		expect(user.type).not.toEqual("not-verified");
+		expect(user.type).toEqual("user");
 		done();
 	});
 });

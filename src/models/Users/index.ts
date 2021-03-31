@@ -84,9 +84,8 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		this.password = await this.hashString(this.password);
 	}
 	if (this.isModified("verificationCode")) {
-		this.verificationCode = await this.hashString(
-			this.verificationCode
-		);
+		const shaHash = this.sha256(this.verificationCode);
+		this.verificationCode = shaHash;
 	}
 	if (this.isNew) {
 		this.type = DEFAULT_USER_TYPE;

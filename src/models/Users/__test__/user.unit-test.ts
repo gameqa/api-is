@@ -14,7 +14,7 @@ const validUser2 = {
 	password: "aaaaaaaaaa",
 };
 
-const DEFAULT_TYPE = "user";
+const DEFAULT_TYPE = "not-verified";
 
 beforeEach(async (done) => {
 	try {
@@ -351,8 +351,59 @@ describe("setVerificationCode", () => {
 	it("Verification code should be of length 64", async (done) => {
 		user = await Users.create(validUser);
 		const unhashed = await user.setVerificationCode();
-		expect(user.verificationCode.length).toEqual(60);
+		expect(user.verificationCode.length).toEqual(44);
 		expect(unhashed.length).toEqual(6);
+		done();
+	});
+});
+
+describe("verify", () => {
+	it("Should throw error with incorrect code", async (done) => {
+		user = await Users.create(validUser);
+		await user.setVerificationCode();
+		const incorrect = "aaa";
+		const shouldFail = async () => {
+			try {
+				await user.verify(incorrect);
+			} catch (error) {
+				throw new Error("test");
+			}
+		};
+
+		await expect(shouldFail()).rejects.toEqual(new Error("test"));
+		done();
+	});
+
+	it("Should throw error if already verified", async (done) => {
+		user = await Users.create(validUser);
+		const correct = await user.setVerificationCode();
+		await user.verify(correct);
+		const shouldFail = async () => {
+			try {
+				await user.verify(correct);
+			} catch (error) {
+				throw new Error("test");
+			}
+		};
+		await expect(shouldFail()).rejects.toEqual(new Error("test"));
+		expect(user.type).not.toEqual("not-verified");
+		done();
+	});
+
+	it("Should work with correct code", async (done) => {
+		user = await Users.create(validUser);
+		const correct = await user.setVerificationCode();
+		const shouldNotFail = async () => {
+			try {
+				await user.verify(correct);
+				return "works";
+			} catch (error) {
+				console.log(error);
+				throw new Error("test");
+			}
+		};
+		await expect(shouldNotFail()).resolves.toEqual("works");
+		expect(user.type).not.toEqual("not-verified");
 		done();
 	});
 });

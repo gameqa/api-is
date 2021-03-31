@@ -18,7 +18,7 @@ export interface UserInterface extends Document {
 	username: string;
 	email: string;
 	password: string;
-	type: string;
+	type: UserTypes;
 	questionCount?: number;
 	answerCount?: number;
 	verifyAnswerCount?: number;
@@ -29,6 +29,7 @@ export interface UserInterface extends Document {
 	verify: (code: string) => Promise<void>;
 	getPublic: () => PublicUser;
 	hashString: (val: string) => Promise<string>;
+	sha256: (val: string) => string;
 }
 
 export interface UserRegisterInfo {
@@ -47,4 +48,4 @@ export interface UserAuthData {
 	token: string;
 }
 
-export type UserTypes = "user" | "admin";
+export type UserTypes = "user" | "admin" | "not-verified";

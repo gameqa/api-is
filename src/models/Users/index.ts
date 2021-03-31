@@ -13,6 +13,7 @@ import {
 	MIN_USER_NAME_LENGTH,
 	MIN_PW_LENGTH,
 } from "./utils";
+import crypto from "crypto";
 
 const userSchema = new Schema(
 	{
@@ -51,6 +52,9 @@ const userSchema = new Schema(
 		articlesFoundCount: {
 			type: Number,
 		},
+		verificationCode: {
+			type: String,
+		},
 	},
 	{
 		timestamps: true,
@@ -79,6 +83,11 @@ userSchema.pre<UserInterface>("save", async function (next) {
 			throw new Error("Lykilorð verður að vera amk. 8 stafir");
 		this.password = await this.hashString(this.password);
 	}
+	if (this.isModified("verificationCode")) {
+		this.verificationCode = await this.hashString(
+			this.verificationCode
+		);
+	}
 	if (this.isNew) {
 		this.type = DEFAULT_USER_TYPE;
 		let doc: UserInterface;
@@ -86,6 +95,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		if (doc) throw new Error("Tölvupóstfang er ekki laust");
 		doc = await Users.findOne({ username: this.username });
 		if (doc) throw new Error("Notendanafn er ekki laust");
+		this.verificationCode = undefined;
 	}
 	if (!USER_TYPES.includes(this.type as UserTypes))
 		throw new Error("Invalid user type");

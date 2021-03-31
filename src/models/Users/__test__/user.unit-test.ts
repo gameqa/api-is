@@ -248,6 +248,17 @@ describe("Creating a user", () => {
 			done();
 		});
 	});
+
+	describe("Selecting verificationCode", () => {
+		it("Should be undefined even if code is passed in to create", async (done) => {
+			user = await Users.create({
+				...validUser,
+				verificationCode: "abcdefg",
+			});
+			expect(user.verificationCode).toBe(undefined);
+			done();
+		});
+	});
 });
 
 describe("Authentication logic", () => {
@@ -326,6 +337,22 @@ describe("Finding user by credentials", () => {
 			}
 		};
 		await expect(throwsError()).rejects.toEqual(new Error("test"));
+		done();
+	});
+});
+
+describe("setVerificationCode", () => {
+	it("Verification code should not be undefined", async (done) => {
+		user = await Users.create(validUser);
+		await user.setVerificationCode();
+		expect(user.verificationCode).not.toEqual(undefined);
+		done();
+	});
+	it("Verification code should be of length 64", async (done) => {
+		user = await Users.create(validUser);
+		const unhashed = await user.setVerificationCode();
+		expect(user.verificationCode.length).toEqual(60);
+		expect(unhashed.length).toEqual(6);
 		done();
 	});
 });

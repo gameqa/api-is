@@ -24,6 +24,9 @@ export interface UserInterface extends Document {
 	verifyAnswerCount?: number;
 	verifyQuestionCount?: number;
 	articlesFoundCount?: number;
+	verificationCode?: string;
+	setVerificationCode: () => Promise<string>;
+	verify: (code: string) => Promise<void>;
 	getPublic: () => PublicUser;
 	hashString: (val: string) => Promise<string>;
 }

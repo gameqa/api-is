@@ -5,6 +5,7 @@ export const USER_TYPES: UserTypes[] = ["admin", "user"];
 export const DEFAULT_USER_TYPE: UserTypes = "user";
 export const MIN_USER_NAME_LENGTH = 4;
 export const MIN_PW_LENGTH = 8;
+export const VERIFICATION_CODE_LENGTH = 6;
 
 export const generateVerificationCode = (length: number): string => {
 	let output = "";

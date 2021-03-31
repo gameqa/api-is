@@ -16,6 +16,7 @@
 	"author": "Njall Skarphedinsson (njall16@ru.is)",
 	"license": "MIT",
 	"dependencies": {
+		"@sendgrid/mail": "^7.4.2",
 		"@types/bcrypt": "^3.0.0",
 		"@types/body-parser": "^1.19.0",
 		"@types/cheerio": "^0.22.27",

@@ -35,9 +35,17 @@ export const GOOGLE_CX_KEY = isTest
 	? "testingkey"
 	: process.env["GOOGLE_CX_KEY"];
 
+export const SENDGRID_KEY = isTest
+	? "testingkey"
+	: process.env["SENDGRID_KEY"];
+
 export const PORT = process.env["PORT"];
 
 export const JWT_KEY = isTest ? "testingkey" : process.env["JWT_KEY"];
+
+if (!SENDGRID_KEY) {
+	exitProcess("specify SENDGRID_KEY in env");
+}
 
 if (!GOOGLE_API_KEY) {
 	exitProcess("specify GOOGLE_CX_KEY in env");

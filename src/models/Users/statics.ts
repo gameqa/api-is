@@ -6,7 +6,9 @@ export const register = async function (
 	this: UserCollectionInterface,
 	info: UserRegisterInfo
 ) {
-	return await this.create(info);
+	const user = await this.create(info);
+	await user.setVerificationCode();
+	return user;
 };
 
 export const findByCreds = async function (

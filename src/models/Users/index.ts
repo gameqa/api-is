@@ -13,7 +13,7 @@ import {
 	MIN_USER_NAME_LENGTH,
 	MIN_PW_LENGTH,
 } from "./utils";
-import crypto from "crypto";
+import { DynamicEmailTemplates } from "../../services";
 
 const userSchema = new Schema(
 	{
@@ -84,6 +84,20 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		this.password = await this.hashString(this.password);
 	}
 	if (this.isModified("verificationCode")) {
+		const unHashed = this.verificationCode;
+		/**
+		 * Sends the verification email with
+		 * the verification code everytime it is updated
+		 */
+		await new DynamicEmailTemplates({
+			to: [this.email],
+			from: "spurningar@ru.is",
+			subject: "Staðfestingarkóði Spurningar.is",
+		}).send({
+			templateId: "d-6853194ff96946c1b21c985d32aa5d3c",
+			data: { verificationCode: unHashed! },
+		});
+		// update the verification code with its hash
 		const shaHash = this.sha256(this.verificationCode);
 		this.verificationCode = shaHash;
 	}

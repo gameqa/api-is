@@ -11,15 +11,14 @@ export default class VisindavefurScraper
 			`https://www.visindavefur.is/svar.php?id=${this.sourceArticleKey}`
 		);
 		const $ = cheerio.load(data);
-		const { children } = $(".article-text").get(0);
-		for (const child of children) {
-			if (child.type !== "text") continue;
-			const text = child.data.replace(/(\n|\t|\r)/g, "");
-			if (!text) continue;
-			this.paragraphs.push(text.trim());
-		}
+		const articleText = $(".article-text").text();
+		this.paragraphs = articleText
+			.replace(/[\n\r\t]{1,}/g, "\n")
+			.split(/[\t\r\n]/g)
+			.filter((para) => !!para && para !== "Hlusta");
 
 		this.title = $("h1").get(0).children.pop().data;
+
 		return {
 			extract: this.paragraphs[0],
 			title: this.title,

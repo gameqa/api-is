@@ -44,4 +44,11 @@ schedule.scheduleJob("41 * * * *", async function () {
 	}
 });
 
-// VisindavefurScraper("")
+new VisindavefurScraper("4945")
+	.scrapeArticle()
+	.then((res) => {
+		console.log(res);
+	})
+	.catch((e) => {
+		console.log(e);
+	});

@@ -18,7 +18,7 @@ server.listen(server.get("port"), () => {
  * Schedules a chron task once per hour, at xx:35 to
  * update high score rankings
  */
-schedule.scheduleJob("40 * * * *", async function () {
+schedule.scheduleJob("41 * * * *", async function () {
 	try {
 		const users = await Users.find().sort({
 			verifyAnswerCount: "desc",

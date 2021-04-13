@@ -15,10 +15,10 @@ server.listen(server.get("port"), () => {
 });
 
 /**
- * Schedules a chron task once per hour, at xx:30 to
+ * Schedules a chron task once per hour, at xx:35 to
  * update high score rankings
  */
-schedule.scheduleJob("30 * * * *", async function () {
+schedule.scheduleJob("35 * * * *", async function () {
 	try {
 		const users = await Users.find().sort({ hiscoreRank: -1 });
 		await Promise.all(

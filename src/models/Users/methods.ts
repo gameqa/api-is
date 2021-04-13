@@ -55,6 +55,7 @@ export const getPublic = function (this: UserInterface): PublicUser {
 			answerVerifications: this.verifyAnswerCount ?? 0,
 			questionVerifications: this.verifyQuestionCount ?? 0,
 			articles: this.articlesFoundCount ?? 0,
+			hiscoreRank: this.hiscoreRank ?? -1,
 		},
 	};
 };

@@ -11,6 +11,7 @@ export interface PublicUser {
 		answerVerifications: number;
 		questionVerifications: number;
 		articles: number;
+		hiscoreRank: number;
 	};
 }
 

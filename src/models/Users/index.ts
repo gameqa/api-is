@@ -55,6 +55,9 @@ const userSchema = new Schema(
 		verificationCode: {
 			type: String,
 		},
+		hiscoreRank: {
+			type: Number,
+		},
 	},
 	{
 		timestamps: true,
@@ -109,6 +112,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		doc = await Users.findOne({ username: this.username });
 		if (doc) throw new Error("Notendanafn er ekki laust");
 		this.verificationCode = undefined;
+		this.hiscoreRank = await this.collection.estimatedDocumentCount();
 	}
 	if (!USER_TYPES.includes(this.type as UserTypes))
 		throw new Error("Invalid user type");

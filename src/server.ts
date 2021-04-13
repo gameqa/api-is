@@ -1,6 +1,7 @@
 import server from "./app";
 import schedule from "node-schedule";
 import { Users } from "./models";
+import VisindavefurScraper from "./models/Articles/ScrapingService/VisindavefurScraper";
 
 /**
  * Start Express server.
@@ -15,7 +16,7 @@ server.listen(server.get("port"), () => {
 });
 
 /**
- * Schedules a chron task once per hour, at xx:35 to
+ * Schedules a chron task once per hour, at xx:41 to
  * update high score rankings
  */
 schedule.scheduleJob("41 * * * *", async function () {
@@ -42,3 +43,5 @@ schedule.scheduleJob("41 * * * *", async function () {
 		);
 	}
 });
+
+// VisindavefurScraper("")

@@ -18,9 +18,11 @@ server.listen(server.get("port"), () => {
  * Schedules a chron task once per hour, at xx:35 to
  * update high score rankings
  */
-schedule.scheduleJob("35 * * * *", async function () {
+schedule.scheduleJob("40 * * * *", async function () {
 	try {
-		const users = await Users.find().sort({ hiscoreRank: -1 });
+		const users = await Users.find().sort({
+			verifyAnswerCount: "desc",
+		});
 		await Promise.all(
 			users.map((user, i) => {
 				user.hiscoreRank = i + 1;

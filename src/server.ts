@@ -1,4 +1,6 @@
 import server from "./app";
+import schedule from "node-schedule";
+import { Users } from "./models";
 
 /**
  * Start Express server.
@@ -12,9 +14,29 @@ server.listen(server.get("port"), () => {
 	console.log("  Press CTRL-C to stop\n");
 });
 
-// bua til game master class
-// bua til AggregateAdapter interface, class
-// count unverified questions
-// count verified questions
-// count answers without spans
-// count unverified answers
+/**
+ * Schedules a chron task once per hour, at xx:30 to
+ * update high score rankings
+ */
+schedule.scheduleJob("30 * * * *", async function () {
+	try {
+		const users = await Users.find().sort({ hiscoreRank: -1 });
+		await Promise.all(
+			users.map((user, i) => {
+				user.hiscoreRank = i + 1;
+				return user.save();
+			})
+		);
+		console.log(
+			`CRON SUCCES [${new Date().toISOString()}]: Updated ${
+				users.length
+			} users hiscore rankings`
+		);
+	} catch (e) {
+		console.log(
+			`CRON FAILURE [${new Date().toISOString()}]: Failed to update highscore rankings, ${
+				e.message
+			}`
+		);
+	}
+});

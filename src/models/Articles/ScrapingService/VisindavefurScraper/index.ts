@@ -15,7 +15,7 @@ export default class VisindavefurScraper
 		this.paragraphs = articleText
 			.replace(/[\n\r\t]{1,}/g, "\n")
 			.split(/[\t\r\n]/g)
-			.filter((para) => !!para && para !== "Hlusta");
+			.filter((para) => !!para.trim() && para !== "Hlusta");
 
 		this.title = $("h1").get(0).children.pop().data;
 

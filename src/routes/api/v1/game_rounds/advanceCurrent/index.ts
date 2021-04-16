@@ -13,7 +13,6 @@ export default async (
 		const { round, user } = req.body;
 		if (round.userId.toString() !== req.body.user._id.toString())
 			throw new Error("Unable to edit round for another user");
-		console.log(user);
 		const doc = await round.advance(
 			// @ts-ignore
 			req.body as TaskUserPayload,

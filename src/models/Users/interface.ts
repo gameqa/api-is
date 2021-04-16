@@ -13,6 +13,7 @@ export interface PublicUser {
 		articles: number;
 		hiscoreRank: number;
 	};
+	level: number;
 }
 
 export interface UserInterface extends Document {
@@ -27,6 +28,7 @@ export interface UserInterface extends Document {
 	articlesFoundCount?: number;
 	verificationCode?: string;
 	hiscoreRank: number;
+	level: number;
 	setVerificationCode: () => Promise<string>;
 	verify: (code: string) => Promise<void>;
 	getPublic: () => PublicUser;

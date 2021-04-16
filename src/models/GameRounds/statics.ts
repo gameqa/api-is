@@ -6,7 +6,6 @@ import {
 	TaskInfo,
 } from "./interface";
 import { Answers, Articles, Questions } from "../";
-import Faker from "faker";
 import * as IdeaWords from "./IdeaWords";
 
 export const findByUserId = async function (

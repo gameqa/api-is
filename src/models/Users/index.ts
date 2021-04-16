@@ -58,6 +58,9 @@ const userSchema = new Schema(
 		hiscoreRank: {
 			type: Number,
 		},
+		level: {
+			type: Number,
+		},
 	},
 	{
 		timestamps: true,
@@ -113,6 +116,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		if (doc) throw new Error("Notendanafn er ekki laust");
 		this.verificationCode = undefined;
 		this.hiscoreRank = await this.collection.estimatedDocumentCount();
+		this.level = 1;
 	}
 	if (!USER_TYPES.includes(this.type as UserTypes))
 		throw new Error("Invalid user type");

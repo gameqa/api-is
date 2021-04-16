@@ -31,18 +31,17 @@ gameRoundsSchema.statics = statics;
 gameRoundsSchema.methods = methods;
 
 gameRoundsSchema.pre<GameRoundsInterface>("save", async function (next) {
+	const user = await Users.findById(this.userId);
+	const userLevel = user.level ?? 1;
 	if (this.isNew) {
 		this.currentRound = 1;
-		this.completedAt = undefined;
+		this.totalRounds = utils.getRoundsForUserLevel(userLevel);
 	}
 	if (this.currentRound > this.totalRounds)
 		throw new Error(
 			"Current round can not be greater then totalrounds"
 		);
-	if (this.isModified("userId")) {
-		const user = await Users.findById(this.userId);
-		if (!user) throw new Error(`No user with the id ${this.userId}`);
-	}
+	if (!user) throw new Error(`No user with the id ${this.userId}`);
 	next();
 });
 

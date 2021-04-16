@@ -49,6 +49,7 @@ export const getPublic = function (this: UserInterface): PublicUser {
 		email: this.email,
 		type: this.type,
 		_id: this._id,
+		level: this.level ?? 1,
 		scoreCard: {
 			questions: this.questionCount ?? 0,
 			answers: this.answerCount ?? 0,

@@ -255,6 +255,7 @@ export const advance = async function (
 		isCompleted = true;
 		this.completedAt = new Date();
 		await this.update({ $set: { completedAt: this.completedAt } });
+		await user.update({ $inc: { level: 1 } });
 		return {
 			currentRound: this.currentRound,
 			totalRounds: this.totalRounds,

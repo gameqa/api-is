@@ -6,6 +6,8 @@ export const register = async function (
 	this: UserCollectionInterface,
 	info: UserRegisterInfo
 ) {
+	if (info.password !== info.password2)
+		throw new Error("Lykilorð verða að vera eins");
 	const user = await this.create(info);
 	await user.setVerificationCode();
 	return user;

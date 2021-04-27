@@ -121,6 +121,7 @@ export const advance = async function (
 			 */
 			try {
 				await Answers.findByIdAndArchive(userPayload.answerId);
+				await user.update({ $inc: { articlesFoundCount: 1 } });
 			} catch (error) {
 				throw new Error(
 					`Unable to archive answer with _id ${userPayload.answerId} in advance gameRound`
@@ -240,6 +241,7 @@ export const advance = async function (
 				await Questions.findByIdAndMarkAsImpossible(
 					userPayload.questionId
 				);
+				await user.update({ $inc: { articlesFoundCount: 1 } });
 			} catch (error) {
 				throw new Error(
 					`Not able to mark question as impossible in advance due to ${error.message}`

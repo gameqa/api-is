@@ -9,7 +9,7 @@ export default async (req: VerificationCodeRequest, res: Response) => {
 		const doc = await Users.findById(user._id);
 		res.send(doc.getPublic());
 	} catch (error) {
-		res.send({
+		res.status(400).send({
 			message: error.message,
 		});
 	}

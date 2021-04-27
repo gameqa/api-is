@@ -40,7 +40,7 @@ export interface UserRegisterInfo {
 	email: string;
 	username: string;
 	password: string;
-	password2: string;
+	password2?: string;
 }
 
 export interface UserCollectionInterface extends Model<UserInterface> {

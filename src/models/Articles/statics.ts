@@ -62,11 +62,25 @@ export const webSearch = async function (
 			ArticleSources.findOne({ identifier })
 		)
 	);
-	return items.map((item, i) => ({
-		url: item.link,
-		snippet: item.snippet,
-		title: item.title,
-		source: sources[i],
-		key: keys[i],
-	}));
+	const returnFormattedItems: ArticlePreview[] = items.map(
+		(item, i) => ({
+			url: item.link,
+			snippet: item.snippet,
+			title: item.title,
+			source: sources[i],
+			key: keys[i],
+		})
+	);
+	const scrapedArticles = await Promise.all(
+		returnFormattedItems.map((item) => {
+			return this.findArticleByUrl(item.url);
+		})
+	);
+
+	return returnFormattedItems.filter((_, i) => {
+		return (
+			!!scrapedArticles[i] &&
+			scrapedArticles[i].paragraphs.join("").trim().length > 0
+		);
+	});
 };

@@ -4,6 +4,7 @@ import verificationCode from "./verificationCode";
 import generateVerificationCode from "./generateVerificationCode";
 import { RouteBuilder } from "../../../utils";
 import { auth, deleteJWT } from "../utils";
+import completeTutorial from "./completeTutorial";
 
 export default RouteBuilder.routerForEndpoints([
 	{
@@ -34,5 +35,11 @@ export default RouteBuilder.routerForEndpoints([
 		route: "/current/auth_token",
 		controller: deleteJWT,
 		method: "delete",
+	},
+	{
+		route: "/complete_tutorial",
+		method: "patch",
+		middleware: [auth],
+		controller: completeTutorial,
 	},
 ]);

@@ -58,5 +58,11 @@ export const getPublic = function (this: UserInterface): PublicUser {
 			articles: this.articlesFoundCount ?? 0,
 			hiscoreRank: this.hiscoreRank ?? -1,
 		},
+		hasCompletedTutorial: this.hasCompletedTutorial ?? false,
 	};
+};
+
+export const completeTutorial = async function (this: UserInterface) {
+	this.hasCompletedTutorial = true;
+	await this.save();
 };

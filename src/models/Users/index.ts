@@ -61,6 +61,9 @@ const userSchema = new Schema(
 		level: {
 			type: Number,
 		},
+		hasCompletedTutorial: {
+			type: Boolean,
+		},
 	},
 	{
 		timestamps: true,
@@ -109,6 +112,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	}
 	if (this.isNew) {
 		this.type = DEFAULT_USER_TYPE;
+		this.hasCompletedTutorial = false;
 		let doc: UserInterface;
 		doc = await Users.findOne({ email: this.email });
 		if (doc) throw new Error("Tölvupóstfang er ekki laust");

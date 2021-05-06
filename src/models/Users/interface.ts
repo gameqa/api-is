@@ -14,6 +14,7 @@ export interface PublicUser {
 		hiscoreRank: number;
 	};
 	level: number;
+	hasCompletedTutorial: boolean;
 }
 
 export interface UserInterface extends Document {
@@ -29,11 +30,13 @@ export interface UserInterface extends Document {
 	verificationCode?: string;
 	hiscoreRank: number;
 	level: number;
+	hasCompletedTutorial: boolean;
 	setVerificationCode: () => Promise<string>;
 	verify: (code: string) => Promise<void>;
 	getPublic: () => PublicUser;
 	hashString: (val: string) => Promise<string>;
 	sha256: (val: string) => string;
+	completeTutorial: () => Promise<void>;
 }
 
 export interface UserRegisterInfo {

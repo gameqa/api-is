@@ -5,6 +5,7 @@ import {
 	VERIFICATION_CODE_LENGTH,
 } from "./utils";
 import crypto from "crypto";
+import { Users } from "../";
 
 export const hashString = async function (
 	this: UserInterface,
@@ -40,6 +41,12 @@ export const verify = async function (this: UserInterface, code: string) {
 	if (this.verificationCode !== hashed)
 		throw new Error("Rangur staðfestingarkóði");
 	this.type = "user";
+
+	if (this.invitedBy) {
+		await Users.findByIdAndUpdate(this.invitedBy, {
+			$inc: { invites: 1 },
+		});
+	}
 	await this.save();
 };
 

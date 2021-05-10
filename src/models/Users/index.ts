@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Types } from "mongoose";
 import {
 	UserInterface,
 	UserCollectionInterface,
@@ -32,6 +32,10 @@ const userSchema = new Schema(
 		password: {
 			type: String,
 			required: true,
+		},
+		invitedBy: {
+			type: Types.ObjectId,
+			required: false,
 		},
 		type: {
 			type: String,

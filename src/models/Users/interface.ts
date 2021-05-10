@@ -1,4 +1,4 @@
-import { Document, Model } from "mongoose";
+import { Document, Model, Types } from "mongoose";
 
 export interface PublicUser {
 	email: string;
@@ -31,6 +31,7 @@ export interface UserInterface extends Document {
 	hiscoreRank: number;
 	level: number;
 	hasCompletedTutorial: boolean;
+	invitedBy?: Types.ObjectId;
 	setVerificationCode: () => Promise<string>;
 	verify: (code: string) => Promise<void>;
 	getPublic: () => PublicUser;
@@ -44,6 +45,7 @@ export interface UserRegisterInfo {
 	username: string;
 	password: string;
 	password2?: string;
+	invitedBy?: string;
 }
 
 export interface UserCollectionInterface extends Model<UserInterface> {

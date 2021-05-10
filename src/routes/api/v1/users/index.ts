@@ -37,6 +37,11 @@ export default RouteBuilder.routerForEndpoints([
 		method: "delete",
 	},
 	{
+		route: "/current/invites",
+		controller: deleteJWT,
+		method: "delete",
+	},
+	{
 		route: "/complete_tutorial",
 		method: "patch",
 		middleware: [auth],

@@ -32,6 +32,7 @@ export interface UserInterface extends Document {
 	level: number;
 	hasCompletedTutorial: boolean;
 	invitedBy?: Types.ObjectId;
+	invites: number;
 	setVerificationCode: () => Promise<string>;
 	verify: (code: string) => Promise<void>;
 	getPublic: () => PublicUser;

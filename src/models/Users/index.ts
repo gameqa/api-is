@@ -37,6 +37,10 @@ const userSchema = new Schema(
 			type: Types.ObjectId,
 			required: false,
 		},
+		invites: {
+			type: Number,
+			required: false,
+		},
 		type: {
 			type: String,
 			default: DEFAULT_USER_TYPE,
@@ -125,6 +129,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		this.verificationCode = undefined;
 		this.hiscoreRank = await this.collection.estimatedDocumentCount();
 		this.level = 1;
+		this.invites = 0;
 	}
 	if (!USER_TYPES.includes(this.type as UserTypes))
 		throw new Error("Invalid user type");

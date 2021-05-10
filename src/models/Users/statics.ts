@@ -8,6 +8,11 @@ export const register = async function (
 ) {
 	if (info.password !== info.password2)
 		throw new Error("Lykilorð verða að vera eins");
+	if (info.invitedBy) {
+		await this.findByIdAndUpdate(info.invitedBy, {
+			$inc: { invites: 1 },
+		});
+	}
 	const user = await this.create(info);
 	await user.setVerificationCode();
 	return user;

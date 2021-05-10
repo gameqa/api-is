@@ -5,6 +5,7 @@ import generateVerificationCode from "./generateVerificationCode";
 import { RouteBuilder } from "../../../utils";
 import { auth, deleteJWT } from "../utils";
 import completeTutorial from "./completeTutorial";
+import currentInvites from "./currentInvites";
 
 export default RouteBuilder.routerForEndpoints([
 	{
@@ -38,8 +39,8 @@ export default RouteBuilder.routerForEndpoints([
 	},
 	{
 		route: "/current/invites",
-		controller: deleteJWT,
-		method: "delete",
+		controller: currentInvites,
+		method: "get",
 	},
 	{
 		route: "/complete_tutorial",

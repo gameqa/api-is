@@ -41,6 +41,7 @@ export default RouteBuilder.routerForEndpoints([
 		route: "/current/invites",
 		controller: currentInvites,
 		method: "get",
+		middleware: [auth],
 	},
 	{
 		route: "/complete_tutorial",

@@ -7,8 +7,13 @@ export default class WikipediaScraper
 	extends ArticleScraperBase
 	implements ArticleScraper {
 	public async scrapeArticle(): Promise<ScrapeData> {
+		console.log(
+			`Parsing https://is.wikipedia.org/wiki/${this.sourceArticleKey}`
+		);
 		const { data } = await axios.get<string>(
-			`https://is.wikipedia.org/wiki/${this.sourceArticleKey}`
+			encodeURI(
+				`https://is.wikipedia.org/wiki/${this.sourceArticleKey}`
+			)
 		);
 		const $ = cheerio.load(data);
 		$("p").each((_, element) => {

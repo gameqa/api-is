@@ -19,9 +19,7 @@ if (fs.existsSync(".env")) {
 	exitProcess("No .env file supplied");
 }
 
-export const MONGODB_URI = isProd
-	? process.env["MONGODB_URI"]
-	: process.env["MONGODB_URI_LOCAL"];
+export const MONGODB_URI = process.env["MONGODB_URI"];
 
 export const USER_PW_HASH_KEY = isTest
 	? "testingkey"

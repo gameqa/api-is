@@ -2,14 +2,12 @@ import cheerio from "cheerio";
 import axios from "axios";
 import { ArticleScraper, ScrapeData } from "../interface";
 import ArticleScraperBase from "../ArticleScraperBase";
+import { urlencoded } from "body-parser";
 
 export default class WikipediaScraper
 	extends ArticleScraperBase
 	implements ArticleScraper {
 	public async scrapeArticle(): Promise<ScrapeData> {
-		console.log(
-			`Parsing https://is.wikipedia.org/wiki/${this.sourceArticleKey}`
-		);
 		const { data } = await axios.get<string>(
 			encodeURI(
 				`https://is.wikipedia.org/wiki/${this.sourceArticleKey}`

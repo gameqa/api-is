@@ -9,7 +9,7 @@ export default async (req: ReadByKeyRequest, res: Response) => {
 		const { sourceIdentifier, articleKey } = req.params;
 		const doc = await Articles.findArticleByKey(
 			sourceIdentifier,
-			articleKey
+			encodeURI(articleKey)
 		);
 		await doc.getSource();
 		res.status(200).send({

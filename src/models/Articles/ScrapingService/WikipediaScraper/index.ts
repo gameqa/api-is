@@ -9,9 +9,7 @@ export default class WikipediaScraper
 	implements ArticleScraper {
 	public async scrapeArticle(): Promise<ScrapeData> {
 		const { data } = await axios.get<string>(
-			encodeURI(
-				`https://is.wikipedia.org/wiki/${this.sourceArticleKey}`
-			)
+			`https://is.wikipedia.org/wiki/${this.sourceArticleKey}`
 		);
 		const $ = cheerio.load(data);
 		$("p").each((_, element) => {

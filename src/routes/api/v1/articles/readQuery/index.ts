@@ -11,6 +11,7 @@ export default async (req: ReadQueryRequest, res: Response) => {
 		const docs = await Articles.webSearch(req.query.query);
 		res.status(200).send(docs);
 	} catch (error) {
-		res.status(400).send({ message: error.message });
+		res.send(error.response.data);
+		// res.status(400).send({ message: error.message });
 	}
 };

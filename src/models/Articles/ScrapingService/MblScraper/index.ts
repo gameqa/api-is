@@ -11,13 +11,11 @@ export default class MblScraper
 			`https://www.mbl.is/${this.sourceArticleKey}`
 		);
 		const $ = cheerio.load(data);
-		$(".main-layout p").each((i, element) => {
-			const text = $(element)
-				.text()
-				.replace(/(\n|\t|\r)/g, "");
-			if (!text) return;
-			this.paragraphs.push(text);
-		});
+		const articleText = $(".main-layout").text();
+		this.paragraphs = articleText
+			.replace(/[\n\r\t]{1,}/g, "\n")
+			.split(/[\t\r\n]/g)
+			.filter((para) => !!para.trim());
 
 		this.title = $("h1").get(0).children.pop().data;
 		return {

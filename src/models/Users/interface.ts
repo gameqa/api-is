@@ -33,6 +33,7 @@ export interface UserInterface extends Document {
 	hasCompletedTutorial: boolean;
 	invitedBy?: Types.ObjectId;
 	invites: number;
+	allowEmail: boolean;
 	setVerificationCode: () => Promise<string>;
 	verify: (code: string) => Promise<void>;
 	getPublic: () => PublicUser;

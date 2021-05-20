@@ -72,6 +72,10 @@ const userSchema = new Schema(
 		hasCompletedTutorial: {
 			type: Boolean,
 		},
+		allowEmail: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	{
 		timestamps: true,

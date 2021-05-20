@@ -71,6 +71,7 @@ export const webSearch = async function (
 			key: keys[i],
 		})
 	);
+
 	const scrapedArticles = await Promise.all(
 		returnFormattedItems.map((item) => {
 			return this.findArticleByUrl(item.url);

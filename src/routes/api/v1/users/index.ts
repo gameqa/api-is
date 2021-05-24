@@ -6,6 +6,7 @@ import { RouteBuilder } from "../../../utils";
 import { auth, deleteJWT } from "../utils";
 import completeTutorial from "./completeTutorial";
 import currentInvites from "./currentInvites";
+import pushNotificationTokens from "./pushNotificationTokens";
 
 export default RouteBuilder.routerForEndpoints([
 	{
@@ -45,6 +46,12 @@ export default RouteBuilder.routerForEndpoints([
 	},
 	{
 		route: "/complete_tutorial",
+		method: "patch",
+		middleware: [auth],
+		controller: completeTutorial,
+	},
+	{
+		route: "/push_notification_tokens",
 		method: "patch",
 		middleware: [auth],
 		controller: completeTutorial,

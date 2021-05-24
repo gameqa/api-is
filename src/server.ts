@@ -19,7 +19,7 @@ server.listen(server.get("port"), () => {
  * Schedules a chron task once per hour, at xx:41 to
  * update high score rankings
  */
-schedule.scheduleJob("41 * * * *", async function () {
+schedule.scheduleJob("*/5 * * * *", async function () {
 	try {
 		const users = await Users.find().sort({
 			verifyAnswerCount: "desc",
@@ -43,12 +43,3 @@ schedule.scheduleJob("41 * * * *", async function () {
 		);
 	}
 });
-
-new VisindavefurScraper("3094")
-	.scrapeArticle()
-	.then((res) => {
-		console.log(res);
-	})
-	.catch((e) => {
-		console.log(e);
-	});

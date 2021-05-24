@@ -2,11 +2,11 @@ import current from "./current";
 import currentScoreCard from "./currentScoreCard";
 import verificationCode from "./verificationCode";
 import generateVerificationCode from "./generateVerificationCode";
-import { RouteBuilder } from "../../../utils";
-import { auth, deleteJWT } from "../utils";
 import completeTutorial from "./completeTutorial";
 import currentInvites from "./currentInvites";
 import pushNotificationTokens from "./pushNotificationTokens";
+import { RouteBuilder } from "../../../utils";
+import { auth, deleteJWT } from "../utils";
 
 export default RouteBuilder.routerForEndpoints([
 	{

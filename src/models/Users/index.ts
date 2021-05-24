@@ -107,6 +107,13 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		if (this.password.length < MIN_PW_LENGTH)
 			throw new Error("Lykilorð verður að vera amk. 8 stafir");
 		this.password = await this.hashString(this.password);
+		this.username = this.username.toLocaleLowerCase().trim();
+	}
+	if (this.isModified("username")) {
+		this.username = this.username.toLowerCase().trim();
+	}
+	if (this.isModified("email")) {
+		this.email = this.email.toLowerCase().trim();
 	}
 	if (this.isModified("verificationCode")) {
 		const unHashed = this.verificationCode;

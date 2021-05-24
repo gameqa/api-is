@@ -76,6 +76,10 @@ const userSchema = new Schema(
 			type: Boolean,
 			default: false,
 		},
+		pushNotificationTokens: {
+			type: [String],
+			default: [],
+		},
 	},
 	{
 		timestamps: true,
@@ -134,6 +138,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		this.hiscoreRank = await this.collection.estimatedDocumentCount();
 		this.level = 1;
 		this.invites = 0;
+		this.pushNotificationTokens = [];
 	}
 	if (!USER_TYPES.includes(this.type as UserTypes))
 		throw new Error("Invalid user type");

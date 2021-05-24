@@ -34,6 +34,7 @@ export interface UserInterface extends Document {
 	invitedBy?: Types.ObjectId;
 	invites: number;
 	allowEmail: boolean;
+	pushNotificationTokens: string[];
 	setVerificationCode: () => Promise<string>;
 	verify: (code: string) => Promise<void>;
 	getPublic: () => PublicUser;

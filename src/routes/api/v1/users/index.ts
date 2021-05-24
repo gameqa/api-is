@@ -54,6 +54,6 @@ export default RouteBuilder.routerForEndpoints([
 		route: "/push_notification_tokens",
 		method: "patch",
 		middleware: [auth],
-		controller: completeTutorial,
+		controller: pushNotificationTokens,
 	},
 ]);

@@ -18,7 +18,7 @@ export const findByCreds = async function (
 	email: string,
 	password: string
 ) {
-	const user = await this.findOne({ email });
+	const user = await this.findOne({ email: email.toLowerCase().trim() });
 	if (!user) throw new Error("No user with this email and password");
 	const isMatch = await bcrypt.compare(password, user.password);
 	if (!isMatch) throw new Error("No user with this email and password");

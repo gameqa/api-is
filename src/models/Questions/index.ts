@@ -46,6 +46,7 @@ questionSchema.statics = statics;
 
 questionSchema.pre<QuestionsInterface>("save", async function (next) {
 	if (this.isModified("text")) {
+		this.text = this.text.trim();
 		if (this.text.split(" ").length < utils.MIN_WORD_COUNT)
 			throw new Error(
 				`Question must be at least ${utils.MIN_WORD_COUNT} words`
@@ -68,7 +69,6 @@ questionSchema.pre<QuestionsInterface>("save", async function (next) {
 		this.archived = false;
 		this.isImpossible = false;
 		this.answeredAt = undefined;
-		this.text = this.text.trim();
 	}
 	next();
 });

@@ -68,6 +68,7 @@ questionSchema.pre<QuestionsInterface>("save", async function (next) {
 		this.archived = false;
 		this.isImpossible = false;
 		this.answeredAt = undefined;
+		this.text = this.text.trim();
 	}
 	next();
 });

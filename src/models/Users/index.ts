@@ -123,7 +123,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		 */
 		await new DynamicEmailTemplates({
 			to: [this.email],
-			from: "samromur@ru.is",
+			from: "njall16@ru.is",
 			subject: "Staðfestingarkóði Spurningar.is",
 		}).send({
 			templateId: "d-6853194ff96946c1b21c985d32aa5d3c",

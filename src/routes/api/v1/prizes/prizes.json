@@ -1,0 +1,31 @@
+[
+	{
+		"_id": "1",
+		"name": "Allir taka þátt",
+		"prereqDescription": "",
+		"prizes": [
+			{
+				"name": "Nocco",
+				"imageURL": "https://http.cat/404"
+			}
+		]
+	},
+	{
+		"_id": "2",
+		"name": "Klíkan",
+		"prereqDescription": "komast í Lvl 5",
+		"prizes": []
+	},
+	{
+		"_id": "3",
+		"name": "Útvaldir",
+		"prereqDescription": "komast í Lvl 10",
+		"prizes": []
+	},
+	{
+		"_id": "4",
+		"name": "Áhrifavaldar",
+		"prereqDescription": "fá 10 vini til þess að skrá sig á spurningar.is",
+		"prizes": []
+	}
+]

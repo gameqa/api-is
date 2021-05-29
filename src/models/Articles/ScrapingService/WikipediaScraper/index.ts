@@ -15,7 +15,8 @@ export default class WikipediaScraper
 		$("p").each((_, element) => {
 			const text = $(element)
 				.text()
-				.replace(/(\n|\t|\r)/g, "");
+				.replace(/(\n|\t|\r)/g, "")
+				.replace(/\u00AD/g, "");
 			if (!text) return;
 			this.paragraphs.push(text);
 		});
@@ -23,9 +24,9 @@ export default class WikipediaScraper
 		this.title = $("h1").get(0).children.pop().data;
 		return {
 			extract: this.paragraphs[0],
-			title: this.title,
+			title: this.title.trim(),
 			sourceArticleKey: this.sourceArticleKey,
-			paragraphs: this.paragraphs,
+			paragraphs: this.paragraphs.map((para) => para.trim()),
 		};
 	}
 }

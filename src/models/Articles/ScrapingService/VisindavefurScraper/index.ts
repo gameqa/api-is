@@ -14,6 +14,7 @@ export default class VisindavefurScraper
 		const articleText = $(".article-text").text();
 		this.paragraphs = articleText
 			.replace(/[\n\r\t]{1,}/g, "\n")
+			.replace(/\u00AD/g, "")
 			.split(/[\t\r\n]/g)
 			.filter((para) => !!para.trim() && para !== "Hlusta");
 
@@ -21,9 +22,9 @@ export default class VisindavefurScraper
 
 		return {
 			extract: this.paragraphs[0],
-			title: this.title,
+			title: this.title.trim(),
 			sourceArticleKey: this.sourceArticleKey,
-			paragraphs: this.paragraphs,
+			paragraphs: this.paragraphs.map((para) => para.trim()),
 		};
 	}
 }

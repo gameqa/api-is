@@ -16,6 +16,7 @@ export default class VisirScraper
 			const text = $(element)
 				.text()
 				.replace(/(\n|\t|\r|)/g, "")
+				.replace(/\u00AD/g, "")
 				.replace(/\s{2}/g, " ")
 				.trim();
 			if (!text) return;
@@ -23,9 +24,9 @@ export default class VisirScraper
 		});
 		return {
 			extract: this.paragraphs[0],
-			title: this.title,
+			title: this.title.trim(),
 			sourceArticleKey: this.sourceArticleKey,
-			paragraphs: this.paragraphs,
+			paragraphs: this.paragraphs.map((para) => para.trim()),
 		};
 	}
 }

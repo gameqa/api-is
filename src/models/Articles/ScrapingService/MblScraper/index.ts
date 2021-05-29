@@ -10,19 +10,20 @@ export default class MblScraper
 		const { data } = await axios.get<string>(
 			`https://www.mbl.is/${this.sourceArticleKey}`
 		);
-		const $ = cheerio.load(data);
+		const $ = cheerio.load(data.replace(/\&shy;/, ""));
 		const articleText = $(".main-layout").text();
 		this.paragraphs = articleText
 			.replace(/[\n\r\t]{1,}/g, "\n")
+			.replace(/\u00AD/g, "")
 			.split(/[\t\r\n]/g)
 			.filter((para) => !!para.trim());
 
 		this.title = $("h1").get(0).children.pop().data;
 		return {
 			extract: this.paragraphs[0],
-			title: this.title,
+			title: this.title.trim(),
 			sourceArticleKey: this.sourceArticleKey,
-			paragraphs: this.paragraphs,
+			paragraphs: this.paragraphs.map((para) => para.trim()),
 		};
 	}
 }

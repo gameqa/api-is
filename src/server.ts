@@ -1,7 +1,7 @@
 import server from "./app";
 import schedule from "node-schedule";
 import { Users } from "./models";
-import VisindavefurScraper from "./models/Articles/ScrapingService/VisindavefurScraper";
+import MBLScraper from "./models/Articles/ScrapingService/MblScraper";
 
 /**
  * Start Express server.
@@ -43,3 +43,8 @@ schedule.scheduleJob("*/5 * * * *", async function () {
 		);
 	}
 });
+
+new MBLScraper("frettir/erlent/2018/04/17/barbara_bush_latin/")
+	.scrapeArticle()
+	.then(console.log)
+	.catch(console.log);

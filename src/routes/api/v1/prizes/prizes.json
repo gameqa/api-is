@@ -2,6 +2,7 @@
 	{
 		"_id": "1",
 		"name": "Allir taka þátt",
+		"chestImg": "https://dunb17ur4ymx4.cloudfront.net/wysiwyg/550688/7d2d3a13aa181518d8ac81fd78b0febeafa8c7e1.png",
 		"prereqDescription": "",
 		"prizes": [
 			{
@@ -13,18 +14,21 @@
 	{
 		"_id": "2",
 		"name": "Klíkan",
+		"chestImg": "https://dunb17ur4ymx4.cloudfront.net/wysiwyg/550688/76484017a8a9afcfda09a623b5dbb945f98196f2.png",
 		"prereqDescription": "komast í Lvl 5",
 		"prizes": []
 	},
 	{
 		"_id": "3",
 		"name": "Útvaldir",
+		"chestImg": "https://dunb17ur4ymx4.cloudfront.net/wysiwyg/550688/d53fea9035786aa9e02c4eb2074d3785972ae695.png",
 		"prereqDescription": "komast í Lvl 10",
 		"prizes": []
 	},
 	{
 		"_id": "4",
 		"name": "Áhrifavaldar",
+		"chestImg": "https://dunb17ur4ymx4.cloudfront.net/wysiwyg/550688/0c6eb5209d0e9849b5d847ccf88efadb00ba2d26.png",
 		"prereqDescription": "fá 10 vini til þess að skrá sig á spurningar.is",
 		"prizes": []
 	}

@@ -15,9 +15,15 @@ export interface GameRoundWithTask {
 	taskInfo: TaskInfo;
 }
 
+export interface ImageInfo {
+	url: string;
+	subject_tf: string;
+}
+
 // ask question interfaces
 interface AskQuestionTask {
 	ideaWords: string[];
+	image: ImageInfo;
 	type: "make-question";
 	questionType: string;
 }

@@ -7,6 +7,7 @@ import {
 } from "./interface";
 import { Answers, Articles, Questions } from "../";
 import * as IdeaWords from "./IdeaWords";
+import * as askByImage from "./AskByImage";
 
 export const findByUserId = async function (
 	this: GameRoundsCollectionInterface,
@@ -52,6 +53,7 @@ export const findByUserId = async function (
 				type: "make-question",
 				ideaWords: IdeaWords.get(IDEA_WORD_COUNT),
 				questionType: Questions.getQuestionWord(),
+				image: askByImage.getImage()
 			};
 			break;
 		}

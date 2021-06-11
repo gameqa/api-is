@@ -1,15 +1,11 @@
 [
+
 	{
 		"_id": "1",
 		"name": "Allir taka þátt",
 		"chestImg": "https://dunb17ur4ymx4.cloudfront.net/wysiwyg/550688/7d2d3a13aa181518d8ac81fd78b0febeafa8c7e1.png",
 		"prereqDescription": "",
-		"prizes": [
-			{
-				"name": "Nocco",
-				"imageURL": "https://http.cat/404"
-			}
-		]
+		"prizes": []
 	},
 	{
 		"_id": "2",

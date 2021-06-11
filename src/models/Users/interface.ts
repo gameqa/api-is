@@ -1,4 +1,5 @@
 import { Document, Model, Types } from "mongoose";
+import { MotivationType } from "./motivation/decleration";
 
 export interface PublicUser {
 	email: string;
@@ -41,6 +42,7 @@ export interface UserInterface extends Document {
 	hashString: (val: string) => Promise<string>;
 	sha256: (val: string) => string;
 	completeTutorial: () => Promise<void>;
+	getMovitation: () => MotivationType;
 }
 
 export interface UserRegisterInfo {

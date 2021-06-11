@@ -5,6 +5,7 @@ import generateVerificationCode from "./generateVerificationCode";
 import completeTutorial from "./completeTutorial";
 import currentInvites from "./currentInvites";
 import pushNotificationTokens from "./pushNotificationTokens";
+import getMotivation from "./getMotivation";
 import { RouteBuilder } from "../../../utils";
 import { auth, deleteJWT } from "../utils";
 
@@ -55,5 +56,11 @@ export default RouteBuilder.routerForEndpoints([
 		method: "patch",
 		middleware: [auth],
 		controller: pushNotificationTokens,
+	},
+	{
+		route: "/motivation",
+		method: "get",
+		middleware: [auth],
+		controller: getMotivation,
 	},
 ]);

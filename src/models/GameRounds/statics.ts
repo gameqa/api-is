@@ -53,7 +53,7 @@ export const findByUserId = async function (
 				type: "make-question",
 				ideaWords: IdeaWords.get(IDEA_WORD_COUNT),
 				questionType: Questions.getQuestionWord(),
-				image: askByImage.getImage()
+				image: askByImage.getImage(),
 			};
 			break;
 		}
@@ -175,16 +175,14 @@ export const findByUserId = async function (
 				paragraph: article.paragraphs[doc.paragraphIndex],
 				text: question.text,
 				_id: doc._id,
-				firstWord: doc.firstWord!,
-				lastWord: doc.lastWord!,
+				firstWord: doc.firstWord,
+				lastWord: doc.lastWord,
 				isYesOrNo: question.isYesOrNo,
 			};
 			break;
 		}
 		default:
-			throw new Error(
-				`Task ${task} selected that was not recognized`
-			);
+			throw new Error(`Task ${task} selected that was not recognized`);
 	}
 
 	return {

@@ -1,16 +1,11 @@
 import { PublicUser, UserInterface } from "./interface";
 import bcrypt from "bcrypt";
-import {
-	generateVerificationCode,
-	VERIFICATION_CODE_LENGTH,
-} from "./utils";
+import { generateVerificationCode, VERIFICATION_CODE_LENGTH } from "./utils";
 import crypto from "crypto";
 import { Users } from "../";
+import motivation from "./motivation";
 
-export const hashString = async function (
-	this: UserInterface,
-	text: string
-) {
+export const hashString = async function (this: UserInterface, text: string) {
 	return await bcrypt.hash(text, 8);
 };
 
@@ -72,4 +67,8 @@ export const getPublic = function (this: UserInterface): PublicUser {
 export const completeTutorial = async function (this: UserInterface) {
 	this.hasCompletedTutorial = true;
 	await this.save();
+};
+
+export const getMovitation = function (this: UserInterface) {
+	return motivation(this);
 };

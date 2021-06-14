@@ -53,11 +53,8 @@ export const advance = async function (
 			 * otherwise we mark it as archived
 			 */
 			try {
-				const question = await Questions.findById(
-					userPayload.questionId
-				);
-				if (!question)
-					throw new Error("Question not found with this _id");
+				const question = await Questions.findById(userPayload.questionId);
+				if (!question) throw new Error("Question not found with this _id");
 				if (userPayload.archive)
 					await question.update({ $set: { archived: true } });
 				else await question.verify(this.userId);
@@ -76,12 +73,7 @@ export const advance = async function (
 			 * an answer that links those two together
 			 */
 			try {
-				const {
-					identifier,
-					key,
-					questionId,
-					paragraphIndex,
-				} = userPayload;
+				const { identifier, key, questionId, paragraphIndex } = userPayload;
 				// find the article, and set upsert to true
 				const article = await Articles.findArticleByKey(
 					identifier as ArticleSourceIdentifier,
@@ -90,14 +82,10 @@ export const advance = async function (
 				);
 				// throw error if no article found
 				if (!article)
-					throw new Error(
-						`Article not found for ${identifier} ${key}`
-					);
+					throw new Error(`Article not found for ${identifier} ${key}`);
 				const question = await Questions.findById(questionId);
 				if (!question)
-					throw new Error(
-						`Unable to find question with id ${questionId}`
-					);
+					throw new Error(`Unable to find question with id ${questionId}`);
 				// create an article
 				await Answers.create({
 					creationRoundId: this._id,
@@ -163,24 +151,13 @@ export const advance = async function (
 			try {
 				const answer = await Answers.findById(userPayload._id);
 				if (!answer)
-					throw new Error(
-						`${userPayload._id} is not a pkey of an answer`
-					);
-				const question = await Questions.findById(
-					answer.questionId
-				);
+					throw new Error(`${userPayload._id} is not a pkey of an answer`);
+				const question = await Questions.findById(answer.questionId);
 				if (!question)
-					throw new Error(
-						`can not find question by Id ${question._id}`
-					);
+					throw new Error(`can not find question by Id ${question._id}`);
 				if (question.isYesOrNo)
-					throw new Error(
-						"Can not user 'verify-span' on yes or no questions"
-					);
-				await answer.verify(
-					this.userId,
-					userPayload.canBeShortened
-				);
+					throw new Error("Can not user 'verify-span' on yes or no questions");
+				await answer.verify(this.userId, userPayload.canBeShortened);
 				await user.update({ $inc: { verifyAnswerCount: 1 } });
 			} catch (error) {
 				throw new Error(
@@ -200,12 +177,8 @@ export const advance = async function (
 			try {
 				answer = await Answers.findById(userPayload.answerId);
 				if (!answer)
-					throw new Error(
-						`${userPayload.answerId} is not a pkey of an answer`
-					);
-				const question = await Questions.findById(
-					answer.questionId
-				);
+					throw new Error(`${userPayload.answerId} is not a pkey of an answer`);
+				const question = await Questions.findById(answer.questionId);
 				if (!question)
 					throw new Error(
 						`can not find question by Id ${userPayload.answerId}`
@@ -238,9 +211,7 @@ export const advance = async function (
 			 * with the _id present in userPayload as impossible
 			 */
 			try {
-				await Questions.findByIdAndMarkAsImpossible(
-					userPayload.questionId
-				);
+				await Questions.findByIdAndMarkAsImpossible(userPayload.questionId);
 				await user.update({ $inc: { articlesFoundCount: 1 } });
 			} catch (error) {
 				throw new Error(
@@ -248,10 +219,57 @@ export const advance = async function (
 				);
 			}
 			break;
+		case "set-yes-or-no-flag":
+			/**
+			 * This is for user to mark if a question is a yes or no
+			 * question or not. This is a payload where you are still
+			 * working with the question so only the answerId is present
+			 */
+			try {
+				if (userPayload.isYesOrNo === undefined)
+					throw new Error("Payload isYesOrNo not given");
+
+				const answer = await Answers.findById(userPayload.answerId);
+
+				if (!answer) {
+					throw new Error("Unable to find answer with the provided id");
+				}
+
+				if (answer.verifiedAt) {
+					throw new Error("Answer is already verified");
+				}
+
+				const question = await Questions.findById(answer.questionId);
+
+				if (!question) {
+					throw new Error("Unable to find question id");
+				}
+
+				await question.update({
+					isYesOrNo: userPayload.isYesOrNo,
+				});
+
+				if (userPayload.isYesOrNo) {
+					await answer.update({
+						firstWord: 0,
+						lastWord: 0,
+						answeredAt: new Date(),
+					});
+				} else {
+					await answer.update({
+						firstWord: undefined,
+						lastWord: undefined,
+						answeredAt: undefined,
+					});
+				}
+			} catch (error) {
+				throw new Error(
+					`Unable to flag question as yes or no due to ${error.message}`
+				);
+			}
+			break;
 		default:
-			throw new Error(
-				`Advance logic not implemented for ${userPayload.type}`
-			);
+			throw new Error(`Advance logic not implemented for ${userPayload.type}`);
 	}
 	if (this.currentRound === this.totalRounds) {
 		isCompleted = true;

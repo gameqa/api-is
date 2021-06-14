@@ -1,5 +1,5 @@
 import { RouteBuilder } from "../../../utils";
-import { allowOnly, auth, populate } from "../utils";
+import { auth, populate } from "../utils";
 import readCurrent from "./readCurrent";
 import advanceCurrent from "./advanceCurrent";
 import getAskAboutImage from "./getAskAboutImage";

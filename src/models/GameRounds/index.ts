@@ -38,9 +38,7 @@ gameRoundsSchema.pre<GameRoundsInterface>("save", async function (next) {
 		this.totalRounds = utils.getRoundsForUserLevel(userLevel);
 	}
 	if (this.currentRound > this.totalRounds)
-		throw new Error(
-			"Current round can not be greater then totalrounds"
-		);
+		throw new Error("Current round can not be greater then totalrounds");
 	if (!user) throw new Error(`No user with the id ${this.userId}`);
 	next();
 });
@@ -51,3 +49,4 @@ export const GameRounds = model<
 >("gamerounds", gameRoundsSchema, "gameRounds");
 
 export * from "./interface";
+export * as AskAboutImage from "./AskByImage";

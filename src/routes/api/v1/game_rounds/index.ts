@@ -2,6 +2,7 @@ import { RouteBuilder } from "../../../utils";
 import { allowOnly, auth, populate } from "../utils";
 import readCurrent from "./readCurrent";
 import advanceCurrent from "./advanceCurrent";
+import getAskAboutImage from "./getAskAboutImage";
 import { GameRounds } from "../../../../models";
 
 export default RouteBuilder.routerForEndpoints([
@@ -16,5 +17,11 @@ export default RouteBuilder.routerForEndpoints([
 		route: "/:roundId/advance",
 		middleware: [auth, populate([["roundId", GameRounds, "round"]])],
 		method: "post",
+	},
+	{
+		controller: getAskAboutImage,
+		route: "/write_question/image",
+		middleware: [auth],
+		method: "get",
 	},
 ]);

@@ -1,8 +1,5 @@
 import { Schema, model, Types } from "mongoose";
-import {
-	QuestionsCollectionInterface,
-	QuestionsInterface,
-} from "./interface";
+import { QuestionsCollectionInterface, QuestionsInterface } from "./interface";
 import * as utils from "./utils";
 import { GameRounds } from "../";
 import * as methods from "./methods";
@@ -37,7 +34,6 @@ const questionSchema = new Schema({
 	},
 	isYesOrNo: {
 		type: Boolean,
-		default: false,
 	},
 });
 
@@ -69,6 +65,7 @@ questionSchema.pre<QuestionsInterface>("save", async function (next) {
 		this.archived = false;
 		this.isImpossible = false;
 		this.answeredAt = undefined;
+		this.isYesOrNo = undefined;
 	}
 	next();
 });

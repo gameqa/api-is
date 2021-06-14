@@ -104,6 +104,13 @@ interface VerifyYesNoAnswerParagraphUserPayload {
 	answer: boolean;
 }
 
+// Set yes or no question payload
+interface SetIsYesOrNoFlagUserPayload {
+	answerId: string | Types.ObjectId;
+	type: "set-yes-or-no-flag";
+	isYesOrNo: boolean;
+}
+
 // completed interface
 interface CompletedGameRound {
 	type: "completed";
@@ -126,6 +133,7 @@ export type TaskUserPayload =
 	| VerifySpanUserPayload
 	| MarkQuestionAsImpossible
 	| VerifyYesNoAnswerParagraphUserPayload
+	| SetIsYesOrNoFlagUserPayload
 	| { type: "bad-type" };
 
 export interface GameRoundsInterface extends Document {
@@ -141,7 +149,5 @@ export interface GameRoundsInterface extends Document {
 
 export interface GameRoundsCollectionInterface
 	extends Model<GameRoundsInterface> {
-	findByUserId: (
-		userId: Types.ObjectId | string
-	) => Promise<GameRoundWithTask>;
+	findByUserId: (userId: Types.ObjectId | string) => Promise<GameRoundWithTask>;
 }

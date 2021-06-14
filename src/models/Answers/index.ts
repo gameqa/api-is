@@ -96,8 +96,7 @@ answerSchema.pre<AnswersInterface>("save", async function (next) {
 		if (this.paragraphIndex < 0)
 			throw new Error("Paragraph index can not be negative");
 		if (
-			article.paragraphs[this.paragraphIndex].length - 1 <
-				this.lastWord &&
+			article.paragraphs[this.paragraphIndex].length - 1 < this.lastWord &&
 			!!this.lastWord
 		)
 			throw new Error("Last word can not be OOB for paragraph");
@@ -117,12 +116,6 @@ answerSchema.pre<AnswersInterface>("save", async function (next) {
 		this.archived = false;
 		this.canBeShortened = false;
 		this.yesOrNoAnswer = undefined;
-	}
-
-	if (this.isModified("questionId") && question.isYesOrNo) {
-		this.firstWord = 0;
-		this.lastWord = 0;
-		this.answeredAt = new Date();
 	}
 
 	next();

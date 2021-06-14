@@ -5,21 +5,36 @@
 		"name": "Allir taka þátt",
 		"chestImg": "https://dunb17ur4ymx4.cloudfront.net/wysiwyg/550688/7d2d3a13aa181518d8ac81fd78b0febeafa8c7e1.png",
 		"prereqDescription": "",
-		"prizes": []
+		"prizes": [{
+			"_id": "1",
+			"name": "Gjafabréf fyrir tvo í Krauma.",
+			"img": "https://irp-cdn.multiscreensite.com/33e1f341/dms3rep/multi/krauma-20-05-29-28141.jpg",
+			"brandImg": "https://lirp-cdn.multiscreensite.com/33e1f341/dms3rep/multi/opt/logo-170x42-1920w-1920w.png"
+		}]
 	},
 	{
 		"_id": "2",
 		"name": "Klíkan",
 		"chestImg": "https://dunb17ur4ymx4.cloudfront.net/wysiwyg/550688/76484017a8a9afcfda09a623b5dbb945f98196f2.png",
 		"prereqDescription": "komast í Lvl 5",
-		"prizes": []
+		"prizes": [{
+			"_id": "2",
+			"name": "Gjafabréf fyrir tvo í Krauma.",
+			"img": "https://irp-cdn.multiscreensite.com/33e1f341/dms3rep/multi/krauma-20-05-29-28141.jpg",
+			"brandImg": "https://lirp-cdn.multiscreensite.com/33e1f341/dms3rep/multi/opt/logo-170x42-1920w-1920w.png"
+		}]
 	},
 	{
 		"_id": "3",
 		"name": "Útvaldir",
 		"chestImg": "https://dunb17ur4ymx4.cloudfront.net/wysiwyg/550688/d53fea9035786aa9e02c4eb2074d3785972ae695.png",
 		"prereqDescription": "komast í Lvl 10",
-		"prizes": []
+		"prizes": [{
+			"_id": "3",
+			"name": "Gjafabréf fyrir tvo í Krauma.",
+			"img": "https://irp-cdn.multiscreensite.com/33e1f341/dms3rep/multi/krauma-20-05-29-28141.jpg",
+			"brandImg": "https://lirp-cdn.multiscreensite.com/33e1f341/dms3rep/multi/opt/logo-170x42-1920w-1920w.png"
+		}]
 	},
 	{
 		"_id": "4",

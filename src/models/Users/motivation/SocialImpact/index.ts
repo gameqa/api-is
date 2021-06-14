@@ -14,7 +14,7 @@ import * as utils from "../utils";
 const mappings: MapUserToMotivation[] = [
 	() => ({
 		type: "social-impact",
-		imageURL: "https://www.ekinex.com/media/pag/comandi-vocali-mobile.jpg",
+		imageURL: "https://i.imgur.com/NfvVecw.jpg",
 		description:
 			"Með þínu framlagi styður þú við framþróun íslensku í upplýsingatækniþjóðfélaginu",
 	}),

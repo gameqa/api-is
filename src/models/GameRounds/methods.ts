@@ -257,9 +257,7 @@ export const advance = async function (
 					});
 				} else {
 					await answer.update({
-						firstWord: undefined,
-						lastWord: undefined,
-						answeredAt: undefined,
+						$unset: { firstWord: "", lastWord: "", answeredAt: "" },
 					});
 				}
 			} catch (error) {

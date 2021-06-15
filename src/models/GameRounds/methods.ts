@@ -258,6 +258,7 @@ export const advance = async function (
 				} else {
 					await answer.update({
 						$unset: { firstWord: "", lastWord: "", answeredAt: "" },
+						archived: true,
 					});
 				}
 			} catch (error) {

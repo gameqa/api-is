@@ -46,11 +46,12 @@ export const webSearch = async function (
 	this: ArticlesCollectionInterface,
 	query: string
 ): Promise<ArticlePreview[]> {
-	console.log("Calling Google.search in next line");
 	const items = await Google.search(query);
-	console.log("Just got Google results", items);
+	console.log("About to get the urls");
 	const urls = items.map((item) => item.link);
+	console.log("Here are the urls", urls);
 	const identifiers = urls.map((url) => ArticleSources.getIdentifier(url));
+	console.log("Here are the identifiers");
 	const keys = urls.map((url) => ArticleSources.getArticleKey(url));
 	const sources = await Promise.all(
 		identifiers.map((identifier) => ArticleSources.findOne({ identifier }))

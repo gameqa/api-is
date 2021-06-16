@@ -51,11 +51,13 @@ export const webSearch = async function (
 	const urls = items.map((item) => item.link);
 	console.log("Here are the urls", urls);
 	const identifiers = urls.map((url) => ArticleSources.getIdentifier(url));
-	console.log("Here are the identifiers");
+	console.log("Here are the identifiers", identifiers);
 	const keys = urls.map((url) => ArticleSources.getArticleKey(url));
+	console.log("Here are the keys", keys);
 	const sources = await Promise.all(
 		identifiers.map((identifier) => ArticleSources.findOne({ identifier }))
 	);
+	console.log("sources", sources);
 	const returnFormattedItems: ArticlePreview[] = items.map((item, i) => ({
 		url: item.link,
 		snippet: item.snippet,
@@ -63,11 +65,13 @@ export const webSearch = async function (
 		source: sources[i],
 		key: keys[i],
 	}));
+	console.log("returnFormattedItems", returnFormattedItems);
 	const scrapedArticles = await Promise.all(
 		returnFormattedItems.map((item) => {
 			return this.findArticleByUrl(item.url);
 		})
 	);
+	console.log("scrapedArticles", scrapedArticles);
 
 	return returnFormattedItems.filter((_, i) => {
 		return (

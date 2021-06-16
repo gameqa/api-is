@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import appUtils from "./utils";
 import Router from "../routes";
 
@@ -7,6 +7,13 @@ const app = express();
 
 // setting up express app
 appUtils.setup(app);
+
+const logger = (req: Request, _res: Response, next: NextFunction) => {
+	console.log(`${req.url}: ${new Date().toISOString()}`);
+	next();
+};
+
+app.use(logger);
 
 // connecting routes
 app.use("/", Router);

@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 
 export default async (req: Request, res: Response) => {
 	try {
+		console.log("GETTING CHART INFO: " + new Date().toISOString());
 		const results = await Answers.aggregate([
 			{ $match: { answeredAt: { $exists: true } } },
 			{

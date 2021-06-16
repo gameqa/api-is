@@ -21,6 +21,7 @@ server.listen(server.get("port"), () => {
  */
 schedule.scheduleJob("*/5 * * * *", async function () {
 	try {
+		console.log("UPDATING HIGHSCORE AT TIME: " + new Date().toISOString());
 		const users = await Users.find().sort({
 			verifyAnswerCount: "desc",
 		});

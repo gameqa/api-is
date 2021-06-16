@@ -5,13 +5,15 @@ import { ArticleScraper, ScrapeData } from "../interface";
 
 export default class VisirScraper
 	extends ArticleScraperBase
-	implements ArticleScraper {
+	implements ArticleScraper
+{
 	public async scrapeArticle(): Promise<ScrapeData> {
 		const { data } = await axios.get<string>(
 			`https://www.visir.is/g/${this.sourceArticleKey}`
 		);
 		const $ = cheerio.load(data);
-		this.title = $("article header h1").get(0).children[0].data;
+		this.title =
+			$("article header h1").get(0)?.children[0]?.data ?? "Titil vantar";
 		$(".article-single__content p").each((_, element) => {
 			const text = $(element)
 				.text()

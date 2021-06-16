@@ -40,6 +40,7 @@ gameRoundsSchema.pre<GameRoundsInterface>("save", async function (next) {
 	if (this.currentRound > this.totalRounds)
 		throw new Error("Current round can not be greater then totalrounds");
 	if (!user) throw new Error(`No user with the id ${this.userId}`);
+
 	next();
 });
 

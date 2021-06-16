@@ -11,11 +11,11 @@ export default async (req: ReadQueryRequest, res: Response) => {
 		const docs = await Articles.webSearch(req.query.query);
 		res.status(200).send(docs);
 	} catch (error) {
+		console.log(error);
 		res.status(500).send(
 			error.response?.data ?? {
 				message: "something unexpected went wrong in search",
 			}
 		);
-		// res.status(400).send({ message: error.message });
 	}
 };

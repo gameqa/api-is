@@ -5,7 +5,8 @@ import ArticleScraperBase from "../ArticleScraperBase";
 
 export default class MblScraper
 	extends ArticleScraperBase
-	implements ArticleScraper {
+	implements ArticleScraper
+{
 	public async scrapeArticle(): Promise<ScrapeData> {
 		const { data } = await axios.get<string>(
 			`https://www.mbl.is/${this.sourceArticleKey}`
@@ -18,7 +19,7 @@ export default class MblScraper
 			.split(/[\t\r\n]/g)
 			.filter((para) => !!para.trim());
 
-		this.title = $("h1").get(0).children.pop().data;
+		this.title = $("h1").get(0)?.children?.pop?.().data ?? "Titil vantar";
 		return {
 			extract: this.paragraphs[0],
 			title: this.title.trim(),

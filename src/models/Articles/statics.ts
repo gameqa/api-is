@@ -48,6 +48,7 @@ export const webSearch = async function (
 ): Promise<ArticlePreview[]> {
 	const items = await Google.search(query);
 	const urls = items.map((item) => item.link);
+	console.log(`urls`, urls);
 	const identifiers = urls.map((url) => ArticleSources.getIdentifier(url));
 	const keys = urls.map((url) => ArticleSources.getArticleKey(url));
 	const sources = await Promise.all(

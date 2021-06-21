@@ -34,12 +34,12 @@ export const findByEmailAndRequestResetPasswordCode = async function (
 	this: UserCollectionInterface,
 	email: string
 ) {
-	const doc = await this.findOne({ email });
-	if (!doc) throw new Error(`User not found with email: ${email}`);
-	doc.resetPasswordInfo = {
+	const user = await this.findOne({ email });
+	if (!user) throw new Error(`User not found with email: ${email}`);
+	user.resetPasswordInfo = {
 		code: utils.generateVerificationCode(utils.RESET_PASSWORD_CODE_LENGTH),
 		guessCount: 0,
 		requestedAt: new Date(),
 	};
-	await doc.save();
+	await user.save();
 };

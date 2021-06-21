@@ -129,6 +129,26 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		const shaHash = this.sha256(this.verificationCode);
 		this.verificationCode = shaHash;
 	}
+	if (
+		this.isModified("resetPasswordInfo") &&
+		this.resetPasswordInfo !== undefined
+	) {
+		const unHashed = this.resetPasswordInfo.code;
+		/**
+		 * Sends email with
+		 * the reset pw code when it is updated
+		 */
+		await new DynamicEmail.Sender({
+			to: [this.email],
+			from: DynamicEmail.DEFAULT_SENDER,
+			subject: "Breyta lykilorði Spurningar.is",
+		}).send({
+			templateId: DynamicEmail.RESET_PW_CODE_TEMPLATE,
+			data: { resetPasswordCode: unHashed! },
+		});
+		// update the code with its hash
+		this.resetPasswordInfo.code = this.sha256(unHashed);
+	}
 	if (this.isNew) {
 		this.type = DEFAULT_USER_TYPE;
 		this.hasCompletedTutorial = false;

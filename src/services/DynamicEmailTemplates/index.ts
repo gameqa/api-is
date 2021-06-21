@@ -41,3 +41,4 @@ export class Sender {
 
 export const DEFAULT_SENDER = "njall16@ru.is";
 export const REGISTER_USER_TEMPLATE = "d-6853194ff96946c1b21c985d32aa5d3c";
+export const RESET_PW_CODE_TEMPLATE = "ID MISSING";

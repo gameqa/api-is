@@ -12,4 +12,11 @@ export interface SignupTemplateData {
 	};
 }
 
-export type Template = SignupTemplateData;
+export interface ResetPasswordTemplateData {
+	templateId: "ID MISSING";
+	data: {
+		resetPasswordCode: string;
+	};
+}
+
+export type Template = SignupTemplateData | ResetPasswordTemplateData;

@@ -1,9 +1,5 @@
 import { Schema, model, Types } from "mongoose";
-import {
-	UserInterface,
-	UserCollectionInterface,
-	UserTypes,
-} from "./interface";
+import { UserInterface, UserCollectionInterface, UserTypes } from "./interface";
 import validator from "validator";
 import * as methods from "./methods";
 import * as statics from "./statics";
@@ -13,7 +9,7 @@ import {
 	MIN_USER_NAME_LENGTH,
 	MIN_PW_LENGTH,
 } from "./utils";
-import { DynamicEmailTemplates } from "../../services";
+import { DynamicEmail } from "../../services";
 
 const userSchema = new Schema(
 	{
@@ -121,12 +117,12 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		 * Sends the verification email with
 		 * the verification code everytime it is updated
 		 */
-		await new DynamicEmailTemplates({
+		await new DynamicEmail.Sender({
 			to: [this.email],
-			from: "njall16@ru.is",
+			from: DynamicEmail.DEFAULT_SENDER,
 			subject: "Staðfestingarkóði Spurningar.is",
 		}).send({
-			templateId: "d-6853194ff96946c1b21c985d32aa5d3c",
+			templateId: DynamicEmail.REGISTER_USER_TEMPLATE,
 			data: { verificationCode: unHashed! },
 		});
 		// update the verification code with its hash

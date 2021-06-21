@@ -1,2 +1,2 @@
 export * from "./RedisWrapper";
-export * from "./DynamicEmailTemplates";
+export * as DynamicEmail from "./DynamicEmailTemplates";

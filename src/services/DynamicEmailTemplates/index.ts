@@ -3,7 +3,7 @@ import { AddressInfo, Template } from "./interface";
 import { SENDGRID_KEY } from "../../utils";
 sgMail.setApiKey(SENDGRID_KEY);
 
-export class DynamicEmailTemplates {
+export class Sender {
 	readonly addressing: AddressInfo;
 
 	public constructor(addressInfo: AddressInfo) {
@@ -38,3 +38,6 @@ export class DynamicEmailTemplates {
 		});
 	}
 }
+
+export const DEFAULT_SENDER = "njall16@ru.is";
+export const REGISTER_USER_TEMPLATE = "d-6853194ff96946c1b21c985d32aa5d3c";

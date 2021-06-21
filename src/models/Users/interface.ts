@@ -36,6 +36,8 @@ export interface UserInterface extends Document {
 	invites: number;
 	allowEmail: boolean;
 	pushNotificationTokens: string[];
+	// info regarding reset password
+	resetPasswordInfo?: ResetPasswordInfo;
 	setVerificationCode: () => Promise<string>;
 	verify: (code: string) => Promise<void>;
 	getPublic: () => PublicUser;
@@ -43,6 +45,12 @@ export interface UserInterface extends Document {
 	sha256: (val: string) => string;
 	completeTutorial: () => Promise<void>;
 	getMovitation: () => MotivationType;
+}
+
+export interface ResetPasswordInfo {
+	code: string;
+	requestedAt: Date;
+	guessCount: number;
 }
 
 export interface UserRegisterInfo {
@@ -56,6 +64,7 @@ export interface UserRegisterInfo {
 export interface UserCollectionInterface extends Model<UserInterface> {
 	register: (v1: UserRegisterInfo) => Promise<UserInterface>;
 	findByCreds: (email: string, passw: string) => Promise<UserAuthData>;
+	GUESS_RESET_PASSWORD_CODE_MAX_ATTEMPTS: number;
 }
 
 export interface UserAuthData {

@@ -28,3 +28,5 @@ export const findByCreds = async function (
 		token: token,
 	};
 };
+
+export const GUESS_RESET_PASSWORD_CODE_MAX_ATTEMPTS = 3;

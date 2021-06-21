@@ -41,6 +41,7 @@ export const findByEmailAndRequestResetPasswordCode = async function (
 		code: utils.generateVerificationCode(utils.RESET_PASSWORD_CODE_LENGTH),
 		requestedAt: new Date(),
 	};
+	user.resetPasswordToken = undefined;
 	user.resetPasswordCodeGuessCount = 0;
 	await user.save();
 };
@@ -68,7 +69,7 @@ export const findByEmailAndRequestResetPasswordToken = async function (
 		new Date().getTime() - user.resetPasswordCode.requestedAt.getTime() >
 		utils.RESET_PASSWORD_CODE_TIME_PERIOD_LENGTH
 	)
-		throw new Error("Verification code is no longer valid");
+		throw new Error("code is no longer valid");
 
 	const hashedInput = user.sha256(code);
 
@@ -95,4 +96,38 @@ export const findByEmailAndRequestResetPasswordToken = async function (
 	await user.save();
 
 	return user.resetPasswordToken.token;
+};
+
+export const findByEmailAndResetPassword = async function (
+	this: UserCollectionInterface,
+	email: string,
+	token: string,
+	password: string
+) {
+	// check if code is undefined
+	if (token === undefined) throw new Error("No code received");
+
+	// find user by email
+	const user = await this.findOne({ email });
+
+	// make sure user exists and has resetPasswordInfo
+	if (!user || user.resetPasswordToken === undefined)
+		throw new Error(`No user with email ${email} has requested token`);
+
+	// check if code has expired
+	if (
+		new Date().getTime() - user.resetPasswordToken.requestedAt.getTime() >
+		utils.RESET_PASSWORD_TOKEN_TIME_PERIOD_LENGTH
+	)
+		throw new Error("Token is no longer valid");
+
+	if (token !== user.resetPasswordToken.token) throw new Error("Token invalid");
+
+	user.password = password;
+	user.resetPasswordCode = undefined;
+	user.resetPasswordToken = undefined;
+
+	await user.save();
+
+	return user;
 };

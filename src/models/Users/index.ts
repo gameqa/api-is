@@ -120,9 +120,8 @@ userSchema.pre<UserInterface>("validate", async function (next) {
 userSchema.pre<UserInterface>("save", async function (next) {
 	if (this.isModified("password")) {
 		if (this.password.length < MIN_PW_LENGTH)
-			throw new Error("Lykilorð verður að vera amk. 8 stafir");
+			throw new Error(`Lykilorð verður að vera amk. ${MIN_PW_LENGTH} stafir`);
 		this.password = await this.hashString(this.password);
-		this.username = this.username.toLocaleLowerCase().trim();
 	}
 	if (this.isModified("username")) {
 		this.username = this.username.toLowerCase().trim();

@@ -64,7 +64,7 @@ export interface UserRegisterInfo {
 export interface UserCollectionInterface extends Model<UserInterface> {
 	register: (v1: UserRegisterInfo) => Promise<UserInterface>;
 	findByCreds: (email: string, passw: string) => Promise<UserAuthData>;
-	GUESS_RESET_PASSWORD_CODE_MAX_ATTEMPTS: number;
+	findByEmailAndRequestResetPasswordCode: (email: string) => Promise<void>;
 }
 
 export interface UserAuthData {

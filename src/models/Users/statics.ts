@@ -1,6 +1,7 @@
 import { UserRegisterInfo, UserCollectionInterface } from "./interface";
 import { AuthTokens } from "../AuthTokens";
 import bcrypt from "bcrypt";
+import * as utils from "./utils";
 
 export const register = async function (
 	this: UserCollectionInterface,
@@ -29,4 +30,16 @@ export const findByCreds = async function (
 	};
 };
 
-export const GUESS_RESET_PASSWORD_CODE_MAX_ATTEMPTS = 3;
+export const findByEmailAndRequestResetPasswordCode = async function (
+	this: UserCollectionInterface,
+	email: string
+) {
+	const doc = await this.findOne({ email });
+	if (!doc) throw new Error(`User not found with email: ${email}`);
+	doc.resetPasswordInfo = {
+		code: utils.generateVerificationCode(utils.RESET_PASSWORD_CODE_LENGTH),
+		guessCount: 0,
+		requestedAt: new Date(),
+	};
+	await doc.save();
+};

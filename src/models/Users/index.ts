@@ -76,6 +76,17 @@ const userSchema = new Schema(
 			type: [String],
 			default: [],
 		},
+		resetPasswordInfo: {
+			code: {
+				type: String,
+			},
+			requestedAt: {
+				type: Date,
+			},
+			guessCount: {
+				type: Number,
+			},
+		},
 	},
 	{
 		timestamps: true,

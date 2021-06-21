@@ -37,7 +37,9 @@ export interface UserInterface extends Document {
 	allowEmail: boolean;
 	pushNotificationTokens: string[];
 	// info regarding reset password
-	resetPasswordInfo?: ResetPasswordInfo;
+	resetPasswordCode?: ResetPasswordCodeInfo;
+	resetPasswordToken?: ResetPasswordTokenInfo;
+	resetPasswordCodeGuessCount: number;
 	setVerificationCode: () => Promise<string>;
 	verify: (code: string) => Promise<void>;
 	getPublic: () => PublicUser;
@@ -47,10 +49,13 @@ export interface UserInterface extends Document {
 	getMovitation: () => MotivationType;
 }
 
-export interface ResetPasswordInfo {
+export interface ResetPasswordCodeInfo {
 	code: string;
 	requestedAt: Date;
-	guessCount: number;
+}
+export interface ResetPasswordTokenInfo {
+	token: string;
+	requestedAt: Date;
 }
 
 export interface UserRegisterInfo {
@@ -65,6 +70,15 @@ export interface UserCollectionInterface extends Model<UserInterface> {
 	register: (v1: UserRegisterInfo) => Promise<UserInterface>;
 	findByCreds: (email: string, passw: string) => Promise<UserAuthData>;
 	findByEmailAndRequestResetPasswordCode: (email: string) => Promise<void>;
+	findByEmailAndRequestResetPasswordToken: (
+		email: string,
+		code: string
+	) => Promise<String>;
+	findByEmailAndResetPassword: (
+		email: string,
+		token: string,
+		password: string
+	) => Promise<UserInterface>;
 }
 
 export interface UserAuthData {

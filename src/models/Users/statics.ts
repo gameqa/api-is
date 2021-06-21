@@ -2,6 +2,7 @@ import { UserRegisterInfo, UserCollectionInterface } from "./interface";
 import { AuthTokens } from "../AuthTokens";
 import bcrypt from "bcrypt";
 import * as utils from "./utils";
+import { USER_PW_HASH_KEY } from "../../utils";
 
 export const register = async function (
 	this: UserCollectionInterface,
@@ -36,10 +37,62 @@ export const findByEmailAndRequestResetPasswordCode = async function (
 ) {
 	const user = await this.findOne({ email });
 	if (!user) throw new Error(`User not found with email: ${email}`);
-	user.resetPasswordInfo = {
+	user.resetPasswordCode = {
 		code: utils.generateVerificationCode(utils.RESET_PASSWORD_CODE_LENGTH),
-		guessCount: 0,
 		requestedAt: new Date(),
 	};
+	user.resetPasswordCodeGuessCount = 0;
 	await user.save();
+};
+
+export const findByEmailAndRequestResetPasswordToken = async function (
+	this: UserCollectionInterface,
+	email: string,
+	code: string
+) {
+	// check if code is undefined
+	if (code === undefined) throw new Error("No code received");
+
+	// find user by email
+	const user = await this.findOne({ email });
+
+	// make sure user exists and has resetPasswordInfo
+	if (!user || user.resetPasswordCode === undefined)
+		throw new Error(`No user with email ${email} has requested code`);
+
+	if (user.resetPasswordCodeGuessCount >= utils.RESET_PASSWORD_MAX_GUESS_COUNT)
+		throw new Error("Too many attempts to guess reset password code");
+
+	// check if code has expired
+	if (
+		new Date().getTime() - user.resetPasswordCode.requestedAt.getTime() >
+		utils.RESET_PASSWORD_CODE_TIME_PERIOD_LENGTH
+	)
+		throw new Error("Verification code is no longer valid");
+
+	const hashedInput = user.sha256(code);
+
+	// if it isnt the same as the hashed code
+	// then we increment a counter
+	if (user.resetPasswordCode.code !== hashedInput) {
+		user.resetPasswordCodeGuessCount += 1;
+		await user.save();
+		throw new Error("Hashed codes do not match");
+	}
+
+	user.resetPasswordToken = {
+		token: await user.hashString(
+			(user.resetPasswordCode.code +
+				new Date().toISOString() +
+				utils.generateVerificationCode(
+					utils.RESET_PASSWORD_TOKEN_TIME_PERIOD_LENGTH
+				)) as string
+		),
+		requestedAt: new Date(),
+	};
+	user.resetPasswordCode = undefined;
+
+	await user.save();
+
+	return user.resetPasswordToken.token;
 };

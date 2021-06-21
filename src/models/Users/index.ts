@@ -76,16 +76,24 @@ const userSchema = new Schema(
 			type: [String],
 			default: [],
 		},
-		resetPasswordInfo: {
+		resetPasswordCode: {
 			code: {
 				type: String,
 			},
 			requestedAt: {
 				type: Date,
 			},
-			guessCount: {
-				type: Number,
+		},
+		resetPasswordToken: {
+			token: {
+				type: String,
 			},
+			requestedAt: {
+				type: Date,
+			},
+		},
+		resetPasswordCodeGuessCount: {
+			type: Number,
 		},
 	},
 	{
@@ -172,6 +180,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		this.hiscoreRank = await this.collection.estimatedDocumentCount();
 		this.level = 1;
 		this.invites = 0;
+		this.resetPasswordCodeGuessCount = 0;
 		this.pushNotificationTokens = [];
 	}
 	if (!USER_TYPES.includes(this.type as UserTypes))

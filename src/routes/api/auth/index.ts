@@ -2,6 +2,7 @@ import authenticate from "./authenticate";
 import register from "./register";
 import requestResetPasswordCode from "./requestResetPasswordCode";
 import requestResetPasswordToken from "./requestResetPasswordToken";
+import resetPassword from "./resetPassword";
 import { RouteBuilder } from "../../utils";
 
 export default RouteBuilder.routerForEndpoints([
@@ -23,6 +24,11 @@ export default RouteBuilder.routerForEndpoints([
 	{
 		route: "/request_reset_password_token",
 		controller: requestResetPasswordToken,
+		method: "post",
+	},
+	{
+		route: "/reset_password",
+		controller: resetPassword,
 		method: "post",
 	},
 ]);

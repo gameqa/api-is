@@ -149,9 +149,9 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	}
 	if (
 		this.isModified("resetPasswordInfo") &&
-		this.resetPasswordInfo !== undefined
+		this.resetPasswordCode !== undefined
 	) {
-		const unHashed = this.resetPasswordInfo.code;
+		const unHashed = this.resetPasswordCode.code;
 		/**
 		 * Sends email with
 		 * the reset pw code when it is updated
@@ -165,7 +165,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 			data: { resetPasswordCode: unHashed! },
 		});
 		// update the code with its hash
-		this.resetPasswordInfo.code = this.sha256(unHashed);
+		this.resetPasswordCode.code = this.sha256(unHashed);
 	}
 	if (this.isNew) {
 		this.type = DEFAULT_USER_TYPE;

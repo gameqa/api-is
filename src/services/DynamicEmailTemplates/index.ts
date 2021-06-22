@@ -39,6 +39,6 @@ export class Sender {
 	}
 }
 
-export const DEFAULT_SENDER = "njall16@ru.is";
+export const DEFAULT_SENDER = "spurningarapp@ru.is";
 export const REGISTER_USER_TEMPLATE = "d-848972f67bb94ba4a22e826ab6656bff";
 export const RESET_PW_CODE_TEMPLATE = "d-87d0255b6c7e4bde9594ee435f4fc80d";

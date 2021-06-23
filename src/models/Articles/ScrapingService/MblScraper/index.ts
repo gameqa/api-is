@@ -8,9 +8,10 @@ export default class MblScraper
 	implements ArticleScraper
 {
 	public async scrapeArticle(): Promise<ScrapeData> {
-		const { data } = await axios.get<string>(
+		const { data, headers } = await axios.get<string>(
 			`https://www.mbl.is/${this.sourceArticleKey}`
 		);
+		console.log(headers)
 		const $ = cheerio.load(data.replace(/\&shy;/, ""));
 		const articleText = $(".main-layout").text();
 		this.paragraphs = articleText

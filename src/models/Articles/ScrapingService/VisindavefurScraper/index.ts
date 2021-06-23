@@ -7,9 +7,10 @@ export default class VisindavefurScraper
 	extends ArticleScraperBase
 	implements ArticleScraper {
 	public async scrapeArticle(): Promise<ScrapeData> {
-		const { data } = await axios.get<string>(
+		const { data, headers } = await axios.get<string>(
 			`https://www.visindavefur.is/svar.php?id=${this.sourceArticleKey}`
 		);
+		console.log(headers)
 		const $ = cheerio.load(data);
 		const articleText = $(".article-text").text();
 		this.paragraphs = articleText

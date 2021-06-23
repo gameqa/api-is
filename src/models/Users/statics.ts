@@ -93,6 +93,8 @@ export const findByEmailAndRequestResetPasswordToken = async function (
 	};
 	user.resetPasswordCode = undefined;
 
+	console.log(user)
+
 	await user.save();
 
 	return user.resetPasswordToken.token;

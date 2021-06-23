@@ -1,7 +1,7 @@
 import server from "./app";
 import schedule from "node-schedule";
 import { Users } from "./models";
-import MBLScraper from "./models/Articles/ScrapingService/MblScraper";
+import VisirScraper from "./models/Articles/ScrapingService/VisirScraper";
 
 /**
  * Start Express server.
@@ -45,7 +45,25 @@ schedule.scheduleJob("*/5 * * * *", async function () {
 	}
 });
 
-new MBLScraper("frettir/erlent/2018/04/17/barbara_bush_latin/")
-	.scrapeArticle()
-	.then(console.log)
-	.catch(console.log);
+const links =  [
+	 '2012345974d',
+	 '2020120742d',
+	 'other/frettir01/201108/708229929',
+	 'other/frettir01/201103/110329248',
+	'other/skodanir/201208/708139925',
+	//  'https://www.visir.is/g/other/vidskipti06/202104/2097828d',
+	//  'https://www.visir.is/g/other/frettir/201102/870939730',
+	//  'https://www.visir.is/g/other/frettir01/201102/361804370',
+	'20212125429d/folk-geti-enn-veikst-tho-stor-hluti-thjodarinnar-se-kominn-med-vorn'
+]
+	 
+for (let i = 0; i < links.length; i++){
+	new VisirScraper(links[i])
+		.scrapeArticle()
+		.then(console.log)
+		.catch((e) => {
+			console.log(links[i]);
+			console.log(e.message);
+		})
+}
+

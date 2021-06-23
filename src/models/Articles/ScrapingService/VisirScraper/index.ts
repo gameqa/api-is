@@ -14,16 +14,12 @@ export default class VisirScraper
 		const $ = cheerio.load(data);
 		this.title =
 			$("article header h1").get(0)?.children[0]?.data ?? "Titil vantar";
-		$(".article-single__content p").each((_, element) => {
-			const text = $(element)
-				.text()
-				.replace(/(\n|\t|\r|)/g, "")
-				.replace(/\u00AD/g, "")
-				.replace(/\s{2}/g, " ")
-				.trim();
-			if (!text) return;
-			this.paragraphs.push(text);
-		});
+		const articleText = $(".article-single__content p").text();
+		this.paragraphs = articleText
+			.replace(/[\n\r\t]{1,}/g, "\n")
+			.replace(/\u00AD/g, "")
+			.split(/[\t\r\n]/g)
+			.filter((para) => !!para.trim() && para !== "Hlusta");
 		return {
 			extract: this.paragraphs[0],
 			title: this.title.trim(),

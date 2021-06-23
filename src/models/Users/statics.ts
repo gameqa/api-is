@@ -129,8 +129,10 @@ export const findByEmailAndResetPassword = async function (
 	if (token !== user.resetPasswordToken.token) throw new Error("Token invalid");
 
 	user.password = password;
-	user.resetPasswordCode = undefined;
-	user.resetPasswordToken = undefined;
+
+	await user.update({
+		 $unset: {resetPasswordToken: ""}
+	})
 
 	await user.save();
 

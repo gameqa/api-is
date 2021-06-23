@@ -91,7 +91,10 @@ export const findByEmailAndRequestResetPasswordToken = async function (
 		),
 		requestedAt: new Date(),
 	};
-	user.resetPasswordCode = undefined;
+
+	await user.update({
+		 $unset: {resetPasswordCode: ""}
+	})
 
 	console.log(user)
 

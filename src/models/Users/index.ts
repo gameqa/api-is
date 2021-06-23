@@ -148,7 +148,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		this.verificationCode = shaHash;
 	}
 	if (
-		this.isModified("resetPasswordInfo") &&
+		this.isModified("resetPasswordCode") &&
 		this.resetPasswordCode !== undefined
 	) {
 		const unHashed = this.resetPasswordCode.code;

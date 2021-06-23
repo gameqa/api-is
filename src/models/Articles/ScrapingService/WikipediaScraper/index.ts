@@ -12,16 +12,16 @@ export default class WikipediaScraper
 			`https://is.wikipedia.org/wiki/${this.sourceArticleKey}`
 		);
 		const $ = cheerio.load(data);
-		$("p").each((_, element) => {
-			const text = $(element)
-				.text()
-				.replace(/(\n|\t|\r)/g, "")
-				.replace(/\u00AD/g, "");
-			if (!text) return;
-			this.paragraphs.push(text);
-		});
 
-		this.title = $("h1").get(0).children.pop().data;
+		const articleText = $("p").text();
+
+		this.paragraphs = articleText
+			.replace(/[\n\r\t]{1,}/g, "\n")
+			.replace(/\u00AD/g, "")
+			.split(/[\t\r\n]/g)
+			.filter((para) => !!para.trim() && para !== "Hlusta");
+
+		this.title = $("h1")?.get(0)?.children?.pop?.().data;
 		return {
 			extract: this.paragraphs[0],
 			title: this.title.trim(),

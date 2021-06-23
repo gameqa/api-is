@@ -13,6 +13,7 @@ export default async (req: RequestTokenRequest, res: Response) => {
 		);
 		res.send({ token });
 	} catch (error) {
+		console.log(`error`, error)
 		res.status(400).send({
 			message: "Invalid code",
 		});

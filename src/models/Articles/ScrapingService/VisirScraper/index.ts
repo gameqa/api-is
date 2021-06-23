@@ -12,6 +12,15 @@ export default class VisirScraper
 			`https://www.visir.is/g/${this.sourceArticleKey}`
 		);
 
+		if (!headers['content-type'] || !headers['content-type'].includes('html')) {
+			return {
+				extract: ArticleScraperBase.REMOVE_TOKEN,
+				title: ArticleScraperBase.REMOVE_TOKEN,
+				sourceArticleKey: ArticleScraperBase.REMOVE_TOKEN,
+				paragraphs: [ArticleScraperBase.REMOVE_TOKEN]
+			}
+		}
+		
 		console.log(headers)
 		const $ = cheerio.load(data);
 		this.title =

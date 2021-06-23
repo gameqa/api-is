@@ -29,6 +29,7 @@ export class ScraperFactory implements ArticleScraper {
 	public async scrapeArticle(): Promise<ScrapeData> {
 		return this.instance.scrapeArticle();
 	}
+
 }
 
 export * from "./interface";

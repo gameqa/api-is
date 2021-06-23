@@ -12,7 +12,15 @@ export default class WikipediaScraper
 			`https://is.wikipedia.org/wiki/${this.sourceArticleKey}`
 		);
 
-		console.log(headers)
+		if (!headers['content-type'] || !headers['content-type'].includes('html')) {
+			return {
+				extract: ArticleScraperBase.REMOVE_TOKEN,
+				title: ArticleScraperBase.REMOVE_TOKEN,
+				sourceArticleKey: ArticleScraperBase.REMOVE_TOKEN,
+				paragraphs: [ArticleScraperBase.REMOVE_TOKEN]
+			}
+		}
+		
 		const $ = cheerio.load(data);
 
 		const articleText = $("p").text();

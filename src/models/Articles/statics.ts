@@ -4,7 +4,7 @@ import {
 	ArticleSources,
 } from "../";
 import { ArticlePreview } from "./interface";
-import { ScraperFactory } from "./ScrapingService";
+import { ScraperFactory, ArticleScraperBase } from "./ScrapingService";
 import Google from "./GoogleSearchApi";
 
 export const findArticleByUrl = async function (
@@ -63,31 +63,19 @@ export const webSearch = async function (
 		key: keys[i],
 	}));
 
-	try {
-		const scrapedArticles = await Promise.all(
-			returnFormattedItems.map((item) => {
-				return this.findArticleByUrl(item.url);
-			})
-		);
-		return returnFormattedItems.filter((_, i) => {
-			return (
-				!!scrapedArticles[i] &&
-				scrapedArticles[i].paragraphs.join("").trim().length > 0
-			);
-		});
-	} catch (e) {
-		//
-	}
+
 
 	const scrapedArticles = await Promise.all(
 		returnFormattedItems.map((item) => {
 			return this.findArticleByUrl(item.url);
 		})
 	);
-	return returnFormattedItems.filter((_, i) => {
+
+	return returnFormattedItems.filter((item, i) => {
 		return (
 			!!scrapedArticles[i] &&
-			scrapedArticles[i].paragraphs.join("").trim().length > 0
+			scrapedArticles[i].paragraphs.join("").trim().length > 0 &&
+			item.title !== ArticleScraperBase.REMOVE_TOKEN
 		);
 	});
 };

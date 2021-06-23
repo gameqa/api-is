@@ -8,4 +8,7 @@ export default class ArticleScraperBase {
 		this.sourceArticleKey = sourceArticleKey;
 		this.paragraphs = [];
 	}
+
+
+	public static REMOVE_TOKEN = '[REMOVE]'
 }

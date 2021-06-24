@@ -40,6 +40,7 @@ export interface UserInterface extends Document {
 	resetPasswordCode?: ResetPasswordCodeInfo;
 	resetPasswordToken?: ResetPasswordTokenInfo;
 	resetPasswordCodeGuessCount: number;
+	shadowBanned?: boolean;
 	setVerificationCode: () => Promise<string>;
 	verify: (code: string) => Promise<void>;
 	getPublic: () => PublicUser;

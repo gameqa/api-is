@@ -224,7 +224,7 @@ const images: ImageInfo[] = [
 	{
 		url: "https://images.unsplash.com/photo-1515536765-9b2a70c4b333?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bGF1Z2hpbmclMjBhbmltYWx8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80",
 		subject_tf: "hlátur",
-	},https://images.unsplash.com/photo-1515536765-9b2a70c4b333?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bGF1Z2hpbmclMjBhbmltYWx8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80
+	}
 ];
 
 export const getImage = () => images[Math.floor(Math.random() * images.length)];

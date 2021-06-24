@@ -143,12 +143,88 @@ const images: ImageInfo[] = [
 	},
 	{
 		url: "https://cdn.britannica.com/94/133594-050-8F09C2FF/Jon-Sigurdsson-statue-Reykjavik-Ice.jpg",
-		subject_tf: "Jónas Sigurðsson",
+		subject_tf: "Jón Sigurðsson",
 	},
 	{
 		url: "https://cdn.britannica.com/94/133594-050-8F09C2FF/Jon-Sigurdsson-statue-Reykjavik-Ice.jpg",
 		subject_tf: "íslensk skáld",
 	},
+	{
+		url: "https://post.greatist.com/wp-content/uploads/sites/2/2019/04/rainrun-800x1200.jpg",
+		subject_tf: "hreyfingu",
+	},
+	{
+		url: "https://img.cpapracticeadvisor.com/files/base/cygnus/cpa/image/2015/11/old_dell_computers_1_.5649f352a97ef.png?auto=format&fit=max&w=1200",
+		subject_tf: "tölvur",
+	},
+	{
+		url: "https://klaraslife.com/wp-content/uploads/2020/07/Pfirsich-Eistee5G7A8231.jpg",
+		subject_tf: "svaladrykk",
+	},
+	{
+		url: "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F37%2F2020%2F07%2F28%2Fmeasured-sugar-cups-7e9a97a1.jpg&q=85",
+		subject_tf: "sykur",
+	},
+	{
+		url: "https://previews.123rf.com/images/dcwcreations/dcwcreations1904/dcwcreations190400026/126228391-several-brands-of-vitamins-on-a-modern-grocery-store-shelf.jpg",
+		subject_tf: "vítamín",
+	},
+	{
+		url: "https://images.freeimages.com/images/large-previews/204/icelandic-flag-at-thingvellir-1344246.jpg",
+		subject_tf: "hátíðarhöld",
+	},
+	{
+		url: "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F23%2F2016%2F05%2F12%2Facetaminophen-pills.jpg",
+		subject_tf: "lyf",
+	},
+	{
+		url: "https://www.bbl.is/media/1/2020-09-06-12.54.08.jpg",
+		subject_tf: "morgunmat",
+	},
+	{
+		url: "https://worldmapblank.com/wp-content/uploads/2021/02/Labeled-Asia-Map-with-Capitals-795x1024.jpg",
+		subject_tf: "Asíu",
+	},
+	{
+		url: "https://d2pn8kiwq2w21t.cloudfront.net/images/jpegPIA03153.width-1024.jpg",
+		subject_tf: "reikistjörnur",
+	},
+	{
+		url: "https://www.visindavefur.is/myndir/solmyrkvi_1919_stor_180315.jpg",
+		subject_tf: "sólkerfið",
+	},
+	{
+		url: "https://www.jacksonsart.com/blog/wp-content/uploads/2020/05/cadmium-yellow-genuine-scaled.jpeg",
+		subject_tf: "hvernig eitthvað er á litinn",
+	},
+	{
+		url: "https://i.natgeofe.com/n/4a2ee633-8b8c-4397-8ccd-a6e2a3c5490b/world-satellite-clipped_2x3.jpg",
+		subject_tf: "landafræði",
+	},
+	{
+		url: "https://i.pinimg.com/originals/35/95/ec/3595ec16b25b2003fc3da16e69fa1c72.jpg",
+		subject_tf: "dýr",
+	},
+	{
+		url: "https://i.pinimg.com/originals/a2/d0/d9/a2d0d9b52aa9adb87f8091842915dd17.jpg",
+		subject_tf: "sjávarföll",
+	},
+	{
+		url: "https://newsroom.clevelandclinic.org/wp-content/uploads/sites/4/2018/08/zygote-anatomy.jpg",
+		subject_tf: "mannslíkamann",
+	},
+	{
+		url: "https://img.apmcdn.org/09bbc0a44ee068799233d9f5a8e35e63152d42ab/portrait/39fa5f-20201027-bones.jpg",
+		subject_tf: "bein",
+	},
+	{
+		url: "https://i.pinimg.com/originals/77/96/13/779613ebf9fe03528fedf5e51e111f11.jpg",
+		subject_tf: "það sem þú ert forvitin/n að vita",
+	},
+	{
+		url: "https://images.unsplash.com/photo-1515536765-9b2a70c4b333?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bGF1Z2hpbmclMjBhbmltYWx8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80",
+		subject_tf: "hlátur",
+	},https://images.unsplash.com/photo-1515536765-9b2a70c4b333?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bGF1Z2hpbmclMjBhbmltYWx8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80
 ];
 
 export const getImage = () => images[Math.floor(Math.random() * images.length)];

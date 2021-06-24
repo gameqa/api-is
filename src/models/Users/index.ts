@@ -95,6 +95,9 @@ const userSchema = new Schema(
 		resetPasswordCodeGuessCount: {
 			type: Number,
 		},
+		shadowBanned: {
+			type: Boolean,
+		},
 	},
 	{
 		timestamps: true,
@@ -181,6 +184,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		this.invites = 0;
 		this.resetPasswordCodeGuessCount = 0;
 		this.pushNotificationTokens = [];
+		this.shadowBanned = false;
 	}
 	if (!USER_TYPES.includes(this.type as UserTypes))
 		throw new Error("Invalid user type");

@@ -47,6 +47,7 @@ export interface UserInterface extends Document {
 	sha256: (val: string) => string;
 	completeTutorial: () => Promise<void>;
 	getMovitation: () => MotivationType;
+	getHighscoreList: () => Promise<PublicUser[]>;
 }
 
 export interface ResetPasswordCodeInfo {

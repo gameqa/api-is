@@ -168,7 +168,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		this.resetPasswordCode.code = this.sha256(unHashed);
 	}
 	if (this.isNew) {
-		this.type = DEFAULT_USER_TYPE;
+		this.type = "user" //DEFAULT_USER_TYPE;
 		this.hasCompletedTutorial = false;
 		let doc: UserInterface;
 		doc = await Users.findOne({ email: this.email });

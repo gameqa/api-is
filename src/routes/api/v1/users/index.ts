@@ -6,6 +6,7 @@ import completeTutorial from "./completeTutorial";
 import currentInvites from "./currentInvites";
 import pushNotificationTokens from "./pushNotificationTokens";
 import getMotivation from "./getMotivation";
+import hiscorePlacement from "./hiscorePlacement";
 import { RouteBuilder } from "../../../utils";
 import { auth, deleteJWT } from "../utils";
 
@@ -62,5 +63,11 @@ export default RouteBuilder.routerForEndpoints([
 		method: "get",
 		middleware: [auth],
 		controller: getMotivation,
+	},
+	{
+		route: "/hiscore_placement",
+		method: "get",
+		middleware: [auth],
+		controller: hiscorePlacement,
 	},
 ]);

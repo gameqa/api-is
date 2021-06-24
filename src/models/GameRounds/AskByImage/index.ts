@@ -224,7 +224,34 @@ const images: ImageInfo[] = [
 	{
 		url: "https://images.unsplash.com/photo-1515536765-9b2a70c4b333?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bGF1Z2hpbmclMjBhbmltYWx8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80",
 		subject_tf: "hlátur",
-	}
+	},
+	/**
+	 * n'yt
+	 */
+	{
+		url: "https://images.saymedia-content.com/.image/t_share/MTc2NDUxNTE5NTY5MjA5MzA2/hiccups-remedy.jpg",
+		subject_tf: "hiksta",
+	},
+	{
+		url: "https://cdn01.zipify.com/images/000/530/993/original/5780523_20180718T055648.jpeg",
+		subject_tf: "gang sólar",
+	},
+	{
+		url: "https://www-cdn-int.eumetsat.int/files/styles/3_4_large/s3/2020-06/ASpot_Weather.jpg?h=d1cb525d&itok=pdW0Ox92",
+		subject_tf: "um veðurfar",
+	},
+	{
+		url: "https://pbs.twimg.com/media/CrHZQxNWIAQTTa3.jpg",
+		subject_tf: "heimsmet",
+	},
+	{
+		url: "https://www.vb.is/media/cache/eb/f6/ebf66d41f93986ac7c91a0d6e0d6fc28.jpg",
+		subject_tf: "íslandsmet",
+	},
+	{
+		url: "https://www.muellerundsohn.com/en/wp-content/uploads/sites/2/2020/05/Ma%C3%9Fband_2m_01.jpg",
+		subject_tf: "meðallengd",
+	},
 ];
 
 export const getImage = () => images[Math.floor(Math.random() * images.length)];

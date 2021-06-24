@@ -19,10 +19,10 @@ export const setVerificationCode = async function (this: UserInterface) {
 	// 	throw new Error(
 	// 		"Ekki hægt að búa til staðfestingarkóða fyrir notanda sem hefur núþegar staðfest"
 	// 	);
-	// const code = generateVerificationCode(VERIFICATION_CODE_LENGTH);
-	// this.verificationCode = code;
-	// await this.save();
-	return "1234";
+	const code = generateVerificationCode(VERIFICATION_CODE_LENGTH);
+	this.verificationCode = code;
+	await this.save();
+	return code;
 };
 
 export const verify = async function (this: UserInterface, code: string) {

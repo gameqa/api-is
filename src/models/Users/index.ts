@@ -95,6 +95,9 @@ const userSchema = new Schema(
 		resetPasswordCodeGuessCount: {
 			type: Number,
 		},
+		shadowBanned: {
+			type: Boolean,
+		},
 	},
 	{
 		timestamps: true,
@@ -168,7 +171,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		this.resetPasswordCode.code = this.sha256(unHashed);
 	}
 	if (this.isNew) {
-		this.type = "user" //DEFAULT_USER_TYPE;
+		this.type = DEFAULT_USER_TYPE;
 		this.hasCompletedTutorial = false;
 		let doc: UserInterface;
 		doc = await Users.findOne({ email: this.email });
@@ -181,6 +184,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		this.invites = 0;
 		this.resetPasswordCodeGuessCount = 0;
 		this.pushNotificationTokens = [];
+		this.shadowBanned = false;
 	}
 	if (!USER_TYPES.includes(this.type as UserTypes))
 		throw new Error("Invalid user type");

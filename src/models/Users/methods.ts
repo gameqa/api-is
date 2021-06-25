@@ -15,10 +15,10 @@ export const sha256 = function (this: UserInterface, text: string) {
 };
 
 export const setVerificationCode = async function (this: UserInterface) {
-	// if (this.type !== "not-verified")
-	// 	throw new Error(
-	// 		"Ekki hægt að búa til staðfestingarkóða fyrir notanda sem hefur núþegar staðfest"
-	// 	);
+	if (this.type !== "not-verified")
+		throw new Error(
+			"Ekki hægt að búa til staðfestingarkóða fyrir notanda sem hefur núþegar staðfest"
+		);
 	const code = generateVerificationCode(VERIFICATION_CODE_LENGTH);
 	this.verificationCode = code;
 	await this.save();
@@ -72,7 +72,9 @@ export const completeTutorial = async function (this: UserInterface) {
 export const getMovitation = function (this: UserInterface) {
 	return motivation(this);
 };
-export const getHighscoreList = async function  (this: UserInterface): Promise<PublicUser[]> {
+export const getHighscoreList = async function (
+	this: UserInterface
+): Promise<PublicUser[]> {
 	const USER_COUNT_ABOVE = 5;
 	const USER_COUNT_BELOW = 4;
 	const userRank = this.hiscoreRank;
@@ -83,5 +85,3 @@ export const getHighscoreList = async function  (this: UserInterface): Promise<P
 	});
 	return users.map((user) => user.getPublic());
 };
-
-

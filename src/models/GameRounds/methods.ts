@@ -23,7 +23,10 @@ export const advance = async function (
 
 	let isCompleted = false;
 
-	
+	const shadowBanWrapper = async (cb: () => Promise<void>) => {
+		if (user.shadowBanned) return;
+		await cb();
+	};
 
 	switch (userPayload.type) {
 		/**
@@ -36,9 +39,11 @@ export const advance = async function (
 			 * and if it fails we throw a new error
 			 */
 			try {
-				await Questions.create({
-					...userPayload,
-					creationRoundId: this._id,
+				shadowBanWrapper(async () => {
+					await Questions.create({
+						...userPayload,
+						creationRoundId: this._id,
+					});
 				});
 				await user.update({ $inc: { questionCount: 1 } });
 			} catch (error) {
@@ -55,11 +60,13 @@ export const advance = async function (
 			 * otherwise we mark it as archived
 			 */
 			try {
-				const question = await Questions.findById(userPayload.questionId);
-				if (!question) throw new Error("Question not found with this _id");
-				if (userPayload.archive)
-					await question.update({ $set: { archived: true } });
-				else await question.verify(this.userId);
+				shadowBanWrapper(async () => {
+					const question = await Questions.findById(userPayload.questionId);
+					if (!question) throw new Error("Question not found with this _id");
+					if (userPayload.archive)
+						await question.update({ $set: { archived: true } });
+					else await question.verify(this.userId);
+				});
 				await user.update({ $inc: { verifyQuestionCount: 1 } });
 			} catch (error) {
 				throw new Error(
@@ -75,25 +82,27 @@ export const advance = async function (
 			 * an answer that links those two together
 			 */
 			try {
-				const { identifier, key, questionId, paragraphIndex } = userPayload;
-				// find the article, and set upsert to true
-				const article = await Articles.findArticleByKey(
-					identifier as ArticleSourceIdentifier,
-					key,
-					true
-				);
-				// throw error if no article found
-				if (!article)
-					throw new Error(`Article not found for ${identifier} ${key}`);
-				const question = await Questions.findById(questionId);
-				if (!question)
-					throw new Error(`Unable to find question with id ${questionId}`);
-				// create an article
-				await Answers.create({
-					creationRoundId: this._id,
-					articleId: article._id,
-					questionId,
-					paragraphIndex,
+				shadowBanWrapper(async () => {
+					const { identifier, key, questionId, paragraphIndex } = userPayload;
+					// find the article, and set upsert to true
+					const article = await Articles.findArticleByKey(
+						identifier as ArticleSourceIdentifier,
+						key,
+						true
+					);
+					// throw error if no article found
+					if (!article)
+						throw new Error(`Article not found for ${identifier} ${key}`);
+					const question = await Questions.findById(questionId);
+					if (!question)
+						throw new Error(`Unable to find question with id ${questionId}`);
+					// create an article
+					await Answers.create({
+						creationRoundId: this._id,
+						articleId: article._id,
+						questionId,
+						paragraphIndex,
+					});
 				});
 				await user.update({ $inc: { articlesFoundCount: 1 } });
 			} catch (error) {
@@ -110,7 +119,9 @@ export const advance = async function (
 			 * to answer the question
 			 */
 			try {
-				await Answers.findByIdAndArchive(userPayload.answerId);
+				shadowBanWrapper(async () => {
+					await Answers.findByIdAndArchive(userPayload.answerId);
+				});
 				await user.update({ $inc: { articlesFoundCount: 1 } });
 			} catch (error) {
 				throw new Error(
@@ -128,9 +139,11 @@ export const advance = async function (
 			 * logic and is aclled directly
 			 */
 			try {
-				await Answers.findByIdAndSetSpan(userPayload.answerId, {
-					roundId: this._id,
-					...userPayload,
+				shadowBanWrapper(async () => {
+					await Answers.findByIdAndSetSpan(userPayload.answerId, {
+						roundId: this._id,
+						...userPayload,
+					});
 				});
 				await user.update({ $inc: { answerCount: 1 } });
 			} catch (error) {
@@ -151,15 +164,19 @@ export const advance = async function (
 			 * which updates the answer
 			 */
 			try {
-				const answer = await Answers.findById(userPayload._id);
-				if (!answer)
-					throw new Error(`${userPayload._id} is not a pkey of an answer`);
-				const question = await Questions.findById(answer.questionId);
-				if (!question)
-					throw new Error(`can not find question by Id ${question._id}`);
-				if (question.isYesOrNo)
-					throw new Error("Can not user 'verify-span' on yes or no questions");
-				await answer.verify(this.userId, userPayload.canBeShortened);
+				shadowBanWrapper(async () => {
+					const answer = await Answers.findById(userPayload._id);
+					if (!answer)
+						throw new Error(`${userPayload._id} is not a pkey of an answer`);
+					const question = await Questions.findById(answer.questionId);
+					if (!question)
+						throw new Error(`can not find question by Id ${question._id}`);
+					if (question.isYesOrNo)
+						throw new Error(
+							"Can not user 'verify-span' on yes or no questions"
+						);
+					await answer.verify(this.userId, userPayload.canBeShortened);
+				});
 				await user.update({ $inc: { verifyAnswerCount: 1 } });
 			} catch (error) {
 				throw new Error(
@@ -177,18 +194,22 @@ export const advance = async function (
 			 */
 			let answer: AnswersInterface;
 			try {
-				answer = await Answers.findById(userPayload.answerId);
-				if (!answer)
-					throw new Error(`${userPayload.answerId} is not a pkey of an answer`);
-				const question = await Questions.findById(answer.questionId);
-				if (!question)
-					throw new Error(
-						`can not find question by Id ${userPayload.answerId}`
-					);
-				if (!question.isYesOrNo)
-					throw new Error(
-						"Can only use 'verify-yes-no-answer-paragraph' on yes or no questions"
-					);
+				shadowBanWrapper(async () => {
+					answer = await Answers.findById(userPayload.answerId);
+					if (!answer)
+						throw new Error(
+							`${userPayload.answerId} is not a pkey of an answer`
+						);
+					const question = await Questions.findById(answer.questionId);
+					if (!question)
+						throw new Error(
+							`can not find question by Id ${userPayload.answerId}`
+						);
+					if (!question.isYesOrNo)
+						throw new Error(
+							"Can only use 'verify-yes-no-answer-paragraph' on yes or no questions"
+						);
+				});
 			} catch (error) {
 				throw new Error(
 					`Unable to verify yes or no answer due to '${error.message}'`
@@ -196,8 +217,10 @@ export const advance = async function (
 			}
 
 			try {
-				await answer.setYesOrNoAnswer(userPayload.answer);
-				await answer.verify(this.userId);
+				shadowBanWrapper(async () => {
+					await answer.setYesOrNoAnswer(userPayload.answer);
+					await answer.verify(this.userId);
+				});
 				await user.update({ $inc: { verifyAnswerCount: 1 } });
 			} catch {
 				// catch error but do nothing
@@ -213,7 +236,9 @@ export const advance = async function (
 			 * with the _id present in userPayload as impossible
 			 */
 			try {
-				await Questions.findByIdAndMarkAsImpossible(userPayload.questionId);
+				shadowBanWrapper(async () => {
+					await Questions.findByIdAndMarkAsImpossible(userPayload.questionId);
+				});
 				await user.update({ $inc: { articlesFoundCount: 1 } });
 			} catch (error) {
 				throw new Error(
@@ -228,41 +253,43 @@ export const advance = async function (
 			 * working with the question so only the answerId is present
 			 */
 			try {
-				if (userPayload.isYesOrNo === undefined)
-					throw new Error("Payload isYesOrNo not given");
+				shadowBanWrapper(async () => {
+					if (userPayload.isYesOrNo === undefined)
+						throw new Error("Payload isYesOrNo not given");
 
-				const answer = await Answers.findById(userPayload.answerId);
+					const answer = await Answers.findById(userPayload.answerId);
 
-				if (!answer) {
-					throw new Error("Unable to find answer with the provided id");
-				}
+					if (!answer) {
+						throw new Error("Unable to find answer with the provided id");
+					}
 
-				if (answer.verifiedAt) {
-					throw new Error("Answer is already verified");
-				}
+					if (answer.verifiedAt) {
+						throw new Error("Answer is already verified");
+					}
 
-				const question = await Questions.findById(answer.questionId);
+					const question = await Questions.findById(answer.questionId);
 
-				if (!question) {
-					throw new Error("Unable to find question id");
-				}
+					if (!question) {
+						throw new Error("Unable to find question id");
+					}
 
-				await question.update({
-					isYesOrNo: userPayload.isYesOrNo,
+					await question.update({
+						isYesOrNo: userPayload.isYesOrNo,
+					});
+
+					if (userPayload.isYesOrNo) {
+						await answer.update({
+							firstWord: 0,
+							lastWord: 0,
+							answeredAt: new Date(),
+						});
+					} else {
+						await answer.update({
+							$unset: { firstWord: "", lastWord: "", answeredAt: "" },
+							archived: true,
+						});
+					}
 				});
-
-				if (userPayload.isYesOrNo) {
-					await answer.update({
-						firstWord: 0,
-						lastWord: 0,
-						answeredAt: new Date(),
-					});
-				} else {
-					await answer.update({
-						$unset: { firstWord: "", lastWord: "", answeredAt: "" },
-						archived: true,
-					});
-				}
 			} catch (error) {
 				throw new Error(
 					`Unable to flag question as yes or no due to ${error.message}`

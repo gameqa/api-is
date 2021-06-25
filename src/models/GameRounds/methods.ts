@@ -39,7 +39,7 @@ export const advance = async function (
 			 * and if it fails we throw a new error
 			 */
 			try {
-				shadowBanWrapper(async () => {
+				await shadowBanWrapper(async () => {
 					await Questions.create({
 						...userPayload,
 						creationRoundId: this._id,
@@ -60,7 +60,7 @@ export const advance = async function (
 			 * otherwise we mark it as archived
 			 */
 			try {
-				shadowBanWrapper(async () => {
+				await shadowBanWrapper(async () => {
 					const question = await Questions.findById(userPayload.questionId);
 					if (!question) throw new Error("Question not found with this _id");
 					if (userPayload.archive)
@@ -82,7 +82,7 @@ export const advance = async function (
 			 * an answer that links those two together
 			 */
 			try {
-				shadowBanWrapper(async () => {
+				await shadowBanWrapper(async () => {
 					const { identifier, key, questionId, paragraphIndex } = userPayload;
 					// find the article, and set upsert to true
 					const article = await Articles.findArticleByKey(
@@ -119,7 +119,7 @@ export const advance = async function (
 			 * to answer the question
 			 */
 			try {
-				shadowBanWrapper(async () => {
+				await shadowBanWrapper(async () => {
 					await Answers.findByIdAndArchive(userPayload.answerId);
 				});
 				await user.update({ $inc: { articlesFoundCount: 1 } });
@@ -139,7 +139,7 @@ export const advance = async function (
 			 * logic and is aclled directly
 			 */
 			try {
-				shadowBanWrapper(async () => {
+				await shadowBanWrapper(async () => {
 					await Answers.findByIdAndSetSpan(userPayload.answerId, {
 						roundId: this._id,
 						...userPayload,
@@ -164,7 +164,7 @@ export const advance = async function (
 			 * which updates the answer
 			 */
 			try {
-				shadowBanWrapper(async () => {
+				await shadowBanWrapper(async () => {
 					const answer = await Answers.findById(userPayload._id);
 					if (!answer)
 						throw new Error(`${userPayload._id} is not a pkey of an answer`);
@@ -194,7 +194,7 @@ export const advance = async function (
 			 */
 			let answer: AnswersInterface;
 			try {
-				shadowBanWrapper(async () => {
+				await shadowBanWrapper(async () => {
 					answer = await Answers.findById(userPayload.answerId);
 					if (!answer)
 						throw new Error(
@@ -217,7 +217,7 @@ export const advance = async function (
 			}
 
 			try {
-				shadowBanWrapper(async () => {
+				await shadowBanWrapper(async () => {
 					await answer.setYesOrNoAnswer(userPayload.answer);
 					await answer.verify(this.userId);
 				});
@@ -236,7 +236,7 @@ export const advance = async function (
 			 * with the _id present in userPayload as impossible
 			 */
 			try {
-				shadowBanWrapper(async () => {
+				await shadowBanWrapper(async () => {
 					await Questions.findByIdAndMarkAsImpossible(userPayload.questionId);
 				});
 				await user.update({ $inc: { articlesFoundCount: 1 } });
@@ -253,7 +253,7 @@ export const advance = async function (
 			 * working with the question so only the answerId is present
 			 */
 			try {
-				shadowBanWrapper(async () => {
+				await shadowBanWrapper(async () => {
 					if (userPayload.isYesOrNo === undefined)
 						throw new Error("Payload isYesOrNo not given");
 

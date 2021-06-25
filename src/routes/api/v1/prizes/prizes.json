@@ -13,7 +13,7 @@
 		},
 		{
 			"_id": "2",
-			"name": "Múmín Bolla frá Ásbjörn Ólafsson",
+			"name": "Múmín Bolli frá Ásbyrni Ólafssyni",
 			"img": "https://cdn.shopify.com/s/files/1/0283/8442/8125/products/CloudberryLivingArabiaMoominMugSummer2020LinmtededitionRelaxingfront_900x.jpg?v=1595408625",
 			"brandImg": "https://www.asbjorn.is/static/sitemap/lg/27527a65336e9084839218bb0cda68ce-asbjorn-stort.jpg?v2"
 		}]
@@ -31,7 +31,7 @@
 		},
 		{
 			"_id": "2",
-			"name": "Múmín Bolla frá Ásbjörn Ólafsson",
+			"name": "Múmín Bolli frá Ásbyrni Ólafssyni",
 			"img": "https://cdn.shopify.com/s/files/1/0283/8442/8125/products/CloudberryLivingArabiaMoominMugSummer2020LinmtededitionRelaxingfront_900x.jpg?v=1595408625",
 			"brandImg": "https://www.asbjorn.is/static/sitemap/lg/27527a65336e9084839218bb0cda68ce-asbjorn-stort.jpg?v2"
 		}]
@@ -49,28 +49,42 @@
 		},
 		{
 			"_id": "2",
-			"name": "Múmín Bolla frá Ásbjörn Ólafsson",
+			"name": "Múmín Bolli frá Ásbyrni Ólafssyni",
 			"img": "https://cdn.shopify.com/s/files/1/0283/8442/8125/products/CloudberryLivingArabiaMoominMugSummer2020LinmtededitionRelaxingfront_900x.jpg?v=1595408625",
 			"brandImg": "https://www.asbjorn.is/static/sitemap/lg/27527a65336e9084839218bb0cda68ce-asbjorn-stort.jpg?v2"
 		},
 		{
 			"_id": "2",
-			"name": "AREON ilmstangir frá Ásbjörn Ólafsson",
+			"name": "AREON ilmstangir frá Ásbyrni Ólafssyni",
 			"img": "https://www.asbjorn.is/static/store/images/product_26759.jpg",
 			"brandImg": "https://www.asbjorn.is/static/sitemap/lg/27527a65336e9084839218bb0cda68ce-asbjorn-stort.jpg?v2"
 		}]
 	},
 	{
 		"_id": "4",
-		"name": "Áhrifavaldar",
+		"name": "Elítan",
 		"chestImg": "https://dunb17ur4ymx4.cloudfront.net/wysiwyg/550688/0c6eb5209d0e9849b5d847ccf88efadb00ba2d26.png",
-		"prereqDescription": "fá 10 vini til þess að skrá sig á spurningar.is",
+		"prereqDescription": "komast í Lvl 15",
 		"prizes": [
 			{
 				"_id": "2",
-				"name": "AREON ilmstangir frá Ásbjörn Ólafsson",
+				"name": "AREON ilmstangir frá Ásbyrni Ólafssyni",
 				"img": "https://www.asbjorn.is/static/store/images/product_26759.jpg",
 				"brandImg": "https://www.asbjorn.is/static/sitemap/lg/27527a65336e9084839218bb0cda68ce-asbjorn-stort.jpg?v2"
+			}
+		]
+	},
+	{
+		"_id": "5",
+		"name": "Hvítir Hrafnar",
+		"chestImg": "https://dunb17ur4ymx4.cloudfront.net/wysiwyg/550688/0c6eb5209d0e9849b5d847ccf88efadb00ba2d26.png",
+		"prereqDescription": "komast í Lvl 20",
+		"prizes": [
+			{
+				"_id": "1",
+				"name": "Gjafabréf fyrir tvo í Krauma.",
+				"img": "https://i.imgur.com/wrwayPj.png",
+				"brandImg": "https://lirp-cdn.multiscreensite.com/33e1f341/dms3rep/multi/opt/logo-170x42-1920w-1920w.png"
 			}
 		]
 	}

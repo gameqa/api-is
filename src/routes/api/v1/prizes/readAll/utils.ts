@@ -9,7 +9,9 @@ export const prizeAvailable = (prizeId: string, user: UserInterface) => {
 		case "3":
 			return user.level >= 10;
 		case "4":
-			return user.invites >= 10;
+			return user.level >= 15;
+		case "5":
+			return user.level >= 20;
 		default:
 			return false;
 	}

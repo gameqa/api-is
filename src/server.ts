@@ -1,6 +1,6 @@
 import server from "./app";
 import schedule from "node-schedule";
-import { Users } from "./models";
+import { UserInterface, Users } from "./models";
 import VisirScraper from "./models/Articles/ScrapingService/VisirScraper";
 
 /**
@@ -20,11 +20,21 @@ server.listen(server.get("port"), () => {
  * update high score rankings
  */
 schedule.scheduleJob("*/5 * * * *", async function () {
+
+	const getUserContributionCount = (user: UserInterface) =>
+		(user.questionCount ?? 0) +
+		(user.verifyAnswerCount ?? 0) +
+		(user.verifyQuestionCount ?? 0) +
+		(user.articlesFoundCount ?? 0) +
+		(user.answerCount ?? 0);
+	
 	try {
 		console.log("UPDATING HIGHSCORE AT TIME: " + new Date().toISOString());
-		const users = await Users.find().sort({
-			verifyAnswerCount: "desc",
-		});
+		const users = await Users.find();
+		users.sort((userA, userB) => 
+			getUserContributionCount(userB) - 
+			getUserContributionCount(userA) 
+		)
 		await Promise.all(
 			users.map((user, i) => {
 				user.hiscoreRank = i + 1;

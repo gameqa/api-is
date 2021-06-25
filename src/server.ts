@@ -55,25 +55,3 @@ schedule.scheduleJob("*/5 * * * *", async function () {
 	}
 });
 
-const links =  [
-	 '2012345974d',
-	 '2020120742d',
-	 'other/frettir01/201108/708229929',
-	 'other/frettir01/201103/110329248',
-	'other/skodanir/201208/708139925',
-	//  'https://www.visir.is/g/other/vidskipti06/202104/2097828d',
-	//  'https://www.visir.is/g/other/frettir/201102/870939730',
-	//  'https://www.visir.is/g/other/frettir01/201102/361804370',
-	'20212125429d/folk-geti-enn-veikst-tho-stor-hluti-thjodarinnar-se-kominn-med-vorn'
-]
-	 
-for (let i = 0; i < links.length; i++){
-	new VisirScraper(links[i])
-		.scrapeArticle()
-		.then(console.log)
-		.catch((e) => {
-			console.log(links[i]);
-			console.log(e.message);
-		})
-}
-

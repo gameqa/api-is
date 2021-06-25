@@ -55,6 +55,9 @@ const answerSchema = new Schema({
 	yesOrNoAnswer: {
 		type: Boolean,
 	},
+	isDisqualified: {
+		type: Boolean,
+	}
 });
 
 answerSchema.methods = methods;
@@ -116,6 +119,7 @@ answerSchema.pre<AnswersInterface>("save", async function (next) {
 		this.archived = false;
 		this.canBeShortened = false;
 		this.yesOrNoAnswer = undefined;
+		this.isDisqualified = false
 	}
 
 	next();

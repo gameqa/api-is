@@ -16,6 +16,7 @@ export interface AnswersInterface extends Document {
 	verifiedAt?: Date;
 	answeredAt?: Date;
 	archived: boolean;
+	isDisqualified: boolean;
 	// flags
 	canBeShortened: boolean;
 	yesOrNoAnswer?: boolean;

@@ -35,6 +35,9 @@ const questionSchema = new Schema({
 	isYesOrNo: {
 		type: Boolean,
 	},
+	isDisqualified: {
+		type: Boolean
+	}
 });
 
 questionSchema.methods = methods;
@@ -66,6 +69,7 @@ questionSchema.pre<QuestionsInterface>("save", async function (next) {
 		this.isImpossible = false;
 		this.answeredAt = undefined;
 		this.isYesOrNo = undefined;
+		this.isDisqualified = false
 	}
 	next();
 });

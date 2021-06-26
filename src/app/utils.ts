@@ -3,11 +3,11 @@ import rateLimit from "express-rate-limit";
 import compression from "compression";
 import bodyParser from "body-parser";
 import path from "path";
-import session from "express-session";
 import mongoose from "mongoose";
-import mongo from "connect-mongo";
 import { MONGODB_URI } from "../utils/secrets";
 import cors from "cors";
+import { Users } from "../models";
+import axios from "axios";
 
 /**
  * Utils class that sets up
@@ -69,20 +69,6 @@ export default class AppUtils {
 
 		// do not execute the below during test
 		if (process.env.NODE_ENV === "test") return;
-
-		// // Mongo middleware to express
-		// app.use(
-		// 	session({
-		// 		resave: true,
-		// 		saveUninitialized: true,
-		// 		secret: SESSION_SECRET,
-		// 		// @ts-ignore
-		// 		store: new (mongo(session))({
-		// 			url: MONGODB_URI,
-		// 			autoReconnect: true,
-		// 		}),
-		// 	})
-		// );
 	};
 
 	/**
@@ -97,6 +83,7 @@ export default class AppUtils {
 				useUnifiedTopology: true,
 			});
 			console.log("info", "Connected to MongoDB");
+		
 		} catch (error) {
 			console.log(
 				"error",

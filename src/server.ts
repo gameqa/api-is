@@ -1,7 +1,6 @@
 import server from "./app";
 import schedule from "node-schedule";
 import { UserInterface, Users } from "./models";
-import VisirScraper from "./models/Articles/ScrapingService/VisirScraper";
 
 /**
  * Start Express server.

@@ -3,9 +3,10 @@ import { MapUserToMotivation } from "../decleration";
 import * as utils from "../utils";
 
 const MAX_LEVEL = 10;
+const LEVEL_FOR_PRIZE_ID_5 = 20;
+const LEVEL_FOR_PRIZE_ID_4 = 15;
 const LEVEL_FOR_PRIZE_ID_3 = 10;
 const LEVEL_FOR_PRIZE_ID_2 = 5;
-const INVITES_FOR_PRIZE = 10;
 
 /**
  * array of functions that map
@@ -56,21 +57,28 @@ const mappings: MapUserToMotivation[] = [
 					} lvl-um frá því að aflæsa þennan vinninga flokk`,
 					prizeId: "3",
 			  }
-			: user.invites < INVITES_FOR_PRIZE
+			: user.invites < LEVEL_FOR_PRIZE_ID_4
 			? {
 					type: "close-to-prize",
-					text: `Þú þarft að bjóða ${
-						INVITES_FOR_PRIZE - user.invites
-					} í viðbót til þess að aflæsa þennan vinninga flokk`,
+					text: `Þú ert ${
+						LEVEL_FOR_PRIZE_ID_4 - user.level
+					} lvl-um frá því að aflæsa þennan vinninga flokk`,
 					prizeId: "4",
+			  }
+			: user.invites < LEVEL_FOR_PRIZE_ID_5
+			? {
+					type: "close-to-prize",
+					text: `Þú ert ${
+						LEVEL_FOR_PRIZE_ID_5 - user.level
+					} lvl-um frá því að aflæsa þsennan vinninga flokk`,
+					prizeId: "5",
 			  }
 			: {
 					type: "close-to-prize",
 					text: "Þú hefur aflæst alla mögulega vinningaflokka!",
-					prizeId: "4",
+					prizeId: "5",
 			  },
 ];
 
 export const getItem = () => utils.getRandom(mappings);
-export const isAvailable = (user: UserInterface) =>
-	user.level < MAX_LEVEL || user.invites < INVITES_FOR_PRIZE;
+export const isAvailable = () => true;

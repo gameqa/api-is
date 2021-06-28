@@ -98,6 +98,12 @@ const userSchema = new Schema(
 		shadowBanned: {
 			type: Boolean,
 		},
+		lastDateActive: {
+			type: String,
+		},
+		dailyStreak: {
+			type: Number,
+		},
 	},
 	{
 		timestamps: true,
@@ -185,6 +191,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		this.resetPasswordCodeGuessCount = 0;
 		this.pushNotificationTokens = [];
 		this.shadowBanned = false;
+		this.dailyStreak = 1;
 	}
 	if (!USER_TYPES.includes(this.type as UserTypes))
 		throw new Error("Invalid user type");

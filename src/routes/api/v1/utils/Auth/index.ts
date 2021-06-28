@@ -2,15 +2,35 @@ import { Request, Response, NextFunction } from "express";
 import cookieParser from "cookie";
 import { AuthTokens } from "../../../../../models";
 
-export const auth = async (
-	req: Request,
-	res: Response,
-	next: NextFunction
-) => {
+const trimDateToString = (date: Date) => {
+	return date.toISOString().slice(0, 10);
+};
+
+const today = () => {
+	return trimDateToString(new Date());
+};
+
+const yesterday = () => {
+	const date = new Date();
+	date.setDate(date.getDate() - 1);
+	return trimDateToString(date);
+};
+
+export const auth = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const token = verifyToken(req);
 		const user = await AuthTokens.getUserByTokenString(token);
-		req.body.user = await user;
+		req.body.user = user;
+		if (user.lastDateActive === today()) {
+			// do nothing
+		} else if (user.lastDateActive === yesterday()) {
+			user.dailyStreak += 1;
+		} else {
+			user.dailyStreak = 1;
+		}
+		user.lastDateActive = today();
+		await user.save();
+
 		next();
 	} catch (e) {
 		res.status(401).send({
@@ -41,8 +61,7 @@ export const deleteJWT = async (req: Request, res: Response) => {
 const verifyToken = (req: Request) => {
 	const { cookie } = req.headers;
 	if (!cookie) throw new Error("No token present in headers");
-	if (!cookie.includes("token="))
-		throw new Error("Incorrect cookie present");
+	if (!cookie.includes("token=")) throw new Error("Incorrect cookie present");
 	const cookieObject = cookieParser.parse(cookie);
 	if (!cookieObject.token) throw new Error("Token invalid");
 	return cookieObject.token as string;

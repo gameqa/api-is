@@ -46,7 +46,7 @@ export default async (req: Request, res: Response) => {
 		);
 	} catch (error) {
 		res.status(500).send({
-			message: "Unable to get Users at this time",
+			message: error.message,
 		});
 	}
 };

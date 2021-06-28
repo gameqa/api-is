@@ -10,7 +10,7 @@ export default async (req: Request, res: Response) => {
 		for (const key in req.query) {
 			if (!allowedQueryKeys.includes(key))
 				throw new Error(`${key} is not a valid query key`);
-			queryObject[key] = req.query[key] === 'false' ? false : true
+			queryObject[key] = req.query[key] === 'false' ? false : true;
 		}
 	
 		const results = await Questions.aggregate([

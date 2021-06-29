@@ -61,6 +61,7 @@ export const getPublic = function (this: UserInterface): PublicUser {
 			hiscoreRank: this.hiscoreRank ?? -1,
 		},
 		hasCompletedTutorial: this.hasCompletedTutorial ?? false,
+		streak: this.dailyStreak
 	};
 };
 

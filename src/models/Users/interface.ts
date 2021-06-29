@@ -16,6 +16,7 @@ export interface PublicUser {
 	};
 	level: number;
 	hasCompletedTutorial: boolean;
+	streak: number;
 }
 
 export interface UserInterface extends Document {

@@ -40,7 +40,8 @@ export default class AppUtils {
 					"http://localhost:3000",
 					"https://spurningarnlp.web.app",
 					"https://spurningar.is",
-					"https://www.spurningar.is",
+					"https://www.spurningar. is",
+					"https://spurningardashboard.web.app",
 				],
 			})
 		);

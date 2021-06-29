@@ -83,9 +83,9 @@ export default class AppUtils {
 				useCreateIndex: true,
 				useUnifiedTopology: true,
 			});
-			console.log("info", "Connected to MongoDB");
+			// console.log("info", "Connected to MongoDB");
 
-			// const PAGE_SIZE = 35;
+			// const PAGE_SIZE = 1;
 			// // query users
 			// const users = await Users.find({
 			// 	"pushNotificationTokens.0": { $exists: true },
@@ -94,7 +94,7 @@ export default class AppUtils {
 			// const userCount = users.length;
 			// // send floor(userCount / PAGE_SIZE) requests with foor loop
 			// let count = 0;
-			// for (let i = 0; i * PAGE_SIZE < userCount; i++) {
+			// for (let i = 125; i * PAGE_SIZE < userCount; i++) {
 			// 	// get items in page
 			// 	const sublist = users.slice(i * PAGE_SIZE, (i + 1) * PAGE_SIZE);
 
@@ -116,7 +116,7 @@ export default class AppUtils {
 			console.log(
 				"error",
 				"MongoDB connection error. Please make sure MongoDB is running. " +
-					JSON.stringify(error?.response?.data)
+					JSON.stringify(error)
 			);
 		}
 	};

@@ -77,7 +77,7 @@ schedule.scheduleJob("00 20 * * *", async function () {
 	// minimum streak to remind users
 	const MINIMUM_STREAK = 2;
 	// max number of people to send to expo per request
-	const PAGE_SIZE = 35;
+	const PAGE_SIZE = 5;
 
 	try {
 		// query users
@@ -100,7 +100,12 @@ schedule.scheduleJob("00 20 * * *", async function () {
 				body: `Þú hefur spilað ${user.dailyStreak} daga í röð, ekki láta syrpuna þína enda í dag.`,
 			}));
 			// send to expo
-			await axios.post("https://exp.host/--/api/v2/push/send", payloadObjects);
+			try {
+				await axios.post("https://exp.host/--/api/v2/push/send", payloadObjects);
+				console.log(`batch ${i} successful`);
+			} catch (error) {
+				console.log(`batch ${i} failed`);
+			}
 		}
 	} catch (error) {
 		console.log("ERROR SENDING PUSH NOTIS", error);

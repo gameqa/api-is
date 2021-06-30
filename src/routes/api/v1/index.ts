@@ -31,4 +31,8 @@ export default RouteBuilder.joinRouters([
 		route: "/questions/",
 		controller: questions,
 	},
+	{
+		route: "/prize_give_aways/",
+		controller: questions,
+	},
 ]);

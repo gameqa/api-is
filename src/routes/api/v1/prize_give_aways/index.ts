@@ -1,7 +1,6 @@
 import { RouteBuilder } from "../../../utils";
-import { allowOnly, auth } from "../utils";
+import { auth } from "../utils";
 import readAll from "./readAll";
-import getRandom from "./getRandom";
 
 export default RouteBuilder.routerForEndpoints([
 	{
@@ -9,11 +8,5 @@ export default RouteBuilder.routerForEndpoints([
 		controller: readAll,
 		method: "get",
 		middleware: [auth],
-	},
-	{
-		route: "/random",
-		controller: getRandom,
-		method: "get",
-		middleware: [],
 	},
 ]);

@@ -42,8 +42,7 @@ const getMotivation = (user: UserInterface) => {
 
 const sample = (): MotivationModule => {
 	const rand = Math.random();
-	if (rand < 0.33) return InviteOthers;
-	if (rand < 0.66) return CloseToPrize;
+	if (rand < 0.5) return CloseToPrize;
 	else return SocialImpact;
 };
 

@@ -19,7 +19,7 @@ export const send = async (
 	console.log(`START OF PUSH NOTIFICATIONS FOR: ${message}`);
 
 	// number of notifications to send at a time
-	const PAGE_SIZE = 5;
+	const PAGE_SIZE = 1;
 	let successfulCount = 0;
 	let failureCount = 0;
 
@@ -36,10 +36,10 @@ export const send = async (
 			const payloadObjects = sublist.map(cb);
 			// send to expo
 			try {
-				// await axios.post(
-				// 	"https://exp.host/--/api/v2/push/send",
-				// 	payloadObjects
-				// );
+				await axios.post(
+					"https://exp.host/--/api/v2/push/send",
+					payloadObjects
+				);
 				successfulCount++;
 			} catch (error) {
 				failureCount++;

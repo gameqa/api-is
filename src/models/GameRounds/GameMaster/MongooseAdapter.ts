@@ -1,12 +1,15 @@
 import { GameMasterAggregator } from "./interface";
 import { Questions, Answers } from "../../";
+import { Types } from "mongoose";
 
 export class MongooseAdapter implements GameMasterAggregator {
-	public async countUnverifiedQuestions() {
+	public async countUnverifiedQuestions(userId: Types.ObjectId) {
 		const docs = await Questions.find({
 			verifiedAt: { $exists: false },
 			isImpossible: false,
 			archived: false,
+			createdBy: { $ne: userId },
+			isDisqualified: false,
 		});
 		return docs.length;
 	}

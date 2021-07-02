@@ -3,6 +3,7 @@ import { Document, Model, Types } from "mongoose";
 export interface QuestionsInterface extends Document {
 	text: string;
 	creationRoundId: Types.ObjectId;
+	createdBy?: Types.ObjectId;
 	verifycationRoundIds: Types.ObjectId[];
 	verifiedAt: Date;
 	archived: boolean;

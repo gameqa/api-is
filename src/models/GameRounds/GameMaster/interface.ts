@@ -1,3 +1,5 @@
+import { Types } from "mongoose";
+
 export type Task =
 	| "make-question"
 	| "verify-question"
@@ -24,5 +26,5 @@ export type CountableTask2CountOp = {
 };
 
 export type GameMasterAggregator = {
-	[key in CountOperations]: () => Promise<number>;
+	[key in CountOperations]: (userId: Types.ObjectId) => Promise<number>;
 };

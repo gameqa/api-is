@@ -22,7 +22,7 @@ export const findByUserId = async function (
 	if (!doc) doc = await this.create({ userId });
 
 	// get a task from the game master
-	const task = await Game.getTask();
+	const task = await Game.getTask(userId);
 	// task info decleration which is then
 	// initialized in the switch case stmnt below
 	let taskInfo: TaskInfo;
@@ -73,6 +73,8 @@ export const findByUserId = async function (
 				answeredAt: { $exists: false },
 				isImpossible: false,
 				archived: false,
+				createdBy: { $ne: userId },
+				isDisqualified: false,
 			});
 			const doc = docs[Math.floor(Math.random() * docs.length)];
 			taskInfo = {

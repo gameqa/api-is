@@ -15,6 +15,9 @@ const questionSchema = new Schema({
 		type: Types.ObjectId,
 		required: true,
 	},
+	createdBy: {
+		type: Types.ObjectId,
+	},
 	verifycationRoundIds: {
 		type: Array,
 		default: [],
@@ -36,8 +39,8 @@ const questionSchema = new Schema({
 		type: Boolean,
 	},
 	isDisqualified: {
-		type: Boolean
-	}
+		type: Boolean,
+	},
 });
 
 questionSchema.methods = methods;
@@ -69,7 +72,7 @@ questionSchema.pre<QuestionsInterface>("save", async function (next) {
 		this.isImpossible = false;
 		this.answeredAt = undefined;
 		this.isYesOrNo = undefined;
-		this.isDisqualified = false
+		this.isDisqualified = false;
 	}
 	next();
 });

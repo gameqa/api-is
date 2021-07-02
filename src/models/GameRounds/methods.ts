@@ -43,6 +43,7 @@ export const advance = async function (
 					await Questions.create({
 						...userPayload,
 						creationRoundId: this._id,
+						createdBy: user._id,
 					});
 				});
 				await user.update({ $inc: { questionCount: 1 } });

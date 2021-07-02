@@ -90,3 +90,4 @@ schedule.scheduleJob("00 20 * * *", async function () {
 		})
 	);
 });
+

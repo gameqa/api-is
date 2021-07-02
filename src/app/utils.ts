@@ -6,8 +6,7 @@ import path from "path";
 import mongoose from "mongoose";
 import { MONGODB_URI } from "../utils/secrets";
 import cors from "cors";
-import { Users } from "../models";
-import axios from "axios";
+import * as Services from "../Services";
 
 /**
  * Utils class that sets up
@@ -83,6 +82,9 @@ export default class AppUtils {
 				useCreateIndex: true,
 				useUnifiedTopology: true,
 			});
+
+		
+			
 		
 		} catch (error) {
 			console.log(

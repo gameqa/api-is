@@ -45,6 +45,7 @@ export class GameMaster {
 		for (const task of this.COUNT_SEQUENCE) {
 			const countAction = this.MAP_COUNTABLE_TO_OP[task as CountableTask];
 			const count = await this.adapter[countAction](userId);
+			console.log(task, count);
 			for (let i = 0; i < count; i++)
 				taskList.push(task);
 		}

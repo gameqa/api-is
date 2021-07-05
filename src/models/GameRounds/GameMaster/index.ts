@@ -48,7 +48,6 @@ export class GameMaster {
 			for (let i = 0; i < count; i++)
 				taskList.push(task);
 		}
-		const length = taskList.length;
 		const CREATE_QUESTION_COUNT = 30;
 		for (let i = 0; i < CREATE_QUESTION_COUNT; i++)
 			taskList.push("make-question");

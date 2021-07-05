@@ -48,7 +48,6 @@ export const findByUserIdAndPopulateAnswers = async function (
 	const answers = await Promise.all(
 		docs.map((question) => Answers.find({ questionId: question._id }))
 	);
-	console.log("answers", answers);
 	// @ts-ignore
 	const output: QuestionsWithAnswers[] = docs.map((doc, i) => ({
 		...doc.toObject(),

@@ -40,25 +40,24 @@ export class GameMaster {
 	};
 
 	public async getAvailableTasks(userId: Types.ObjectId): Promise<Task[]> {
-		const taskList: Task[] = ["verify-span"];
-		const toRemove: Task[] = [];
+		const taskList: Task[] = [];
+
 		for (const task of this.COUNT_SEQUENCE) {
-			const prev = this.MAP_TO_PREV[task as CountableTask];
 			const countAction = this.MAP_COUNTABLE_TO_OP[task as CountableTask];
 			const count = await this.adapter[countAction](userId);
-			console.log(countAction, count);
-			if (count < GameMaster.MAX_TO_DO_PER_TASK) taskList.push(prev);
-			if (count == 0) toRemove.push(task);
+			for (let i = 0; i < count; i++)
+				taskList.push(task);
 		}
-		return taskList.filter((item) => !toRemove.includes(item));
+		const length = taskList.length;
+		const CREATE_QUESTION_COUNT = 30;
+		for (let i = 0; i < CREATE_QUESTION_COUNT; i++)
+			taskList.push("make-question");
+		return taskList;
+
 	}
 
 	public async getTask(userId: Types.ObjectId): Promise<Task> {
 		const tasks = await this.getAvailableTasks(userId);
-		// done as the verification tasks need to be done twice
-		// so they should weight twice as much in the random sampling
-		if (tasks.includes("verify-question")) tasks.push("verify-question");
-		if (tasks.includes("verify-span")) tasks.push("verify-span");
 		return tasks[Math.floor(Math.random() * tasks.length)];
 	}
 }

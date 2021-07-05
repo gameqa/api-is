@@ -21,11 +21,9 @@ export interface AnswersInterface extends Document {
 	canBeShortened: boolean;
 	yesOrNoAnswer?: boolean;
 	// methods
-	verify: (
-		userId: Types.ObjectId,
-		canBeShortened?: boolean
-	) => Promise<void>;
+	verify: (userId: Types.ObjectId, canBeShortened?: boolean) => Promise<void>;
 	setYesOrNoAnswer: (answer: boolean) => Promise<void>;
+	toPublic: () => Promise<PublicAnswer>;
 }
 
 export interface SpanAnswer {
@@ -34,8 +32,7 @@ export interface SpanAnswer {
 	lastWord: number;
 }
 
-export interface AnswersCollectionInterface
-	extends Model<AnswersInterface> {
+export interface AnswersCollectionInterface extends Model<AnswersInterface> {
 	findByIdAndSetSpan: (
 		id: string | Types.ObjectId,
 		answer: SpanAnswer
@@ -44,3 +41,29 @@ export interface AnswersCollectionInterface
 		id: string | Types.ObjectId
 	) => Promise<AnswersInterface | null>;
 }
+
+/**
+ * This is the interface for questions
+ * that are delivered to users as a public
+ * view of the resource
+ */
+export interface PublicYesNo {
+	type: "yes-no";
+	answerIs: boolean; // true = yes / false = no
+	verifiedAt?: Date;
+	_id: Types.ObjectId;
+}
+
+export interface PublicTextSpan {
+	type: "text-span";
+	textSpan: string;
+	verifiedAt?: Date;
+	_id: Types.ObjectId;
+}
+
+export interface PublicUnknownType {
+	type: "unknown";
+	_id: Types.ObjectId;
+}
+
+export type PublicAnswer = PublicYesNo | PublicTextSpan | PublicUnknownType;

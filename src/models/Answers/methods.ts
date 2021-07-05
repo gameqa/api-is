@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
-import { AnswersInterface } from "./interface";
-import { Users, Questions, Answers } from "..";
+import { AnswersInterface, PublicAnswer } from "./interface";
+import { Users, Questions, Answers, Articles } from "..";
 import { VERIFICATION_COUNTS } from "./utils";
 
 export const verify = async function (
@@ -14,11 +14,9 @@ export const verify = async function (
 	await this.update({
 		$push: { verificationRoundIds: userId },
 		$set: {
-			canBeShortened:
-				(canBeShortened ?? false) || this.canBeShortened,
+			canBeShortened: (canBeShortened ?? false) || this.canBeShortened,
 			// spread out object with  verifiedAt if we want to verify
-			...(this.verificationRoundIds.length + 1 ===
-			VERIFICATION_COUNTS
+			...(this.verificationRoundIds.length + 1 === VERIFICATION_COUNTS
 				? { verifiedAt: new Date() }
 				: {}),
 		},
@@ -39,10 +37,7 @@ export const setYesOrNoAnswer = async function (
 		throw new Error(
 			`Can not set yes or no answer in Answer that belongs to a question that is not yes or no`
 		);
-	if (
-		this.yesOrNoAnswer !== undefined &&
-		this.yesOrNoAnswer !== answer
-	) {
+	if (this.yesOrNoAnswer !== undefined && this.yesOrNoAnswer !== answer) {
 		/**
 		 * This is a case when two reveiwers disagree, then the answer
 		 * should be archived
@@ -54,4 +49,44 @@ export const setYesOrNoAnswer = async function (
 	}
 
 	await this.update({ $set: { yesOrNoAnswer: answer } });
+};
+
+export const toPublic = async function (
+	this: AnswersInterface
+): Promise<PublicAnswer> {
+	const question = await Questions.findById(this.questionId);
+	if (!question) throw new Error("Answer does not have valid question ID");
+	if (question.isYesOrNo) {
+		return {
+			type: "yes-no",
+			answerIs: this.yesOrNoAnswer,
+			_id: this._id,
+			verifiedAt: this.verifiedAt,
+		};
+	} else if (this.firstWord == undefined || this.lastWord === undefined)
+		return {
+			type: "unknown",
+			_id: this._id,
+		};
+
+	const article = await Articles.findById(this.articleId);
+	if (!article) throw new Error("Answer does not have valid article ID");
+
+	let textSpan: string;
+
+	try {
+		const DELIMITER = " ";
+		const wordArray = article.paragraphs[this.paragraphIndex].split(DELIMITER);
+		const answerWords = wordArray.slice(this.firstWord, this.lastWord);
+		textSpan = answerWords.join(" ");
+	} catch (e) {
+		textSpan = "Svar fannst ekki";
+	}
+
+	return {
+		type: "text-span",
+		textSpan,
+		_id: this._id,
+		verifiedAt: this.verifiedAt,
+	};
 };

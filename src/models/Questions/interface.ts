@@ -1,4 +1,5 @@
 import { Document, Model, Types } from "mongoose";
+import { AnswersInterface } from "../Answers";
 
 export interface QuestionsInterface extends Document {
 	text: string;
@@ -25,4 +26,11 @@ export interface QuestionsCollectionInterface
 	findByIdAndMarkAsImpossible: (
 		id: string | Types.ObjectId
 	) => Promise<void | QuestionsInterface>;
+	findByUserIdAndPopulateAnswers: (
+		id: Types.ObjectId
+	) => Promise<void | QuestionsInterface>;
+}
+
+export interface QuestionsWithAnswers extends QuestionsInterface {
+	answers: AnswersInterface[];
 }

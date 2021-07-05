@@ -1,5 +1,7 @@
 import { Types } from "mongoose";
 import { QuestionsCollectionInterface, Users } from "../";
+import { Answers } from "../Answers";
+import { QuestionsWithAnswers } from "./interface";
 
 export const findByIdAndArchive = async function (
 	this: QuestionsCollectionInterface,
@@ -34,8 +36,23 @@ export const findByIdAndMarkAsImpossible = async function (
 		},
 	});
 	if (!doc)
-		throw new Error(
-			`No question with _id ${_id} found to mark as impossible`
-		);
+		throw new Error(`No question with _id ${_id} found to mark as impossible`);
 	return doc;
+};
+
+export const findByUserIdAndPopulateAnswers = async function (
+	this: QuestionsCollectionInterface,
+	userId: Types.ObjectId
+) {
+	const docs = await this.find({ createdBy: userId });
+	const answers = await Promise.all(
+		docs.map((question) => Answers.find({ questionId: question._id }))
+	);
+	console.log("answers", answers);
+	// @ts-ignore
+	const output: QuestionsWithAnswers[] = docs.map((doc, i) => ({
+		...doc.toObject(),
+		answers: answers[i],
+	}));
+	return output;
 };

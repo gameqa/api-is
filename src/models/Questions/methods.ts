@@ -12,8 +12,7 @@ export const verify = async function (
 	await this.update({
 		$push: { verifycationRoundIds: userId },
 		$set: {
-			...(this.verifycationRoundIds.length + 1 ===
-			VERIFICATION_COUNTS
+			...(this.verifycationRoundIds.length + 1 === VERIFICATION_COUNTS
 				? { verifiedAt: new Date() }
 				: {}),
 		},

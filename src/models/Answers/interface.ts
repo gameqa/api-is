@@ -4,6 +4,7 @@ export interface AnswersInterface extends Document {
 	// required objectIds not relevant to article
 	questionId: Types.ObjectId;
 	creationRoundId: Types.ObjectId;
+	createdBy?: Types.ObjectId;
 	// article info
 	articleId: Types.ObjectId;
 	paragraphIndex: number;

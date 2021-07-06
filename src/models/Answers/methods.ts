@@ -57,20 +57,22 @@ export const toPublic = async function (
 	const question = await Questions.findById(this.questionId);
 	if (!question) throw new Error("Answer does not have valid question ID");
 
-	const createdBy = (await Users.findById(this.createdBy)) ?? undefined
+	const createdBy =
+		(await Users.findById(this.createdBy)).getPublic() ?? undefined;
+
 	if (question.isYesOrNo) {
 		return {
 			type: "yes-no",
 			answerIs: this.yesOrNoAnswer,
 			_id: this._id,
 			verifiedAt: this.verifiedAt,
-			createdBy
+			createdBy,
 		};
 	} else if (this.firstWord == undefined || this.lastWord === undefined)
 		return {
 			type: "unknown",
 			_id: this._id,
-			createdBy
+			createdBy,
 		};
 
 	const article = await Articles.findById(this.articleId);
@@ -87,12 +89,11 @@ export const toPublic = async function (
 		textSpan = "Svar fannst ekki";
 	}
 
-
 	return {
 		type: "text-span",
 		textSpan,
 		_id: this._id,
 		verifiedAt: this.verifiedAt,
-		createdBy
+		createdBy,
 	};
 };

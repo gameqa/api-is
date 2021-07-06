@@ -1,5 +1,5 @@
 import { Document, Model, Types } from "mongoose";
-import { UserInterface } from "../Users";
+import { PublicUser } from "../Users";
 
 export interface AnswersInterface extends Document {
 	// required objectIds not relevant to article
@@ -54,7 +54,7 @@ export interface PublicYesNo {
 	answerIs: boolean; // true = yes / false = no
 	verifiedAt?: Date;
 	_id: Types.ObjectId;
-	createdBy?: UserInterface;
+	createdBy?: PublicUser;
 }
 
 export interface PublicTextSpan {
@@ -62,13 +62,13 @@ export interface PublicTextSpan {
 	textSpan: string;
 	verifiedAt?: Date;
 	_id: Types.ObjectId;
-	createdBy?: UserInterface;
+	createdBy?: PublicUser;
 }
 
 export interface PublicUnknownType {
 	type: "unknown";
 	_id: Types.ObjectId;
-	createdBy?: UserInterface;
+	createdBy?: PublicUser;
 }
 
 export type PublicAnswer = PublicYesNo | PublicTextSpan | PublicUnknownType;

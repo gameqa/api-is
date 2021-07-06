@@ -1,5 +1,4 @@
 import { Response } from "express";
-import { Articles, GameRounds } from "../../../../../models";
 import { GetByIdRequest } from "./interface";
 
 /**

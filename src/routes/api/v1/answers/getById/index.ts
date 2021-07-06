@@ -6,7 +6,8 @@ import { GetByIdRequest } from "./interface";
  */
 export default async (req: GetByIdRequest, res: Response) => {
 	try {
-		res.send(await req.body.answer.toPublic());
+		const answer = await req.body.answer.toPublic();
+		res.send(answer);
 	} catch (error) {
 		res.status(400).send({ message: error.message });
 	}

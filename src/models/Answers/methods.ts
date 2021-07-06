@@ -58,7 +58,8 @@ export const toPublic = async function (
 	if (!question) throw new Error("Answer does not have valid question ID");
 
 	const createdBy =
-		(await Users.findById(this.createdBy)).getPublic() ?? undefined;
+		await Users.findById(this.createdBy);
+	const createdByPublic = createdBy ? createdBy.getPublic() : undefined;
 
 	if (question.isYesOrNo) {
 		return {
@@ -66,13 +67,13 @@ export const toPublic = async function (
 			answerIs: this.yesOrNoAnswer,
 			_id: this._id,
 			verifiedAt: this.verifiedAt,
-			createdBy,
+			createdBy: createdByPublic,
 		};
 	} else if (this.firstWord == undefined || this.lastWord === undefined)
 		return {
 			type: "unknown",
 			_id: this._id,
-			createdBy,
+			createdBy: createdByPublic,
 		};
 
 	const article = await Articles.findById(this.articleId);
@@ -94,6 +95,6 @@ export const toPublic = async function (
 		textSpan,
 		_id: this._id,
 		verifiedAt: this.verifiedAt,
-		createdBy,
+		createdBy: createdByPublic,
 	};
 };

@@ -9,6 +9,8 @@ export default async (req: GetByIdRequest, res: Response) => {
 		const answer = await req.body.answer.toPublic();
 		res.send(answer);
 	} catch (error) {
+
+		console.log(error.message)
 		res.status(400).send({ message: error.message });
 	}
 };

@@ -1,6 +1,5 @@
 import { RouteBuilder } from "../../../utils";
 import { auth, populate } from "../utils";
-
 import { Answers } from "../../../../models";
 import getById from "./getById";
 

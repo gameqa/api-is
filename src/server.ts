@@ -141,12 +141,11 @@ schedule.scheduleJob("00 16 * * *", async function () {
 			(user) => ({
 				to: user.pushNotificationTokens,
 				sound: "default",
-				title: `Þú hefur fengið ${answerCount} svör`,
+				title: `Þú hefur fengið ${answerCount} svör!`,
 				body: `Síðastliðinn sólarhring hafa aðrir notendur svarað ${answerCount} spurningum frá þér. Sjáðu svörin í appinu.`,
 			})
 		);
 	}
-
 });
 
 

@@ -84,7 +84,7 @@ export const toPublic = async function (
 	try {
 		const DELIMITER = " ";
 		const wordArray = article.paragraphs[this.paragraphIndex].split(DELIMITER);
-		const answerWords = wordArray.slice(this.firstWord, this.lastWord);
+		const answerWords = wordArray.slice(this.firstWord, this.lastWord + 1);
 		textSpan = answerWords.join(" ");
 	} catch (e) {
 		textSpan = "Svar fannst ekki";

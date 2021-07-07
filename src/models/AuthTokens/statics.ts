@@ -33,6 +33,6 @@ export const getUserByTokenString = async function (
 };
 
 export const getExpiry = function (this: AuthTokenCollectionInterface) {
-	const TOKEN_TTL_MS = 1000 * 60 * 60 * 24 * 14;
+	const TOKEN_TTL_MS = 1000 * 60 * 60 * 24 * 7 * 52;
 	return new Date(Date.now() + TOKEN_TTL_MS);
 };

@@ -52,7 +52,7 @@ export const findByUserIdAndPopulateAnswers = async function (
 	// @ts-ignore
 	const output: QuestionsWithAnswers[] = docs.map((doc, i) => ({
 		...doc.toObject(),
-		answers: answers[i],
+		answers: answers[i].filter((answer) => !!answer.verifiedAt),
 	}));
 	return output;
 };

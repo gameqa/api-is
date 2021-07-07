@@ -21,6 +21,8 @@ if (fs.existsSync(".env")) {
 
 export const MONGODB_URI = process.env["MONGODB_URI"];
 
+export const REDIS_URL = process.env['REDIS_URL'];
+
 export const USER_PW_HASH_KEY = isTest
   ? "testingkey"
   : process.env["USER_PW_HASH_KEY"];
@@ -66,3 +68,7 @@ if (!JWT_KEY) {
 if (!PORT) {
   exitProcess("specify PORT in env");
 }
+if (!REDIS_URL) {
+  exitProcess("specify REDIS_URL in env");
+}
+

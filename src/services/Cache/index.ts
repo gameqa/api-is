@@ -1,7 +1,10 @@
 import * as redis from "redis";
 import * as utils from "util";
+import { REDIS_URL } from "../../utils";
 
-const client = redis.createClient();
+const client = redis.createClient({
+	url: REDIS_URL
+});
 
 client.on("error", (error) => {
 	console.error("REDIS ERROR", error.message);

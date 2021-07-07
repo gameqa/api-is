@@ -28,6 +28,8 @@ export const advance = async function (
 		await cb();
 	};
 
+	console.log(`User ${this.userId} sent data to advance from ${userPayload.type}`);
+
 	switch (userPayload.type) {
 		/**
 		 * switch through possible tasks
@@ -103,6 +105,7 @@ export const advance = async function (
 						articleId: article._id,
 						questionId,
 						paragraphIndex,
+						createdBy: user._id
 					});
 				});
 				await user.update({ $inc: { articlesFoundCount: 1 } });

@@ -20,6 +20,9 @@ const answerSchema = new Schema({
 		type: Types.ObjectId,
 		required: true,
 	},
+	createdBy: {
+		type: Types.ObjectId,
+	},
 	articleId: {
 		type: Types.ObjectId,
 		required: true,

@@ -17,7 +17,6 @@ export const populate = (recipes: PopulateRecipe[]) => {
 			res.status(404).send({
 				message: e.message,
 			});
-			next();
 		}
 	};
 };

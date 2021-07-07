@@ -6,6 +6,7 @@ import gameRounds from "./game_rounds";
 import prizes from "./prizes";
 import questions from "./questions";
 import prizeGiveAways from "./prize_give_aways";
+import answers from "./answers";
 
 export default RouteBuilder.joinRouters([
 	{
@@ -35,5 +36,9 @@ export default RouteBuilder.joinRouters([
 	{
 		route: "/prize_give_aways/",
 		controller: prizeGiveAways,
+	},
+	{
+		route: "/answers/",
+		controller: answers,
 	},
 ]);

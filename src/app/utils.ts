@@ -40,6 +40,7 @@ export default class AppUtils {
 					"https://spurningar.is",
 					"https://www.spurningar. is",
 					"https://spurningardashboard.web.app",
+					"https://stats.spurningar.is",
 				],
 			})
 		);
@@ -81,6 +82,8 @@ export default class AppUtils {
 				useCreateIndex: true,
 				useUnifiedTopology: true,
 			});
+
+		
 		} catch (error) {
 			console.log(
 				"error",

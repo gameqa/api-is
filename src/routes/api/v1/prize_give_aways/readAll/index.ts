@@ -7,11 +7,11 @@ export default async (req: ReadAllRequest, res: Response) => {
 
     res.send([
         {
-            time: new Date(1625072400000), // 17:00 june 30th,
+            time: new Date(1625158800000), // 17:00 june 30th,
             items: []
         },
         {
-            time: new Date(1625677200000), // 17:00 july 7th,
+            time: new Date(1625763600000), // 17:00 july 7th,
             items: []
         }
     ]);

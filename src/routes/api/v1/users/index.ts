@@ -9,6 +9,7 @@ import getMotivation from "./getMotivation";
 import hiscorePlacement from "./hiscorePlacement";
 import { RouteBuilder } from "../../../utils";
 import { auth, deleteJWT } from "../utils";
+import getQuestions from "./getQuestions";
 
 export default RouteBuilder.routerForEndpoints([
 	{
@@ -69,5 +70,11 @@ export default RouteBuilder.routerForEndpoints([
 		method: "get",
 		middleware: [auth],
 		controller: hiscorePlacement,
+	},
+	{
+		route: "/questions",
+		method: "get",
+		middleware: [auth],
+		controller: getQuestions,
 	},
 ]);

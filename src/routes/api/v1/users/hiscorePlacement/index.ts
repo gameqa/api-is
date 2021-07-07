@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { HiscorePlacementRequest } from "./interface";
-import { UserInterface, Users } from "../../../../../models";
+import { PublicUser, Users } from "../../../../../models";
 
 import * as Services from "../../../../../services";
 /**
@@ -18,10 +18,10 @@ export default async (req: HiscorePlacementRequest, res: Response) => {
 				req.query.offset ?? Math.max(1, req.body.user.hiscoreRank - SHIFT_VALUE)
 			) - 1;
 		const limit = Number(req.query.limit ?? DEFAULT_LIMIT);
-		let users = await Services.Cache.get<UserInterface[]>(CACHE_KEY);
+		let users = await Services.Cache.get<PublicUser[]>(CACHE_KEY);
 		if (!users) {
-			users = await Users.find().sort({ hiscoreRank: 1 }).lean();
-			await Services.Cache.setTTL<UserInterface[]>(
+			users = (await Users.find().sort({ hiscoreRank: 1 })).map((user) => user.getPublic());
+			await Services.Cache.setTTL<PublicUser[]>(
 				CACHE_KEY,
 				users,
 				CACHE_TIME

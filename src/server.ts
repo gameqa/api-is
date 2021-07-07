@@ -1,8 +1,9 @@
 import server from "./app";
 import schedule from "node-schedule";
 import * as Services from "./services";
-import { UserInterface, Users } from "./models";
+import { Answers, Questions, UserInterface, Users } from "./models";
 import axios from "axios";
+import { Types } from "mongoose";
 
 /**
  * Start Express server.
@@ -90,4 +91,62 @@ schedule.scheduleJob("00 20 * * *", async function () {
 		})
 	);
 });
+
+/**
+ * SENDING ANSWERS NOTIFICATIONS
+ * Schedules a chron task once per day, to users letting them know how many 
+ * answers they have received
+ */
+schedule.scheduleJob("00 16 * * *", async function () {
+	// calculate Date 1 day from now (yesterday)
+	const yesterday = new Date();
+	yesterday.setDate(yesterday.getDate() - 1);
+	
+	// object to map userIds to answered question count
+	const mapUsersToAnswerCount: { [key: string]: number } = {};
+
+	try {
+		// find all answers verified since yesterday
+		const answers = await Answers.find({
+			verifiedAt: {
+				$gt: yesterday,
+				$lt: new Date(),
+			}
+		});
+
+		// map answers to questions
+		const questions = (await Promise.all(
+			answers.map((answer) => Questions.findOne(answer.questionId))
+		)).filter((questionItem) => !!questionItem.createdBy);
+
+		// couont questions by creators ID
+		for (const questionItem of questions) {
+			const userId = questionItem.createdBy.toString();
+			if (mapUsersToAnswerCount[userId] === undefined) mapUsersToAnswerCount[userId] = 0;
+			mapUsersToAnswerCount[userId]++;
+		}
+	 } catch (e) {
+		 
+	}
+
+	// send notifications to each user
+	for (const key in mapUsersToAnswerCount) {
+		const answerCount = mapUsersToAnswerCount[key];
+		await Services.PushNotifications.send(
+			`Sending notification to user: ${key} about ${mapUsersToAnswerCount[key]} answered questions in last 24H`,
+			{
+				_id: key,
+				"pushNotificationTokens.0": { $exists: true },
+			},
+			(user) => ({
+				to: user.pushNotificationTokens,
+				sound: "default",
+				title: `Þú hefur fengið ${answerCount} svör`,
+				body: `Síðastliðinn sólarhring hafa aðrir notendur svarað ${answerCount} spurningum frá þér. Sjáðu svörin í appinu.`,
+			})
+		);
+	}
+
+});
+
 

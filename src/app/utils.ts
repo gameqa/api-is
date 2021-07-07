@@ -6,7 +6,6 @@ import path from "path";
 import mongoose from "mongoose";
 import { MONGODB_URI } from "../utils/secrets";
 import cors from "cors";
-import { PushNotifications } from "../services";
 
 /**
  * Utils class that sets up
@@ -41,6 +40,7 @@ export default class AppUtils {
 					"https://spurningar.is",
 					"https://www.spurningar. is",
 					"https://spurningardashboard.web.app",
+					"https://stats.spurningar.is",
 				],
 			})
 		);

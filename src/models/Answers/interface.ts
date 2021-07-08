@@ -56,6 +56,7 @@ export interface PublicYesNo {
 	verifiedAt?: Date;
 	_id: Types.ObjectId;
 	createdBy?: PublicUser;
+	seen: boolean;
 }
 
 export interface PublicTextSpan {
@@ -64,12 +65,14 @@ export interface PublicTextSpan {
 	verifiedAt?: Date;
 	_id: Types.ObjectId;
 	createdBy?: PublicUser;
+	seen: boolean;
 }
 
 export interface PublicUnknownType {
 	type: "unknown";
 	_id: Types.ObjectId;
 	createdBy?: PublicUser;
+	seen: boolean;
 }
 
 export type PublicAnswer = PublicYesNo | PublicTextSpan | PublicUnknownType;

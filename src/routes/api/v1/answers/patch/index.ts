@@ -10,7 +10,7 @@ export default async (req: PatchByIdRequest, res: Response) => {
 		const body = _.pick(req.body, [
 			"seenByQuestionerAt",
 		]);
-		req.body.answer.update({ $set: body });
+		await req.body.answer.update({ $set: body });
 		res.send(req.body.answer.toPublic());
 	} catch (error) {
 		console.log(error.message)

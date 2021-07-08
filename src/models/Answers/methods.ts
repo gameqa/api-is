@@ -68,12 +68,14 @@ export const toPublic = async function (
 			_id: this._id,
 			verifiedAt: this.verifiedAt,
 			createdBy: createdByPublic,
+			seen: !!this.seenByQuestionerAt
 		};
 	} else if (this.firstWord == undefined || this.lastWord === undefined)
 		return {
 			type: "unknown",
 			_id: this._id,
 			createdBy: createdByPublic,
+			seen: !!this.seenByQuestionerAt
 		};
 
 	const article = await Articles.findById(this.articleId);
@@ -96,5 +98,6 @@ export const toPublic = async function (
 		_id: this._id,
 		verifiedAt: this.verifiedAt,
 		createdBy: createdByPublic,
+		seen: !!this.seenByQuestionerAt
 	};
 };

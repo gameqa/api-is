@@ -60,6 +60,9 @@ const answerSchema = new Schema({
 	},
 	isDisqualified: {
 		type: Boolean,
+	},
+	seenByQuestionerAt: {
+		type: Date,
 	}
 });
 
@@ -122,7 +125,8 @@ answerSchema.pre<AnswersInterface>("save", async function (next) {
 		this.archived = false;
 		this.canBeShortened = false;
 		this.yesOrNoAnswer = undefined;
-		this.isDisqualified = false
+		this.isDisqualified = false;
+		this.seenByQuestionerAt = undefined;
 	}
 
 	next();

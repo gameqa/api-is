@@ -22,6 +22,7 @@ export interface AnswersInterface extends Document {
 	// flags
 	canBeShortened: boolean;
 	yesOrNoAnswer?: boolean;
+	seenByQuestionerAt?: Date; // markr as seen by person asking question
 	// methods
 	verify: (userId: Types.ObjectId, canBeShortened?: boolean) => Promise<void>;
 	setYesOrNoAnswer: (answer: boolean) => Promise<void>;

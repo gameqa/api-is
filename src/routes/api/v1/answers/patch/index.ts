@@ -1,5 +1,6 @@
 import { Response } from "express";
 import _ from "lodash";
+import { Answers } from "../../../../../models";
 import { PatchByIdRequest } from "./interface";
 
 /**
@@ -10,8 +11,8 @@ export default async (req: PatchByIdRequest, res: Response) => {
 		const body = _.pick(req.body, [
 			"seenByQuestionerAt",
 		]);
-		await req.body.answer.update({ $set: body });
-		res.send(req.body.answer.toPublic());
+		const doc = await Answers.findByIdAndUpdate(req.body.answer._id, { $set: body }, { new: true });
+		res.send(doc.toPublic());
 	} catch (error) {
 		console.log(error.message)
 		res.status(400).send({ message: error.message });

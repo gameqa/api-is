@@ -7,6 +7,6 @@ export default RouteBuilder.routerForEndpoints([
 		route: "/",
 		controller: readAll,
 		method: "get",
-		middleware: [auth],
+		middleware: [],
 	},
 ]);

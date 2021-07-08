@@ -13,6 +13,10 @@ export default async (req: ReadAllRequest, res: Response) => {
         {
             time: new Date(1625763600000), // 17:00 july 7th,
             items: []
+        },
+        {
+            time: new Date(1626368400000), // 17:00 july 15th,
+            items: []
         }
     ]);
 };

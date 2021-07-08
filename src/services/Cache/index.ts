@@ -25,3 +25,12 @@ export const setTTL = async <T>(key: string, value: T, seconds: number) => {
 export const get = async <T>(key: string): Promise<T> => {
 	return JSON.parse(await _get(key));
 };
+
+export const getOrSetTTL = async <T>(key: string, TTL: number, cb: () => Promise<T>) => {
+	let data = await get<T>(key);
+	if (!data) {
+		data = await cb();
+		await setTTL(key, data, TTL);
+	}
+	return data;
+}

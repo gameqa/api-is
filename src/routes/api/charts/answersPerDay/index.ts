@@ -1,36 +1,19 @@
-import { Answers } from "../../../../models";
-import { Request, Response } from "express";
 
-export default async (req: Request, res: Response) => {
+import { Request, Response } from "express";
+import * as Services from "../../../../services";
+import * as Declerations from "./declerations";
+import * as Utils from "./utils";
+
+export default async (_: Request, res: Response) => {
 	try {
-		console.log("GETTING CHART INFO: " + new Date().toISOString());
-		const results = await Answers.aggregate([
-			{ $match: { answeredAt: { $exists: true } } },
-			{
-				$project: {
-					date: {
-						$dateToString: {
-							format: "%Y-%m-%d",
-							date: "$answeredAt",
-						},
-					},
-				},
-			},
-			{
-				$group: {
-					_id: { date: "$date" },
-					count: { $sum: 1 },
-				},
-			},
-		]);
-		res.send(
-			results
-				.map((item) => ({
-					count: item.count,
-					date: new Date(Date.parse(item._id.date)),
-				}))
-				.sort((a, b) => a.date.getTime() - b.date.getTime())
-		);
+		const CHACHE_KEY = "ANSWERS_PER_DAY";
+		const CACHE_DURATION_SECONDS = 240;
+
+		res.send(await Services.Cache.getOrSetTTL<Declerations.PerDate[]>(
+			CHACHE_KEY,
+			CACHE_DURATION_SECONDS,
+			Utils.getAnswersPerDay
+		));
 	} catch (error) {
 		res.status(500).send({
 			message: "Unable to get chart at this time",

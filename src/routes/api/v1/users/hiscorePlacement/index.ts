@@ -13,29 +13,27 @@ export default async (req: HiscorePlacementRequest, res: Response) => {
 	const CACHE_TIME = 15;
 
 	try {
+		// calculate default offset, if not supplied by req
 		const offset =
 			Number(
 				req.query.offset ?? Math.max(1, req.body.user.hiscoreRank - SHIFT_VALUE)
 			) - 1;
+		
+		// get default or given limit
 		const limit = Number(req.query.limit ?? DEFAULT_LIMIT);
-		let users = await Services.Cache.get<PublicUser[]>(CACHE_KEY);
-		if (!users) {
-			users = (await Users.find().sort({ hiscoreRank: 1 })).map((user) => user.getPublic());
-			await Services.Cache.setTTL<PublicUser[]>(
-				CACHE_KEY,
-				users,
-				CACHE_TIME
-			);
-		}
+
+		// use cache get or set to receive the users
+		const users = await Services.Cache.getOrSetTTL<PublicUser[]>(
+			CACHE_KEY,
+			CACHE_TIME,
+			async () => {
+				const users = await Users.find().sort({ hiscoreRank: 1 });
+				return users.map((user) => user.getPublic());
+			}
+		);
+
 		res.send(users.slice(offset, offset + limit));
 	} catch (error) {
 		res.status(400).send({ message: error.message });
 	}
 };
-
-// try {
-
-// 	res.send(await req.body.user.getHighscoreList());
-// } catch (error) {
-// 	res.status(400).send({ message: error.message });
-// }

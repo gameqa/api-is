@@ -5,34 +5,24 @@
 		"name": "Allir taka þátt",
 		"chestImg": "https://dunb17ur4ymx4.cloudfront.net/wysiwyg/550688/7d2d3a13aa181518d8ac81fd78b0febeafa8c7e1.png",
 		"prereqDescription": "",
-		"prizes": [{
-			"_id": "1",
-			"name": "Gjafabréf fyrir tvo í Krauma.",
-			"img": "https://i.imgur.com/wrwayPj.png",
-			"brandImg": "https://lirp-cdn.multiscreensite.com/33e1f341/dms3rep/multi/opt/logo-170x42-1920w-1920w.png"
-		},
-		{
-			"_id": "2",
-			"name": "Múmín Bolli frá Ásbirni Ólafssyni",
-			"img": "https://cdn.shopify.com/s/files/1/0283/8442/8125/products/CloudberryLivingArabiaMoominMugSummer2020LinmtededitionRelaxingfront_900x.jpg?v=1595408625",
-			"brandImg": "https://www.asbjorn.is/static/sitemap/lg/27527a65336e9084839218bb0cda68ce-asbjorn-stort.jpg?v2"
-		}]
+		"prizes": []
 	},
 	{
 		"_id": "2",
 		"name": "Klíkan",
 		"chestImg": "https://dunb17ur4ymx4.cloudfront.net/wysiwyg/550688/76484017a8a9afcfda09a623b5dbb945f98196f2.png",
 		"prereqDescription": "komast í Lvl 5",
-		"prizes": [{
+		"prizes": [
+		{
 			"_id": "2",
-			"name": "Gjafabréf fyrir tvo í Krauma.",
-			"img": "https://i.imgur.com/wrwayPj.png",
-			"brandImg": "https://lirp-cdn.multiscreensite.com/33e1f341/dms3rep/multi/opt/logo-170x42-1920w-1920w.png"
+			"name": "AREON ilmstangir frá Ásbirni Ólafssyni",
+			"img": "https://www.asbjorn.is/static/store/images/product_26759.jpg",
+			"brandImg": "https://www.asbjorn.is/static/sitemap/lg/27527a65336e9084839218bb0cda68ce-asbjorn-stort.jpg?v2"
 		},
 		{
 			"_id": "2",
 			"name": "Múmín Bolli frá Ásbirni Ólafssyni",
-			"img": "https://cdn.shopify.com/s/files/1/0283/8442/8125/products/CloudberryLivingArabiaMoominMugSummer2020LinmtededitionRelaxingfront_900x.jpg?v=1595408625",
+			"img": "https://i.imgur.com/7j1N6pz.png",
 			"brandImg": "https://www.asbjorn.is/static/sitemap/lg/27527a65336e9084839218bb0cda68ce-asbjorn-stort.jpg?v2"
 		}]
 	},
@@ -42,22 +32,22 @@
 		"chestImg": "https://dunb17ur4ymx4.cloudfront.net/wysiwyg/550688/d53fea9035786aa9e02c4eb2074d3785972ae695.png",
 		"prereqDescription": "komast í Lvl 10",
 		"prizes": [{
-			"_id": "3",
-			"name": "Gjafabréf fyrir tvo í Krauma.",
-			"img": "https://i.imgur.com/wrwayPj.png",
-			"brandImg": "https://lirp-cdn.multiscreensite.com/33e1f341/dms3rep/multi/opt/logo-170x42-1920w-1920w.png"
-		},
-		{
-			"_id": "2",
-			"name": "Múmín Bolli frá Ásbirni Ólafssyni",
-			"img": "https://cdn.shopify.com/s/files/1/0283/8442/8125/products/CloudberryLivingArabiaMoominMugSummer2020LinmtededitionRelaxingfront_900x.jpg?v=1595408625",
-			"brandImg": "https://www.asbjorn.is/static/sitemap/lg/27527a65336e9084839218bb0cda68ce-asbjorn-stort.jpg?v2"
-		},
-		{
 			"_id": "2",
 			"name": "AREON ilmstangir frá Ásbirni Ólafssyni",
-			"img": "https://www.asbjorn.is/static/store/images/product_26759.jpg",
+			"img": "https://i.imgur.com/lQKvrgn.png",
 			"brandImg": "https://www.asbjorn.is/static/sitemap/lg/27527a65336e9084839218bb0cda68ce-asbjorn-stort.jpg?v2"
+		},
+		{
+			"_id": "4",
+			"name": "5000kr Gjafabéf frá YAY",
+			"img": "https://i.imgur.com/lQKvrgn.png",
+			"brandImg": "https://i.imgur.com/lQKvrgn.png"
+		},
+		{
+			"_id": "4",
+			"name": "5000kr Gjafabéf frá YAY",
+			"img": "https://i.imgur.com/lQKvrgn.png",
+			"brandImg": "https://i.imgur.com/lQKvrgn.png"
 		}]
 	},
 	{
@@ -67,10 +57,22 @@
 		"prereqDescription": "komast í Lvl 15",
 		"prizes": [
 			{
-				"_id": "2",
-				"name": "AREON ilmstangir frá Ásbirni Ólafssyni",
-				"img": "https://www.asbjorn.is/static/store/images/product_26759.jpg",
-				"brandImg": "https://www.asbjorn.is/static/sitemap/lg/27527a65336e9084839218bb0cda68ce-asbjorn-stort.jpg?v2"
+				"_id": "4",
+				"name": "5000kr Gjafabéf frá YAY",
+				"img": "https://i.imgur.com/lQKvrgn.png",
+				"brandImg": "https://i.imgur.com/lQKvrgn.png"
+			},
+			{
+				"_id": "4",
+				"name": "5000kr Gjafabéf frá YAY",
+				"img": "https://i.imgur.com/lQKvrgn.png",
+				"brandImg": "https://i.imgur.com/lQKvrgn.png"
+			},
+			{
+				"_id": "4",
+				"name": "5000kr Gjafabéf frá YAY",
+				"img": "https://i.imgur.com/lQKvrgn.png",
+				"brandImg": "https://i.imgur.com/lQKvrgn.png"
 			}
 		]
 	},
@@ -80,6 +82,12 @@
 		"chestImg": "https://dunb17ur4ymx4.cloudfront.net/wysiwyg/550688/0c6eb5209d0e9849b5d847ccf88efadb00ba2d26.png",
 		"prereqDescription": "komast í Lvl 20",
 		"prizes": [
+			{
+				"_id": "1",
+				"name": "Gjafabréf fyrir tvo í Krauma.",
+				"img": "https://i.imgur.com/wrwayPj.png",
+				"brandImg": "https://lirp-cdn.multiscreensite.com/33e1f341/dms3rep/multi/opt/logo-170x42-1920w-1920w.png"
+			},
 			{
 				"_id": "1",
 				"name": "Gjafabréf fyrir tvo í Krauma.",

@@ -41,6 +41,9 @@ const questionSchema = new Schema({
 	isDisqualified: {
 		type: Boolean,
 	},
+	archiveReason: {
+		type: String
+	}
 });
 
 questionSchema.methods = methods;
@@ -73,6 +76,7 @@ questionSchema.pre<QuestionsInterface>("save", async function (next) {
 		this.answeredAt = undefined;
 		this.isYesOrNo = undefined;
 		this.isDisqualified = false;
+		this.archiveReason = undefined;
 	}
 	next();
 });

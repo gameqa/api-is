@@ -8,6 +8,7 @@ export interface QuestionsInterface extends Document {
 	verifycationRoundIds: Types.ObjectId[];
 	verifiedAt: Date;
 	archived: boolean;
+	archiveReason?: string;
 	answeredAt?: Date;
 	isImpossible: boolean;
 	isYesOrNo?: boolean;

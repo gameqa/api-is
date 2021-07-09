@@ -43,6 +43,7 @@ interface VerifyQuestionTask {
 interface VerifyQuestionUserPayload {
 	type: "verify-question";
 	archive: boolean;
+	archiveReason?: string;
 	questionId: string | Types.ObjectId;
 }
 // find article interfaces

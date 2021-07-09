@@ -67,7 +67,7 @@ export const advance = async function (
 					const question = await Questions.findById(userPayload.questionId);
 					if (!question) throw new Error("Question not found with this _id");
 					if (userPayload.archive)
-						await question.update({ $set: { archived: true } });
+						await question.update({ $set: { archived: true, archiveReason: userPayload.archiveReason } });
 					else await question.verify(this.userId);
 				});
 				await user.update({ $inc: { verifyQuestionCount: 1 } });

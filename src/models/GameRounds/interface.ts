@@ -1,5 +1,5 @@
 import { Document, Model, Types } from "mongoose";
-import { UserInterface } from "../Users";
+import { ArchiveReason, UserInterface } from "../";
 
 export type TaskTypes =
 	| "make-question"
@@ -43,7 +43,7 @@ interface VerifyQuestionTask {
 interface VerifyQuestionUserPayload {
 	type: "verify-question";
 	archive: boolean;
-	archiveReason?: string;
+	archiveReason?: ArchiveReason;
 	questionId: string | Types.ObjectId;
 }
 // find article interfaces

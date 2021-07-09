@@ -78,6 +78,11 @@ questionSchema.pre<QuestionsInterface>("save", async function (next) {
 		this.isDisqualified = false;
 		this.archiveReason = undefined;
 	}
+
+	if (this.archiveReason && this.isModified("archiveReason")) {
+		if (!utils.ARCHIVE_REASONS.includes(this.archiveReason))
+			throw new Error("Archive reason is not valid");
+	}
 	next();
 });
 

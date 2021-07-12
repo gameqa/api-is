@@ -2,7 +2,7 @@ import { PublicUser, UserInterface } from "./interface";
 import bcrypt from "bcrypt";
 import { generateVerificationCode, VERIFICATION_CODE_LENGTH } from "./utils";
 import crypto from "crypto";
-import { Users } from "../";
+import { Users, GameRounds } from "../";
 import motivation from "./motivation";
 
 export const hashString = async function (this: UserInterface, text: string) {
@@ -61,7 +61,8 @@ export const getPublic = function (this: UserInterface): PublicUser {
 			hiscoreRank: this.hiscoreRank ?? -1,
 		},
 		hasCompletedTutorial: this.hasCompletedTutorial ?? false,
-		streak: this.dailyStreak
+		streak: this.dailyStreak,
+		resetCount: this.resetCount ?? 0
 	};
 };
 
@@ -86,3 +87,27 @@ export const getHighscoreList = async function (
 	});
 	return users.map((user) => user.getPublic());
 };
+
+export const resetLevel = async function (
+	this: UserInterface
+): Promise<UserInterface> {
+	const gameRound = await GameRounds.findOne({
+		userId: this._id,
+		completedAt: { $exists: false }
+	});
+
+	// clear up any unfinished gamerunds
+	if (gameRound) {
+		gameRound.totalRounds = gameRound.currentRound;
+		gameRound.completedAt = new Date();
+		await gameRound.save();
+	}
+
+	// reset lvels
+	this.level = 1;
+	this.resetCount = (this.resetCount ?? 0) + 1;
+	
+	// save and return instance
+	await this.save();
+	return this;
+}

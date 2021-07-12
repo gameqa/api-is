@@ -17,6 +17,7 @@ export interface PublicUser {
 	level: number;
 	hasCompletedTutorial: boolean;
 	streak: number;
+	resetCount: number;
 }
 
 export interface UserInterface extends Document {
@@ -44,7 +45,9 @@ export interface UserInterface extends Document {
 	shadowBanned?: boolean;
 	lastDateActive?: string;
 	dailyStreak: number;
+	resetCount?: number;
 	setVerificationCode: () => Promise<string>;
+	resetLevel: () => Promise<UserInterface>;
 	verify: (code: string) => Promise<void>;
 	getPublic: () => PublicUser;
 	hashString: (val: string) => Promise<string>;

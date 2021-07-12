@@ -104,6 +104,9 @@ const userSchema = new Schema(
 		dailyStreak: {
 			type: Number,
 		},
+		resetCount: {
+			type: Number,
+		}
 	},
 	{
 		timestamps: true,

@@ -62,7 +62,7 @@ export const getPublic = function (this: UserInterface): PublicUser {
 		},
 		hasCompletedTutorial: this.hasCompletedTutorial ?? false,
 		streak: this.dailyStreak,
-		resetCount: this.resetCount ?? 0
+		resetCount: this.resetCount ?? 0,
 	};
 };
 
@@ -93,7 +93,7 @@ export const resetLevel = async function (
 ): Promise<UserInterface> {
 	const gameRound = await GameRounds.findOne({
 		userId: this._id,
-		completedAt: { $exists: false }
+		completedAt: { $exists: false },
 	});
 
 	// clear up any unfinished gamerounds
@@ -103,11 +103,15 @@ export const resetLevel = async function (
 		await gameRound.save();
 	}
 
+	// check level
+	const MIN_LEVEL_TO_LEVEL_UP = 20;
+	if (this.level < MIN_LEVEL_TO_LEVEL_UP) return this;
+
 	// reset levels
 	this.level = 1;
 	this.resetCount = (this.resetCount ?? 0) + 1;
-	
+
 	// save and return instance
 	await this.save();
 	return this;
-}
+};

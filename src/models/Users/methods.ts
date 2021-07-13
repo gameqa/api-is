@@ -96,14 +96,14 @@ export const resetLevel = async function (
 		completedAt: { $exists: false }
 	});
 
-	// clear up any unfinished gamerunds
+	// clear up any unfinished gamerounds
 	if (gameRound) {
 		gameRound.totalRounds = gameRound.currentRound;
 		gameRound.completedAt = new Date();
 		await gameRound.save();
 	}
 
-	// reset lvels
+	// reset levels
 	this.level = 1;
 	this.resetCount = (this.resetCount ?? 0) + 1;
 	

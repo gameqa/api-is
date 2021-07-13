@@ -10,6 +10,7 @@ import hiscorePlacement from "./hiscorePlacement";
 import { RouteBuilder } from "../../../utils";
 import { auth, deleteJWT } from "../utils";
 import getQuestions from "./getQuestions";
+import resetLevel from "./resetLevel";
 
 export default RouteBuilder.routerForEndpoints([
 	{
@@ -76,5 +77,11 @@ export default RouteBuilder.routerForEndpoints([
 		method: "get",
 		middleware: [auth],
 		controller: getQuestions,
+	},
+	{
+		route: "/reset_level",
+		controller: resetLevel,
+		middleware: [auth],
+		method: "post",
 	},
 ]);

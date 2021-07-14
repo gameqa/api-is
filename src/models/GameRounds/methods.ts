@@ -28,7 +28,9 @@ export const advance = async function (
 		await cb();
 	};
 
-	console.log(`User ${this.userId} sent data to advance from ${userPayload.type}`);
+	console.log(
+		`User ${this.userId} sent data to advance from ${userPayload.type}`
+	);
 
 	switch (userPayload.type) {
 		/**
@@ -67,7 +69,12 @@ export const advance = async function (
 					const question = await Questions.findById(userPayload.questionId);
 					if (!question) throw new Error("Question not found with this _id");
 					if (userPayload.archive)
-						await question.update({ $set: { archived: true, archiveReason: userPayload.archiveReason } });
+						await question.update({
+							$set: {
+								archived: true,
+								archiveReason: userPayload.archiveReason,
+							},
+						});
 					else await question.verify(this.userId);
 				});
 				await user.update({ $inc: { verifyQuestionCount: 1 } });
@@ -99,13 +106,15 @@ export const advance = async function (
 					const question = await Questions.findById(questionId);
 					if (!question)
 						throw new Error(`Unable to find question with id ${questionId}`);
+					question.isImpossible = false;
+					await question.save();
 					// create an article
 					await Answers.create({
 						creationRoundId: this._id,
 						articleId: article._id,
 						questionId,
 						paragraphIndex,
-						createdBy: user._id
+						createdBy: user._id,
 					});
 				});
 				await user.update({ $inc: { articlesFoundCount: 1 } });

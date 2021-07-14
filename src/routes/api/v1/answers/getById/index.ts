@@ -7,7 +7,7 @@ import { GetByIdRequest } from "./interface";
 export default async (req: GetByIdRequest, res: Response) => {
 	try {
 		const answer = await req.body.answer;
-		const publicViewOfAnswer = answer.toPublic();
+		const publicViewOfAnswer = await answer.toPublic();
 		const cacheAge = !!answer.answeredAt ? "86400" : "300";
 		res
 			.set("Cache-Control", `public, max-age=${cacheAge}`)

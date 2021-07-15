@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
 import { Questions } from "../../../../../models";
 
+/**
+ * For admin dashboard
+ */
+
 export default async (req: Request, res: Response) => {
 	try {
 		const allowedQueryKeys = ["archived", "isImpossible", "isDisqualified"];

@@ -31,7 +31,7 @@ export default async (req: GetByIdRequest, res: Response) => {
 		);
 
 		// send response
-		res.send(publicAnswer);
+		res.set("Cache-Control", `public, max-age=${cacheTime}`).send(publicAnswer);
 	} catch (error) {
 		res.status(400).send({ message: error.message });
 	}

@@ -75,28 +75,28 @@
 				"name": "Blackbox Pizza",
 				"img": "https://i.imgur.com/blMMAE8.png",
 				"brandImg": "",
-				"available": false
+				"available": true
 			},
 			{
 				"_id": "4",
 				"name": "Blackbox Pizza",
 				"img": "https://i.imgur.com/blMMAE8.png",
 				"brandImg": "",
-				"available": false
+				"available": true
 			},
 			{
 				"_id": "4",
 				"name": "Blackbox Pizza",
 				"img": "https://i.imgur.com/blMMAE8.png",
 				"brandImg": "",
-				"available": false
+				"available": true
 			},
 			{
 				"_id": "4",
 				"name": "Blackbox Pizza",
 				"img": "https://i.imgur.com/blMMAE8.png",
 				"brandImg": "",
-				"available": false
+				"available": true
 			}
 		]
 	},

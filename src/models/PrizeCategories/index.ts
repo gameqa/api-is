@@ -9,11 +9,11 @@ const prizeCategoriesSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	chestClosedURL: {
+	lockedImg: {
 		type: String,
 		required: true,
 	},
-	chestURL: {
+	unlockedImg: {
 		type: String,
 		required: true,
 	},

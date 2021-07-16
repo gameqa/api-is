@@ -1,10 +1,10 @@
 import { Model, Document } from "mongoose";
 
 export interface PrizeCategoriesInterface extends Document {
-	title: string;
-	openChestURL: string;
-	closedChestURL: string;
-	requiredLVL: number;
+	name: string;
+	unlockedImg: string;
+	lockedImg: string;
+	requiredLvl: number;
 }
 
 export interface PrizeCategoriesCollections

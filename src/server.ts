@@ -29,6 +29,9 @@ server.listen(server.get("port"), () => {
  * update high score rankings
  */
 schedule.scheduleJob("*/5 * * * *", async function () {
+	const getUserPlacementByLevel = (user: UserInterface) =>
+		(user.resetCount ?? 0) * 100 + user.level;
+
 	const getUserContributionCount = (user: UserInterface) =>
 		(user.questionCount ?? 0) +
 		(user.verifyAnswerCount ?? 0) +
@@ -39,10 +42,12 @@ schedule.scheduleJob("*/5 * * * *", async function () {
 	try {
 		console.log("UPDATING HIGHSCORE AT TIME: " + new Date().toISOString());
 		const users = await Users.find();
-		users.sort(
-			(userA, userB) =>
-				getUserContributionCount(userB) - getUserContributionCount(userA)
-		);
+		users.sort((userA, userB) => {
+			const compareLevels =
+				getUserPlacementByLevel(userB) - getUserPlacementByLevel(userA);
+			if (compareLevels !== 0) return compareLevels;
+			return getUserContributionCount(userB) - getUserContributionCount(userA);
+		});
 		await Promise.all(
 			users.map((user, i) => {
 				user.hiscoreRank = i + 1;
@@ -94,14 +99,14 @@ schedule.scheduleJob("00 20 * * *", async function () {
 
 /**
  * SENDING ANSWERS NOTIFICATIONS
- * Schedules a chron task once per day, to users letting them know how many 
+ * Schedules a chron task once per day, to users letting them know how many
  * answers they have received
  */
 schedule.scheduleJob("00 16 * * *", async function () {
 	// calculate Date 1 day from now (yesterday)
 	const yesterday = new Date();
 	yesterday.setDate(yesterday.getDate() - 1);
-	
+
 	// object to map userIds to answered question count
 	const mapUsersToAnswerCount: { [key: string]: number } = {};
 
@@ -111,23 +116,24 @@ schedule.scheduleJob("00 16 * * *", async function () {
 			verifiedAt: {
 				$gt: yesterday,
 				$lt: new Date(),
-			}
+			},
 		});
 
 		// map answers to questions
-		const questions = (await Promise.all(
-			answers.map((answer) => Questions.findOne(answer.questionId))
-		)).filter((questionItem) => !!questionItem.createdBy);
+		const questions = (
+			await Promise.all(
+				answers.map((answer) => Questions.findOne(answer.questionId))
+			)
+		).filter((questionItem) => !!questionItem.createdBy);
 
 		// couont questions by creators ID
 		for (const questionItem of questions) {
 			const userId = questionItem.createdBy.toString();
-			if (mapUsersToAnswerCount[userId] === undefined) mapUsersToAnswerCount[userId] = 0;
+			if (mapUsersToAnswerCount[userId] === undefined)
+				mapUsersToAnswerCount[userId] = 0;
 			mapUsersToAnswerCount[userId]++;
 		}
-	 } catch (e) {
-		 
-	}
+	} catch (e) {}
 
 	// send notifications to each user
 	for (const key in mapUsersToAnswerCount) {
@@ -147,5 +153,3 @@ schedule.scheduleJob("00 16 * * *", async function () {
 		);
 	}
 });
-
-

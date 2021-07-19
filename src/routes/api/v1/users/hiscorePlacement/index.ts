@@ -18,7 +18,7 @@ export default async (req: HiscorePlacementRequest, res: Response) => {
 			Number(
 				req.query.offset ?? Math.max(1, req.body.user.hiscoreRank - SHIFT_VALUE)
 			) - 1;
-		
+
 		// get default or given limit
 		const limit = Number(req.query.limit ?? DEFAULT_LIMIT);
 

@@ -1,23 +1,32 @@
-import { Request, Response } from "express";
-import { PrizeCategories } from "../../../../../models";
-import prizes from "../prizes.json";
+import { Response } from "express";
+import { PrizeCategories, Prizes } from "../../../../../models";
 import { ReadAllRequest } from "./interface";
-import { prizeAvailable } from "./utils";
 
+/**
+ * Route to read list of prize categories with prizes
+ *
+ * Used in: App, Dashboard
+ */
 export default async (req: ReadAllRequest, res: Response) => {
 	const { user } = req.body;
 
-	const prizeCategories = (await PrizeCategories.find()).map(
-		(prizeCategory) => ({
+	const prizesCategories = (
+		await PrizeCategories.find().populate("prizes")
+	).map((prizeCategory) => {
+		return {
 			_id: prizeCategory.id,
 			name: prizeCategory.name,
-			prereqDescription: `komast í lvl ${prizeCategory.requiredLvl}`,
-			lockedImg: prizeCategory.lockedImg,
 			unlockedImg: prizeCategory.unlockedImg,
-			isAvailable: user.level >= prizeCategory.requiredLvl,
-			prizes: [],
-		})
-	);
+			lockedImg: prizeCategory.lockedImg,
+			prereqDescription: `komast í LVL ${prizeCategory.requiredLvl}`,
+			prizes: prizeCategory.prizes.map((prize) => ({
+				_id: prize.id,
+				name: prize.name,
+				img: prize.img,
+				brandImg: prize.brandImg,
+			})),
+		};
+	});
 
-	res.send(prizeCategories);
+	res.send(prizesCategories);
 };

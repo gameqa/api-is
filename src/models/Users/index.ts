@@ -129,24 +129,66 @@ userSchema.pre<UserInterface>("validate", async function (next) {
 	next();
 });
 
+/**@mixin */
+userSchema.statics = statics;
+userSchema.methods = methods;
+
+/**
+ * PRE SAVE HOOK for User model
+ */
 userSchema.pre<UserInterface>("save", async function (next) {
+	/**
+	 * TRIGGER:
+	 *    New instance of user created or
+	 *    password has been changed by User
+	 * DESCRIPTION:
+	 *    When user changes password it is in plain text, so if password is valid we hash the password
+	 *    else throw error
+	 *
+	 * RESULT:
+	 *    new password hashed
+	 */
 	if (this.isModified("password")) {
 		if (this.password.length < MIN_PW_LENGTH)
 			throw new Error(`Lykilorð verður að vera amk. ${MIN_PW_LENGTH} stafir`);
 		this.password = await this.hashString(this.password);
 	}
+
+	/**
+	 * TRIGGER:
+	 *    new instance of user created or username has been changed by user
+	 * DESCRIPTION:
+	 *    Removes whitespaces from beginning or end of string
+	 * RESULT:
+	 *     a clean string with the users username
+	 */
 	if (this.isModified("username")) {
 		this.username = this.username.toLowerCase().trim();
 	}
+	/**
+	 * TRIGGER:
+	 *    new instance of user created or email has been changed by user
+	 * DESCRIPTION:
+	 *    Removes whitespaces from beginning or end of string
+	 * RESULT:
+	 *     a clean string with the users email
+	 */
 	if (this.isModified("email")) {
 		this.email = this.email.toLowerCase().trim();
 	}
+	/**
+	 * TRIGGER:
+	 *    new verification code has been generated
+	 * DESCRIPTION:
+	 *    the new verification code is unhashed,
+	 * 	  Sends the verification email with
+	 *    the verification code everytime it is updated
+	 * RESULT:
+	 *    email has been sent.
+	 *    new verification code hashed and saved
+	 */
 	if (this.isModified("verificationCode")) {
 		const unHashed = this.verificationCode;
-		/**
-		 * Sends the verification email with
-		 * the verification code everytime it is updated
-		 */
 		await new DynamicEmail.Sender({
 			to: [this.email],
 			from: DynamicEmail.DEFAULT_SENDER,
@@ -159,15 +201,23 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		const shaHash = this.sha256(this.verificationCode);
 		this.verificationCode = shaHash;
 	}
+	/**
+	 * TRIGGER:
+	 *    User resets password and reset password code has been set
+	 * DESCRIPTION:
+	 *    the new reset-password verification code is unhashed,
+	 * 	  Sends the reset-passwrod verification email with
+	 *    the reset-passwrod verification code everytime it is updated
+	 * RESULT:
+	 *    email has been sent.
+	 *    new reset-passwrod verification code hashed and saved
+	 */
 	if (
 		this.isModified("resetPasswordCode") &&
 		this.resetPasswordCode !== undefined
 	) {
 		const unHashed = this.resetPasswordCode.code;
-		/**
-		 * Sends email with
-		 * the reset pw code when it is updated
-		 */
+
 		await new DynamicEmail.Sender({
 			to: [this.email],
 			from: DynamicEmail.DEFAULT_SENDER,
@@ -179,15 +229,29 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		// update the code with its hash
 		this.resetPasswordCode.code = this.sha256(unHashed);
 	}
+
+	/**
+	 * TRIGGER:
+	 *     User is being saved for the first time.( on creation)
+	 *
+	 * DESCRIPTION:
+	 *     Setting required default values
+	 *
+	 * RESULT:
+	 *     New user is created with default values
+	 */
 	if (this.isNew) {
 		this.type = DEFAULT_USER_TYPE;
 		this.hasCompletedTutorial = false;
 		let doc: UserInterface;
+		// check if email is already taken
 		doc = await Users.findOne({ email: this.email });
 		if (doc) throw new Error("Tölvupóstfang er ekki laust");
+		// check if username is already taken
 		doc = await Users.findOne({ username: this.username });
 		if (doc) throw new Error("Notendanafn er ekki laust");
 		this.verificationCode = undefined;
+		// new user placed last on highscore list
 		this.hiscoreRank = await this.collection.estimatedDocumentCount();
 		this.level = 1;
 		this.invites = 0;
@@ -201,10 +265,34 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		this.verifyQuestionCount = 0;
 		this.articlesFoundCount = 0;
 	}
+	/**
+	 * TRIGGER:
+	 *    this is always run
+	 * DESCRIPTION:
+	 *    validate the value of the usertype value
+	 * RESULT:
+	 *    on incorrect values throw error
+	 */
 	if (!USER_TYPES.includes(this.type as UserTypes))
 		throw new Error("Invalid user type");
+	/**
+	 * TRIGGER:
+	 *    this is always run
+	 * DESCRIPTION:
+	 *    validate the format of the email
+	 * RESULT:
+	 *    on incorrect format throw error
+	 */
 	if (!validator.isEmail(this.email))
 		throw new Error("Tölvupóstfang er á röngu sniði");
+	/**
+	 * TRIGGER:
+	 *    this is always run
+	 * DESCRIPTION:
+	 *    validate the length of the username
+	 * RESULT:
+	 *    on incorrect length throw error
+	 */
 	if (this.username.length < MIN_USER_NAME_LENGTH)
 		throw new Error("Notendanafn verður að vera amk. 4 stafir");
 	next();

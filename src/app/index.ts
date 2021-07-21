@@ -2,7 +2,15 @@ import express, { NextFunction, Request, Response } from "express";
 import appUtils from "./utils";
 import Router from "../routes";
 
-// Create Express server
+/**
+ *
+ * Initialization and set up of express app
+ *
+ * Here we add a logger, connect the router
+ * endpoints to the app and set a default 405
+ * response for unsupported routes
+ *
+ */
 const app = express();
 
 // setting up express app

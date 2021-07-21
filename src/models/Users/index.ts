@@ -174,7 +174,6 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	 * DESCRIPTION:
 	 *    When user changes password it is in plain text, so if password is valid we hash the password
 	 *    else throw error
-	 *
 	 * RESULT:
 	 *    new password hashed
 	 */
@@ -195,6 +194,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	if (this.isModified("username")) {
 		this.username = this.username.toLowerCase().trim();
 	}
+
 	/**
 	 * TRIGGER:
 	 *    new instance of user created or email has been changed by user
@@ -206,6 +206,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	if (this.isModified("email")) {
 		this.email = this.email.toLowerCase().trim();
 	}
+
 	/**
 	 * TRIGGER:
 	 *    new verification code has been generated
@@ -231,6 +232,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		const shaHash = this.sha256(this.verificationCode);
 		this.verificationCode = shaHash;
 	}
+
 	/**
 	 * TRIGGER:
 	 *    User resets password and reset password code has been set
@@ -263,10 +265,8 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	/**
 	 * TRIGGER:
 	 *     User is being saved for the first time.( on creation)
-	 *
 	 * DESCRIPTION:
 	 *     Setting required default values
-	 *
 	 * RESULT:
 	 *     New user is created with default values
 	 */
@@ -295,6 +295,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		this.verifyQuestionCount = 0;
 		this.articlesFoundCount = 0;
 	}
+
 	/**
 	 * TRIGGER:
 	 *    this is always run

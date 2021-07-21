@@ -116,16 +116,46 @@ const userSchema = new Schema(
 userSchema.methods = methods;
 userSchema.statics = statics;
 
+/**
+ * Form validation, errors thrown here will send a message to the front end
+ * */
 userSchema.pre<UserInterface>("validate", async function (next) {
+	/**
+	 * TRIGGER:
+	 *    this is always run
+	 * DESCRIPTION:
+	 *    check that there is a password
+	 * RESULT:
+	 *    on no password, throw error
+	 */
 	if (!this.password) {
 		throw new Error("Það vantar lykilorð");
 	}
+
+	/**
+	 * TRIGGER:
+	 *    this is always run
+	 * DESCRIPTION:
+	 *    check if there is a username
+	 * RESULT:
+	 *    on no username, throw error
+	 */
 	if (!this.username) {
 		throw new Error("Það vantar notandanafn");
 	}
+
+	/**
+	 * TRIGGER:
+	 *    this is always run
+	 * DESCRIPTION:
+	 *    check if there is a email
+	 * RESULT:
+	 *    on no email, throw error
+	 */
 	if (!this.email) {
 		throw new Error("Það vantar tölvupóstfang");
 	}
+
 	next();
 });
 

@@ -165,6 +165,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	if (this.isModified("username")) {
 		this.username = this.username.toLowerCase().trim();
 	}
+
 	/**
 	 * TRIGGER:
 	 *    new instance of user created or email has been changed by user
@@ -176,6 +177,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	if (this.isModified("email")) {
 		this.email = this.email.toLowerCase().trim();
 	}
+
 	/**
 	 * TRIGGER:
 	 *    new verification code has been generated
@@ -201,6 +203,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		const shaHash = this.sha256(this.verificationCode);
 		this.verificationCode = shaHash;
 	}
+
 	/**
 	 * TRIGGER:
 	 *    User resets password and reset password code has been set
@@ -265,6 +268,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		this.verifyQuestionCount = 0;
 		this.articlesFoundCount = 0;
 	}
+
 	/**
 	 * TRIGGER:
 	 *    this is always run
@@ -273,6 +277,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	 * RESULT:
 	 *    on incorrect values throw error
 	 */
+
 	if (!USER_TYPES.includes(this.type as UserTypes))
 		throw new Error("Invalid user type");
 	/**
@@ -283,6 +288,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	 * RESULT:
 	 *    on incorrect format throw error
 	 */
+
 	if (!validator.isEmail(this.email))
 		throw new Error("Tölvupóstfang er á röngu sniði");
 	/**

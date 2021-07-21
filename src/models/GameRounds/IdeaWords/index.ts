@@ -1,3 +1,9 @@
+/**
+ * DEPRECATED WAY OF INDUCING IDEAS FOR THE USER
+ * THIS HAS BEEN REPLACE BY ASK BY IMAGE
+ *
+ * THIS CAN BE REMOVED IN FUTURE RELEASES
+ */
 const names = [
 	"Bill Clinton",
 	// íslenskir tónlistarmenn og hljómsveitir
@@ -172,8 +178,16 @@ const itemArrays = [
 	countries,
 	fictitiousPersons,
 ];
-
-export const get = (count: number) => {
+/**
+ * @deprecated
+ * @param {number} count the number of words to get by random ample
+ *
+ * @returns {string[]} returns an array of idea words
+ */
+export const get = (count: number): string[] => {
+	console.log(
+		"DEPRECATION WARNING: getting ideas by words has been deprecated, remove this function all and replace by ask by image as this will be removed in future releases"
+	);
 	const retArray: string[] = [];
 	while (retArray.length < count) {
 		const list = getRandomItem(itemArrays);

@@ -13,21 +13,45 @@ import {
 	GameRoundWithTask,
 } from "./interface";
 
+/**
+ * Advances a current game round based
+ * on the information provided by user
+ *
+ * This is the function that is called
+ * whenever a user submits data from a
+ * specific round
+ *
+ * @param this for type decleration only
+ * @param userPayload the payload given by the user from the api route
+ * @param user the user retrieved from session on frontend
+ */
 export const advance = async function (
 	this: GameRoundsInterface,
 	userPayload: TaskUserPayload,
 	user: UserInterface
 ): Promise<GameRoundWithTask> {
+	// check if gameRound has been completed
 	if (this.completedAt)
 		throw new Error("Can not advance game round that is completed");
 
 	let isCompleted = false;
 
+	/**
+	 * Closure which can be used
+	 * to wrap any asyncronous activity
+	 * in this advance function
+	 *
+	 * Any activity, or function calls will
+	 * not be executed if the user present
+	 * in this closures context is shadowbanned
+	 * @param cb
+	 */
 	const shadowBanWrapper = async (cb: () => Promise<void>) => {
 		if (user.shadowBanned) return;
 		await cb();
 	};
 
+	// logging
 	console.log(
 		`User ${this.userId} sent data to advance from ${userPayload.type}`
 	);
@@ -312,11 +336,19 @@ export const advance = async function (
 		default:
 			throw new Error(`Advance logic not implemented for ${userPayload.type}`);
 	}
+	// if the round is completed we execute the following block
 	if (this.currentRound === this.totalRounds) {
 		isCompleted = true;
+		// set completed at
 		this.completedAt = new Date();
+
+		// update the game round info
 		await this.update({ $set: { completedAt: this.completedAt } });
+
+		// increase the users level
 		await user.update({ $inc: { level: 1 } });
+
+		// let the user know that the round has been completed
 		return {
 			currentRound: this.currentRound,
 			totalRounds: this.totalRounds,
@@ -326,8 +358,11 @@ export const advance = async function (
 			},
 		};
 	}
+
+	// executed if the user has not completed the gameRound
 	this.currentRound++;
 	await this.update({ $set: { currentRound: this.currentRound } });
-	// reuse logic to get game round
+
+	// reuse logic to get game round task
 	return await GameRounds.findByUserId(this.userId);
 };

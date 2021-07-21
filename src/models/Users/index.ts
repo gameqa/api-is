@@ -144,7 +144,6 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	 * DESCRIPTION:
 	 *    When user changes password it is in plain text, so if password is valid we hash the password
 	 *    else throw error
-	 *
 	 * RESULT:
 	 *    new password hashed
 	 */
@@ -236,10 +235,8 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	/**
 	 * TRIGGER:
 	 *     User is being saved for the first time.( on creation)
-	 *
 	 * DESCRIPTION:
 	 *     Setting required default values
-	 *
 	 * RESULT:
 	 *     New user is created with default values
 	 */

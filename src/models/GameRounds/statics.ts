@@ -9,36 +9,81 @@ import { Answers, Articles, Questions } from "../";
 import * as IdeaWords from "./IdeaWords";
 import * as askByImage from "./AskByImage";
 
+/**
+ * A static function that finds (OR CREATES)
+ * a game round based on a userId
+ *
+ * case i) if there is a round already in progress, that gameRound is returned
+ * case ii) else we create a new game round
+ *
+ * After a gameround has been initialized in memory
+ * we pick a task based on a scheduler system for the
+ * current gameRound which can be used to tell
+ * the user what to do next
+ * @param this
+ * @param userId
+ */
 export const findByUserId = async function (
 	this: GameRoundsCollectionInterface,
 	userId: Types.ObjectId
 ): Promise<GameRoundWithTask> {
+	/**
+	 * PART 1 of the procedure
+	 *
+	 * GETTING OR SETTING A GAME ROUND
+	 *
+	 * In the next lines we try to find an
+	 * uncompleted game round, and if that
+	 * is unsuccessful we, instead, create
+	 * a game round from scratch
+	 *
+	 * That should mean that that either
+	 * case i) user has never played before
+	 * case ii) the last time a user played
+	 *     he completed the round and didn't start
+	 *     a new game round
+	 */
 	// find a document with this userId
 	let doc = await this.findOne({
 		userId,
 		completedAt: { $exists: false },
 	});
+
 	// if no document is found.. then we create it
 	if (!doc) doc = await this.create({ userId });
 
-	// get a task from the game master
+	/**
+	 * PART 2 of the procedure
+	 *
+	 * TASK TYPE SCHEDULING
+	 *
+	 * the below call calls the 'GameMaster' which
+	 * handles scheduling which task type to give to the user
+	 *
+	 * This is done to decouple the scheduling of task types
+	 * logic from the logic involved with
+	 * picking an individual task
+	 */
 	const task = await Game.getTask(userId);
+
+	/**
+	 * PART 3 of the procedure
+	 *
+	 * INDIVIDUAL TASK SCHEDULING
+	 *
+	 * We take the task type given to us
+	 * from the game master and switch-case
+	 * through each Task Type and find an individual
+	 * resource pertaining to the task type
+	 * which we can ask the user to take a look at
+	 * and work on as a part of the game
+	 */
+
 	// task info decleration which is then
 	// initialized in the switch case stmnt below
 	let taskInfo: TaskInfo;
-	// destructuring
 	const { _id, currentRound, totalRounds } = doc;
 
-	/**
-	 * Switch through all tasks
-	 * and populate the task info
-	 * for the relevant task;
-	 *
-	 * this task type is defined by game
-	 * master and is irrelevant for the
-	 * interface which is used to define
-	 * the response of this method
-	 */
 	switch (task) {
 		case "make-question": {
 			/**
@@ -187,6 +232,7 @@ export const findByUserId = async function (
 			throw new Error(`Task ${task} selected that was not recognized`);
 	}
 
+	// return object that has the gameRoundId, round progress info and task info
 	return {
 		_id,
 		currentRound,

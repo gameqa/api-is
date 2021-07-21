@@ -106,7 +106,7 @@ const userSchema = new Schema(
 		},
 		resetCount: {
 			type: Number,
-		}
+		},
 	},
 	{
 		timestamps: true,
@@ -195,6 +195,11 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		this.pushNotificationTokens = [];
 		this.shadowBanned = false;
 		this.dailyStreak = 1;
+		this.questionCount = 0;
+		this.answerCount = 0;
+		this.verifyAnswerCount = 0;
+		this.verifyQuestionCount = 0;
+		this.articlesFoundCount = 0;
 	}
 	if (!USER_TYPES.includes(this.type as UserTypes))
 		throw new Error("Invalid user type");
@@ -205,6 +210,63 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	next();
 });
 
+/**
+ * The user model represents any kind of user with-in
+ * the system. This includes both users and system admins.
+ * This means that admins can be players as well.
+ *
+ * The model contains information regarding authentication,
+ * as well as statistics on the users playtime, including
+ * the number of rounds completed by task type
+ *
+ * @param {string} username - the users chosen username, must be unique
+ * @param {string} email - the users email. Must be both valid and unique
+ * @param {string} password the users password. This value must be passed in as unhashed. Hashing
+ *     will happen in a pre-save hook.
+ * @param {Types.ObjectId} invitedBy - deprecated: the user who invited this user
+ * @param {Types.ObjectId[]} invites - deprecated: the users that have been invited by this user
+ * @param {boolean | undefined} hasCompletedTutorial - deprecated: no tutorial present in front end, redundant attribute
+ * @param {UserTypes} type - SET BY DEFAULT BY MODEL. This parameter can not and should not be
+ *     passed in to the constructor. The type of the user, f.x. 'admin', 'not-verified', 'user'
+ *     the user type will be set to 'not-verified' by default when created, and will be set to user
+ *     when the user verifies via auth code
+ * @param {number} questionCount - SET BY DEFAULT BY MODEL. This parameter can not and should not
+ *     be passed in to the constructor. Total number of questions created by the user (set to 0)
+ * @param {number} answerCount - SET BY DEFAULT BY MODEL. This parameter can not and should not be
+ *     passed in to the constructor. Total number of answer spans marked by user
+ * @param {number} verifyAnswerCount - SET BY DEFAULT BY MODEL. This parameter can not and should not be
+ *     passed in to the constructor. Total number of answer spans verified by the user
+ * @param {number} verifyQuestionCount - SET BY DEFAULT BY MODEL. This parameter can not and should not be
+ *     passed in to the constructor. Total number of questions verified by the user
+ * @param {number} articlesFoundCount - SET BY DEFAULT BY MODEL. This parameter can not and should not be
+ *     passed in to the constructor. Total number of articles found by user
+ * @param {string} verificationCode - SET BY DEFAULT BY MODEL. This parameter can not and should not be
+ *     passed in to the constructor. This is a code that is generated randomly, sent to the user
+ *     via email which he must enter in order to be able to play the game. This code is stored in a
+ *     hashed state.
+ * @param {number} hiscoreRank - SET BY DEFAULT BY MODEL. This parameter can not and should not be
+ *     passed in to the constructor. Hiscore rank is the users current rank on the hiscore. This number
+ *     is updated periodically by a chron task but on the creation of a user we estimate that a users
+ *     is last on the hiscore.
+ * @param {number} level - SET BY DEFAULT BY MODEL. This parameter can not and should not be
+ *     passed in to the constructor. The level is set to default as level 1. When the user completes
+ *     a game round, each time, the level is incremented by +1
+ * @param {boolean} allowEmail - true if the user allows a promotional email to be sent his or hers way
+ * @param {string[]} pushNotificationTokens - an array of push notification tokens for mobile app users
+ * @param {boolean} shadowBanned - SET BY DEFAULT BY MODEL. This parameter can not and should not be
+ *     passed in to the constructor. If a user is shadow banned then his contributions to the data gathering
+ *     process will be ignored, but he can still continue on playing and level up, none the wiser.
+ * @param {string} lastDateActive - SET BY DEFAULT BY MODEL. This parameter can not and should not be
+ *     passed in to the constructor. This is a string in the form of 'yyyy-MM-dd' which is used to keep
+ *     track of login streaks.
+ * @param {dailyStreak} number  - SET BY DEFAULT BY MODEL. This parameter can not and should not be
+ *     passed in to the constructor. This is the number of days this user has been logged in
+ *
+ * TODO: document resetPasswordCode attribute
+ * TODO: document resetPasswordToken attribute
+ * TODO: document resetPasswordCodeGuessCount attribute
+ * TODO: document resetCount attribute
+ */
 export const Users = model<UserInterface, UserCollectionInterface>(
 	"users",
 	userSchema,

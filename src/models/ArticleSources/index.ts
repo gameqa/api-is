@@ -5,7 +5,10 @@ import {
 } from "./interface";
 import * as statics from "./statics";
 
-// define the Mongoose schema
+/**
+ * @class ArticleSources
+ * @mixes {ArticleSources.methods}
+ */
 const articleSourcesSchema = new Schema({
 	identifier: {
 		type: String,
@@ -27,7 +30,7 @@ const articleSourcesSchema = new Schema({
 	},
 });
 
-// add static methods to the Article sources model
+/** @mixin */
 articleSourcesSchema.statics = statics;
 
 /**

@@ -2,7 +2,6 @@ import { UserInterface } from "../../interface";
 import { MapUserToMotivation } from "../decleration";
 import * as utils from "../utils";
 
-const MAX_LEVEL = 10;
 const LEVEL_FOR_PRIZE_ID_5 = 20;
 const LEVEL_FOR_PRIZE_ID_4 = 15;
 const LEVEL_FOR_PRIZE_ID_3 = 10;

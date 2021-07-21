@@ -277,7 +277,6 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	 * RESULT:
 	 *    on incorrect values throw error
 	 */
-
 	if (!USER_TYPES.includes(this.type as UserTypes))
 		throw new Error("Invalid user type");
 	/**
@@ -288,7 +287,6 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	 * RESULT:
 	 *    on incorrect format throw error
 	 */
-
 	if (!validator.isEmail(this.email))
 		throw new Error("Tölvupóstfang er á röngu sniði");
 	/**

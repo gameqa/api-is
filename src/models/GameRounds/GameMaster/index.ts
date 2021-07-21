@@ -184,6 +184,10 @@ export class GameMaster {
 	}
 }
 
+/**
+ * Export an instance of the game master which accepts the MongooseAdapter
+ * as its adapter
+ */
 export default new GameMaster(MongooseAdapter);
 
 export * from "./interface";

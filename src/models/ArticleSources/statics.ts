@@ -10,6 +10,7 @@ import {
 } from "./utils";
 
 /**
+ *
  * Each article source should have a unique string
  * that identifies its webpage (e.g. __wiki__) in our system
  *
@@ -18,7 +19,7 @@ import {
  *
  * Throw an error if the url is not valid
  *
- *
+ * @memberof module:models~ArticleSources
  * @param this for type decleration
  * @param URL valid url from a article source hostname
  * @returns {ArticleSourceIdentifier} the valid identifier

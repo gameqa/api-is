@@ -10,7 +10,6 @@ import * as methods from "./methods";
 
 /**
  * @class GameRounds
- * @mixes {GameRounds.methods}
  * @mixes {GameRounds.statics}
  */
 const gameRoundsSchema = new Schema({
@@ -34,7 +33,6 @@ const gameRoundsSchema = new Schema({
 
 /**@mixin */
 gameRoundsSchema.statics = statics;
-/**@mixin */
 gameRoundsSchema.methods = methods;
 
 /**
@@ -75,6 +73,7 @@ gameRoundsSchema.pre<GameRoundsInterface>("save", async function (next) {
  * the active game round saves the users progress in
  * the app.
  *
+ *
  * @param {Types.ObjectId} userId the user that owns the game round
  *
  * @param {number} totalRounds CALCULATED BY MODEL, this value can not and
@@ -91,6 +90,7 @@ gameRoundsSchema.pre<GameRoundsInterface>("save", async function (next) {
  *     not and should not be passed into the constructor. This is undefined
  *     for any inactive gameround but will be set to 'Date.now()' when the last
  *     round is completed.
+ *
  */
 export const GameRounds = model<
 	GameRoundsInterface,

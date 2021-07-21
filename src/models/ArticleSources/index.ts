@@ -7,7 +7,7 @@ import * as statics from "./statics";
 
 /**
  * @class ArticleSources
- * @mixes {ArticleSources.methods}
+ * @mixes {ArticleSources.statics}
  */
 const articleSourcesSchema = new Schema({
 	identifier: {

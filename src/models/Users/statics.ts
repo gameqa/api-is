@@ -4,10 +4,19 @@ import bcrypt from "bcrypt";
 import * as utils from "./utils";
 import { USER_PW_HASH_KEY } from "../../utils";
 
+/**
+ * This is a function that takes in UserRegisterInfo,
+ * then creates and sets verification code for user
+ *
+ * @param this for type decleration
+ * @param info the registration info for the user
+ * @returns User
+ */
 export const register = async function (
 	this: UserCollectionInterface,
 	info: UserRegisterInfo
 ) {
+	// if password dont match throw error: Password must match
 	if (info.password !== info.password2)
 		throw new Error("Lykilorð verða að vera eins");
 	const user = await this.create(info);
@@ -15,15 +24,29 @@ export const register = async function (
 	return user;
 };
 
+/**
+ * This is a function that takes in email and password,
+ * Finds User by username and password and generates a new auth token.
+ *
+ * @param this for type declaration
+ * @param email the email of the user you want to find
+ * @param password the password of the user you want to find
+ * @returns Object with public User and token
+ */
 export const findByCreds = async function (
 	this: UserCollectionInterface,
 	email: string,
 	password: string
 ) {
+	// find user by email
 	const user = await this.findOne({ email: email.toLowerCase().trim() });
+	// if no user found, throw error
 	if (!user) throw new Error("No user with this email and password");
+	// check if password matches found user password
 	const isMatch = await bcrypt.compare(password, user.password);
+	// if no match throw error
 	if (!isMatch) throw new Error("No user with this email and password");
+	// generate new auth token
 	const token = await AuthTokens.generate(user._id);
 	return {
 		user: user.getPublic(),
@@ -31,16 +54,26 @@ export const findByCreds = async function (
 	};
 };
 
+/**
+ * This is a function that takes in the email of the user you want to find,
+ * then generates a new reset-password verification code and sets the reset-password request date.
+ * Saves the user
+ *
+ * @param this type declaration
+ * @param email the email of the user you want to find
+ */
 export const findByEmailAndRequestResetPasswordCode = async function (
 	this: UserCollectionInterface,
 	email: string
 ) {
 	const user = await this.findOne({ email });
 	if (!user) throw new Error(`User not found with email: ${email}`);
+	// set the reset-password verificationcode and date of reset password request
 	user.resetPasswordCode = {
 		code: utils.generateVerificationCode(utils.RESET_PASSWORD_CODE_LENGTH),
 		requestedAt: new Date(),
 	};
+	// clear reset password token and reset guess count
 	user.resetPasswordToken = undefined;
 	user.resetPasswordCodeGuessCount = 0;
 	await user.save();
@@ -93,10 +126,10 @@ export const findByEmailAndRequestResetPasswordToken = async function (
 	};
 
 	await user.update({
-		 $unset: {resetPasswordCode: ""}
-	})
+		$unset: { resetPasswordCode: "" },
+	});
 
-	console.log(user)
+	console.log(user);
 
 	await user.save();
 
@@ -131,8 +164,8 @@ export const findByEmailAndResetPassword = async function (
 	user.password = password;
 
 	await user.update({
-		 $unset: {resetPasswordToken: ""}
-	})
+		$unset: { resetPasswordToken: "" },
+	});
 
 	await user.save();
 

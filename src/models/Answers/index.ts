@@ -69,11 +69,27 @@ const answerSchema = new Schema({
 answerSchema.methods = methods;
 answerSchema.statics = statics;
 
+/**
+ * PRE SAVE HOOK for User model
+ */
 answerSchema.pre<AnswersInterface>("save", async function (next) {
+	// declare variables
 	let question: QuestionsInterface;
 	let round: GameRoundsInterface;
 	let article: ArticlesInterface;
 
+	/**
+	 * TRIGGER:
+	 *    the answer model is newly created
+	 *    note that the questionId should not change
+	 * DESCRIPTION:
+	 *    we check if the questionId truly exists
+	 *    and mark the question as answered since
+	 *    an answer has been created
+	 * RESULT:
+	 *    we know that the questionId is valid and
+	 *    the questionId is marked as answered
+	 */
 	if (this.isModified("questionId")) {
 		question = await Questions.findById(this.questionId);
 		if (!question)
@@ -82,6 +98,16 @@ answerSchema.pre<AnswersInterface>("save", async function (next) {
 			);
 		await question.markAsAnswered();
 	}
+
+	/**
+	 * TRIGGER:
+	 *     the answer model is newly created
+	 *     note that the creationRoundId should not change
+	 * DESCRIPTION:
+	 *     we verify that the gameround actually exists
+	 * RESULT:
+	 *     we are confident that the creationRoundId exists
+	 */
 	if (this.isModified("creationRoundId")) {
 		round = await GameRounds.findById(this.creationRoundId);
 		if (!round)
@@ -89,21 +115,37 @@ answerSchema.pre<AnswersInterface>("save", async function (next) {
 				`Round with id ${this.creationRoundId} not found when creating answer`
 			);
 	}
+
+	/**
+	 * TRIGGER:
+	 *   Any infromation relating to articleId, or location of answer
+	 *   within the article has been changed
+	 * DESCRIPTION:
+	 *   We check if the article exists, and throw an error if it doesnt
+	 *   check if the paragraph index is within range
+	 *   check whether the lastword is within range inside the selected paragraph
+	 * RESULT:
+	 *   we can trust that the answer metadata is valid
+	 */
 	if (
 		this.isModified("articleId") ||
 		this.isModified("paragraphIndex") ||
 		this.isModified("lastWord")
 	) {
+		// check if article exists
 		article = await Articles.findById(this.articleId);
 		if (!article)
 			throw new Error(
 				`Article with id ${this.articleId} not found when creating answer`
 			);
 
+		// make sure paragraphIndex is within range
 		if (article.paragraphs.length - 1 < this.paragraphIndex)
 			throw new Error("Paragraph index is out of bounds");
 		if (this.paragraphIndex < 0)
 			throw new Error("Paragraph index can not be negative");
+
+		// make sure lastWord does not go OOB in paragraph
 		if (
 			article.paragraphs[this.paragraphIndex].length - 1 < this.lastWord &&
 			!!this.lastWord
@@ -111,10 +153,37 @@ answerSchema.pre<AnswersInterface>("save", async function (next) {
 			throw new Error("Last word can not be OOB for paragraph");
 	}
 
+	/**
+	 * TRIGGER:
+	 *   this is always run
+	 * DESCRIPTION:
+	 *   make sure that the range is positive
+	 * RESULT:
+	 *   we can trust that lastword is correctly selected
+	 *   relative to first word
+	 */
 	if (this.firstWord > this.lastWord)
 		throw new Error("Span can not have negative range");
+
+	/**
+	 * TRIGGER:
+	 *   this is always run
+	 * DESCRIPTION:
+	 *   make sure that the first word is non negative
+	 * RESULT:
+	 *   we know that the first word correctly indexes the paragraph
+	 */
 	if (this.firstWord < 0)
 		throw new Error("first word of span can not be negative");
+
+	/**
+	 * TRIGGER:
+	 *   only run when instance is first saved
+	 * DESCRIPTION:
+	 *   set default values
+	 * RESULT:
+	 *   these values can not be passed into constructor
+	 */
 	if (this.isNew) {
 		this.firstWord = undefined;
 		this.lastWord = undefined;

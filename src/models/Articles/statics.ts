@@ -47,8 +47,10 @@ export const webSearch = async function (
 	query: string
 ): Promise<ArticlePreview[]> {
 	const items = await Google.search(query);
-	const urls = items.map((item) => item.link).filter((link) => !link.includes("pdf"));
-	console.log(`urls`, urls);
+	const urls = items
+		.map((item) => item.link)
+		.filter((link) => !link.includes("pdf"));
+
 	const identifiers = urls.map((url) => ArticleSources.getIdentifier(url));
 	const keys = urls.map((url) => ArticleSources.getArticleKey(url));
 	const sources = await Promise.all(
@@ -62,8 +64,6 @@ export const webSearch = async function (
 		source: sources[i],
 		key: keys[i],
 	}));
-
-
 
 	const scrapedArticles = await Promise.all(
 		returnFormattedItems.map((item) => {

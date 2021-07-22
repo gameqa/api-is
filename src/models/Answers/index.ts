@@ -63,7 +63,7 @@ const answerSchema = new Schema({
 	},
 	seenByQuestionerAt: {
 		type: Date,
-	}
+	},
 });
 
 answerSchema.methods = methods;
@@ -132,6 +132,93 @@ answerSchema.pre<AnswersInterface>("save", async function (next) {
 	next();
 });
 
+/**
+ *
+ * The Answers model keeps track of an answer for a specific
+ * question. Each answer belongs to only one question, but a
+ * question can in fact have many answers. An answer is created
+ * when an article is found that countains the answer. The answer
+ * also contains more meta data. Which includes start of answer
+ * span, end of answer span, is it a yes or no question and so on
+ *
+ *
+ * @param {Types.ObjectId} questionId - Question which this answer is
+ *     created to answer.
+ *
+ * @param {Types.ObjectId} creationRoundId - the game round in which
+ *     this answer was created. An answer is created in the google
+ *     search phase so the round in which this answer was googled.
+ *
+ * @param {Types.ObjectId} createdBy - _id of user which found the
+ *     answer in the Google search phase
+ *
+ * @param {Types.ObjectId} articleId - _id of the article in which the
+ *     user (who found the answer) has chosen as a candidate to answer
+ *     this question
+ *
+ * @param {number} paragraphIndex - the index of the paragraph which
+ *    the user (who found the answer) has chosen as a candidate inside
+ *    the article to answer this question. If the article contains N
+ *    paragraphs, then this number can range from 0 to N-1
+ *
+ * @param {number | undefined} firstWord - SET BY DEFAULT BY MODEL. This
+ *     parameter can not and should not be passed in to the constructor.
+ *     firstWord is by default set to undefined. In the select span step
+ *     a user will submit the first word which will update this field in
+ *     the resource
+ *
+ * @param {number | undefined} lastWord - SET BY DEFAULT BY MODEL. This
+ *     parameter can not and should not be passed in to the constructor.
+ *     lastWord is by default set to undefined. In the select span step
+ *     a user will submit the last word which will update this field in
+ *     the resource
+ *
+ * @param {Date | undefined} answeredAt - Answered is set as new Date()
+ *     whenever an answer span is selected or a yes/no answer has been
+ *     chosen for a yes/no question
+ *
+ * @param {Date | undefined} verifiedAt - SET BY DEFAULT BY MODEL. This
+ *     parameter can not and should not be passed in to the constructor.
+ *     When an answer (with a span or defined yes/no answer) has been
+ *     verified a certain number of times by users the verifiedAt will be
+ *     set as new Date()
+ *
+ * @param {boolean | undefined} archived - an answer is not archived by
+ *     default. When a user is tasked by marking the span, answering yes/no
+ *     or verifying the span or yes/no he has the option to say that the
+ *     answer is incorrect or that it isn't present. When he does so
+ *     the answer is marked as archivd.
+ *
+ * @param {boolean | undefined} canBeShortened - deprecated: original intention
+ *     was to allow users to mark that an answer span is 'too wordy'. Due
+ *     to problems with incorperating this into the front end this was
+ *     in the end abandoned. This field is although still being set / updated.
+ *     However, this field will not be included in the dataset gathered.
+ *
+ * @param {boolean | undefined} yesOrNoAnswer - if the question connected to
+ *     this answer is a yes/no question the yesOrNoAnswer can be set to
+ *     either true or false. True means that the answer to the question
+ *     is 'yes', false on the other hand signifies that the answer to the
+ *     question is 'no'.
+ *
+ * @param {boolean | undefined} isDisqualified - this field can be thought
+ *     of as meaning that the answer should not be included in the final
+ *     dataset. In this sense, we can think of 'archived' as a preamble
+ *     to being 'isDisqualified'. 'archived' is marked by the user, and an
+ *     admin could possibly verify the 'archived' status by making the
+ *     answer 'isDisqualified', if the admin does not agree with the user
+ *     the admin could decide to remove the 'archive' status and thus making
+ *     the answer valid again.
+ *
+ * @param {Date | undefined} seenByQuestionerAt - undefined by default but
+ *     set to new Date() as soon as the person who wrote the question (which
+ *     this answer is set to create) sees the answer.
+ *
+ *
+ * TODO: document answerRoundId
+ * TODO: document verificationRoundIds
+ *
+ */
 export const Answers = model<AnswersInterface, AnswersCollectionInterface>(
 	"answers",
 	answerSchema,

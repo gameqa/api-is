@@ -29,9 +29,8 @@ export class Sender {
 					],
 				},
 				null,
-				(error, response) => {
-					console.log(error, response);
-					if (error) return reject(null);
+				(error, _) => {
+					if (error) return reject(error);
 					return resolve(null);
 				}
 			);
@@ -42,3 +41,4 @@ export class Sender {
 export const DEFAULT_SENDER = "spurningarapp@ru.is";
 export const REGISTER_USER_TEMPLATE = "d-848972f67bb94ba4a22e826ab6656bff";
 export const RESET_PW_CODE_TEMPLATE = "d-87d0255b6c7e4bde9594ee435f4fc80d";
+export const WEEKLY_WINNERS_TEMPLATE = "d-3c9addb0168445328e035b6244145fcd";

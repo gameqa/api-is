@@ -153,3 +153,41 @@ schedule.scheduleJob("00 16 * * *", async function () {
 		);
 	}
 });
+
+/**
+ * PICKING WINNERS
+ * this task picks winners automatically at 16:00 every thursday
+ */
+schedule.scheduleJob("0 16 * * THU", async () => {
+	const LEVELS = [0, 5, 10, 15, 20];
+	let text = "";
+
+	try {
+		for (const MIN_LEVEL of LEVELS) {
+			const users = await Users.find({
+				$or: [{ level: { $gt: MIN_LEVEL - 1 } }, { resetCount: { $gt: 0 } }],
+			});
+
+			const pot: { username: string; email: string }[] = [];
+			for (const user of users) {
+				const { email, username } = user;
+				const tickets =
+					(user.level >= MIN_LEVEL ? 1 : 0) + (user.resetCount ?? 0);
+				for (let i = 0; i < tickets; i++) pot.push({ username, email });
+			}
+			const winner = pot[Math.floor(Math.random() * pot.length)];
+			text += `LVL ${MIN_LEVEL} TOTAL PARTICIPANTS: ${users.length} WINNER IS: ${winner.username}, email: ${winner.email}\n\n`;
+		}
+
+		await new Services.DynamicEmail.Sender({
+			to: [Services.DynamicEmail.DEFAULT_SENDER],
+			from: Services.DynamicEmail.DEFAULT_SENDER,
+			subject: "Vinningshafar",
+		}).send({
+			templateId: Services.DynamicEmail.WEEKLY_WINNERS_TEMPLATE,
+			data: { text },
+		});
+	} catch (e) {
+		console.log(e);
+	}
+});

@@ -5,6 +5,13 @@ import crypto from "crypto";
 import { Users, GameRounds } from "../";
 import motivation from "./motivation";
 
+/**
+ * This is a function that takes in a data string to hash
+ *
+ * @param this type declaration
+ * @param text data string of text you want to hash
+ * @returns A promise to be either resolved with the encrypted data salt or rejected with an Error
+ */
 export const hashString = async function (this: UserInterface, text: string) {
 	return await bcrypt.hash(text, 8);
 };
@@ -14,29 +21,61 @@ export const sha256 = function (this: UserInterface, text: string) {
 	return hash.toString();
 };
 
+/**
+ * This is a function, takes in no arguments, if usertype is not-verified
+ * then generates new verification code and saves, else throws error.
+ *
+ * @param this type declaration
+ * @returns Verification code
+ */
 export const setVerificationCode = async function (this: UserInterface) {
+	/** If usertpye is not-verified
+	 * Throw error: cannot make verification code for user that is verified
+	 */
 	if (this.type !== "not-verified")
 		throw new Error(
 			"Ekki hægt að búa til staðfestingarkóða fyrir notanda sem hefur núþegar staðfest"
 		);
+	// Generate new verification code
 	const code = generateVerificationCode(VERIFICATION_CODE_LENGTH);
 	this.verificationCode = code;
 	await this.save();
 	return code;
 };
 
+/**
+ * This is a function that takes in verification code input from user and compares
+ * if it matches the one set. If it matches, change usertype to "user" then save.
+ *
+ * @param this type declaration
+ * @param code verification code to compare
+ */
 export const verify = async function (this: UserInterface, code: string) {
 	const hashed = await this.sha256(code);
+	/** If usertpye is not  "not-verified"
+	 * Throw error: cannot make verification code for user that is verified
+	 */
 	if (this.type !== "not-verified")
 		throw new Error("Þú ert núþegar búin/n að staðfesta aðganginn");
+	/**
+	 * if user inputted verification code is not of right lenght
+	 * throw error: verification code must be X long
+	 */
 	if (code.length !== VERIFICATION_CODE_LENGTH)
 		throw new Error(
 			`Staðfestingarkóði verður að vera ${VERIFICATION_CODE_LENGTH} tölur`
 		);
+	/**
+	 * If set verification code does not match the hashed of the user inputted one,
+	 * throw error: Wrong verification code */
 	if (this.verificationCode !== hashed)
 		throw new Error("Rangur staðfestingarkóði");
 	this.type = "user";
 
+	/**
+	 * @deprecated - no longer support invitedBy
+	 */
+	// TODO: veit ekki med thetta
 	if (this.invitedBy) {
 		await Users.findByIdAndUpdate(this.invitedBy, {
 			$inc: { invites: 1 },
@@ -45,6 +84,13 @@ export const verify = async function (this: UserInterface, code: string) {
 	await this.save();
 };
 
+/**
+ * This is a function that takes in no arguments.
+ * Sets the values in an object that we want the frontend to have
+ *
+ * @param this type declaration
+ * @returns PublicUser object with the user values we want the front end to have
+ */
 export const getPublic = function (this: UserInterface): PublicUser {
 	return {
 		username: this.username,
@@ -66,14 +112,39 @@ export const getPublic = function (this: UserInterface): PublicUser {
 	};
 };
 
+/**
+ * @deprecated no longer have tutorial
+ * @param this type decleration
+ */
 export const completeTutorial = async function (this: UserInterface) {
 	this.hasCompletedTutorial = true;
 	await this.save();
 };
 
+/**
+ * This is a function that takes in no arguments.
+ * It calls another function and passes "this" into it,
+ * "this" being the UserInterface
+ * the called function calculates and return a motivation object
+ *
+ * @param this type declaration
+ * @returns — the Motivation object
+ */
 export const getMovitation = function (this: UserInterface) {
 	return motivation(this);
 };
+
+/**
+ * This is a function that takes in no arguments.
+ * The function calulates and returns 5 users above you in the scoreboard and 4 users below
+ * Unless if there are not 5 users above you,
+ *
+ * example: if you are in 3rd place then there are only 2 persons above you,
+ * then we find more users that are placed lower than you.
+ *
+ * @param this - type declaration
+ * @returns PublicUser[]
+ */
 export const getHighscoreList = async function (
 	this: UserInterface
 ): Promise<PublicUser[]> {
@@ -88,6 +159,14 @@ export const getHighscoreList = async function (
 	return users.map((user) => user.getPublic());
 };
 
+/**
+ * This is a function that takes in no arguments.
+ * THe function resets the level for the user and increments resetCount by one
+ * if the user has reached level 20
+ *
+ * @param this - type declaration
+ * @returns UserInterface
+ */
 export const resetLevel = async function (
 	this: UserInterface
 ): Promise<UserInterface> {

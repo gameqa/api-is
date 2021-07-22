@@ -83,6 +83,25 @@ export default class AppUtils {
 				useCreateIndex: true,
 				useUnifiedTopology: true,
 			});
+
+			// const LEVELS = [5, 10, 15, 20];
+			// for (const MIN_LEVEL of LEVELS) {
+			// 	const users = await Users.find({
+			// 		$or: [{ level: { $gt: MIN_LEVEL - 1 } }, { resetCount: { $gt: 0 } }],
+			// 	});
+
+			// 	const pot: { username: string; email: string }[] = [];
+			// 	console.log(`Users of lvl ${MIN_LEVEL} or greater: ${users.length}`);
+			// 	for (const user of users) {
+			// 		const { email, username } = user;
+			// 		const tickets =
+			// 			(user.level >= MIN_LEVEL ? 1 : 0) + (user.resetCount ?? 0);
+			// 		for (let i = 0; i < tickets; i++) pot.push({ username, email });
+			// 	}
+
+			// 	const winner = pot[Math.floor(Math.random() * pot.length)];
+			// 	console.log("winner", winner);
+			// }
 		} catch (error) {
 			console.log(
 				"error",

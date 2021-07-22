@@ -1,9 +1,15 @@
-
 import { Types } from "mongoose";
 import { QuestionsCollectionInterface, Users } from "../";
 import { Answers } from "../Answers";
 import { QuestionsWithAnswers } from "./interface";
 
+/**
+ * This function finds and archives a specific question
+ *
+ * @param this - type declaration
+ * @param id - id of question to mark as archived
+ * @returns the archived Question
+ */
 export const findByIdAndArchive = async function (
 	this: QuestionsCollectionInterface,
 	id: Types.ObjectId
@@ -13,6 +19,14 @@ export const findByIdAndArchive = async function (
 	});
 };
 
+/**
+ * @deprecated - no longer supported
+ *
+ * Here for backwards compatability
+ *
+ * @param this - type declaration
+ * @returns string
+ */
 export const getQuestionWord = function (
 	this: QuestionsCollectionInterface
 ): string {

@@ -160,18 +160,27 @@ export const findByEmailAndRequestResetPasswordToken = async function (
 		),
 		requestedAt: new Date(),
 	};
-
+	// clearing code since it has been used
 	await user.update({
 		$unset: { resetPasswordCode: "" },
 	});
-
-	console.log(user);
 
 	await user.save();
 
 	return user.resetPasswordToken.token;
 };
 
+/**
+ * This is a function that takes in 3 arguments, users email, reset-password token and password.
+ *
+ * Finds user by id and if token is valid resets password and updates user info
+ *
+ * @param this - type declaration
+ * @param email - email of user you want to find
+ * @param token - users reset-password token
+ * @param password - users new password
+ * @returns UserInterface
+ */
 export const findByEmailAndResetPassword = async function (
 	this: UserCollectionInterface,
 	email: string,

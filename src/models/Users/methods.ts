@@ -6,7 +6,7 @@ import { Users, GameRounds } from "../";
 import motivation from "./motivation";
 
 /**
- * This is a function that takes in a data string to hash
+ * This is a function that takes in a data string and hashes it
  *
  * @param this type declaration
  * @param text data string of text you want to hash
@@ -16,13 +16,20 @@ export const hashString = async function (this: UserInterface, text: string) {
 	return await bcrypt.hash(text, 8);
 };
 
+/**
+ * This is a function that takes in a data string and hashes it
+ *
+ * @param this - type declaration
+ * @param text - data string of text you want to hash
+ * @returns hashed string
+ */
 export const sha256 = function (this: UserInterface, text: string) {
 	const hash = crypto.createHash("sha256").update(text).digest("base64");
 	return hash.toString();
 };
 
 /**
- * This is a function, takes in no arguments, if usertype is not-verified
+ * if usertype is not-verified
  * then generates new verification code and saves, else throws error.
  *
  * @param this type declaration
@@ -44,7 +51,6 @@ export const setVerificationCode = async function (this: UserInterface) {
 };
 
 /**
- * This is a function that takes in verification code input from user and compares
  * if it matches the one set. If it matches, change usertype to "user" then save.
  *
  * @param this type declaration
@@ -75,7 +81,6 @@ export const verify = async function (this: UserInterface, code: string) {
 	/**
 	 * @deprecated - no longer support invitedBy
 	 */
-	// TODO: veit ekki med thetta
 	if (this.invitedBy) {
 		await Users.findByIdAndUpdate(this.invitedBy, {
 			$inc: { invites: 1 },
@@ -85,7 +90,6 @@ export const verify = async function (this: UserInterface, code: string) {
 };
 
 /**
- * This is a function that takes in no arguments.
  * Sets the values in an object that we want the frontend to have
  *
  * @param this type declaration
@@ -122,10 +126,7 @@ export const completeTutorial = async function (this: UserInterface) {
 };
 
 /**
- * This is a function that takes in no arguments.
- * It calls another function and passes "this" into it,
- * "this" being the UserInterface
- * the called function calculates and return a motivation object
+ * Gets motivation for this user
  *
  * @param this type declaration
  * @returns — the Motivation object
@@ -135,12 +136,7 @@ export const getMovitation = function (this: UserInterface) {
 };
 
 /**
- * This is a function that takes in no arguments.
- * The function calulates and returns 5 users above you in the scoreboard and 4 users below
- * Unless if there are not 5 users above you,
- *
- * example: if you are in 3rd place then there are only 2 persons above you,
- * then we find more users that are placed lower than you.
+ * returns a list of users, around the highscore rank of the current user
  *
  * @param this - type declaration
  * @returns PublicUser[]
@@ -160,9 +156,10 @@ export const getHighscoreList = async function (
 };
 
 /**
- * This is a function that takes in no arguments.
  * THe function resets the level for the user and increments resetCount by one
  * if the user has reached level 20
+ *
+ * This implements Prestige
  *
  * @param this - type declaration
  * @returns UserInterface

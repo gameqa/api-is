@@ -79,6 +79,20 @@ export const findByEmailAndRequestResetPasswordCode = async function (
 	await user.save();
 };
 
+/**
+ * This is a function that takes in email of the user you want to find and verification code he has recieved by email
+ * and entered in the front end.
+ *
+ * If the user code matches the code assign to him,
+ * we generate a new reset password token that allows him to reset his password.
+ *
+ * The reset password token is valid for 5 minutes.
+ *
+ * @param this - type declaration
+ * @param email - email of user requesting to reset password
+ * @param code - reset-password verification code
+ * @returns resetPasswordToken
+ */
 export const findByEmailAndRequestResetPasswordToken = async function (
 	this: UserCollectionInterface,
 	email: string,
@@ -146,18 +160,27 @@ export const findByEmailAndRequestResetPasswordToken = async function (
 		),
 		requestedAt: new Date(),
 	};
-
+	// clearing code since it has been used
 	await user.update({
 		$unset: { resetPasswordCode: "" },
 	});
-
-	console.log(user);
 
 	await user.save();
 
 	return user.resetPasswordToken.token;
 };
 
+/**
+ * This is a function that takes in 3 arguments, users email, reset-password token and password.
+ *
+ * Finds user by id and if token is valid resets password and updates user info
+ *
+ * @param this - type declaration
+ * @param email - email of user you want to find
+ * @param token - users reset-password token
+ * @param password - users new password
+ * @returns UserInterface
+ */
 export const findByEmailAndResetPassword = async function (
 	this: UserCollectionInterface,
 	email: string,

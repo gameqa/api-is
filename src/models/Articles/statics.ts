@@ -80,21 +80,42 @@ export const findArticleByKey = async function (
 	return article;
 };
 
+/**
+ * Performs a web search (Google) and returns relevant
+ * articles in our ArticlePreview interface
+ *
+ * @param this - for TS type decleration only
+ * @param query - query string for Google
+ */
 export const webSearch = async function (
 	this: ArticlesCollectionInterface,
 	query: string
 ): Promise<ArticlePreview[]> {
+	// get array of SearchItems from google search
 	const items = await Google.search(query);
+
+	// extract an array of urls {string[]} from google search results
 	const urls = items
 		.map((item) => item.link)
 		.filter((link) => !link.includes("pdf"));
 
+	// get an array of article source identifiers (e.g. __wiki__, __visir__) from urls
 	const identifiers = urls.map((url) => ArticleSources.getIdentifier(url));
+
+	// get an array of article keys from the urls
 	const keys = urls.map((url) => ArticleSources.getArticleKey(url));
+
+	// find the sources behind the identifiers
 	const sources = await Promise.all(
 		identifiers.map((identifier) => ArticleSources.findOne({ identifier }))
 	);
 
+	/**
+	 * map the data we got from above into an ArticlePreview interface
+	 * which contains info about the source, url (from google), snippet/extract (from google)
+	 * webpage title (from google), source object (from mapping and query above), and
+	 * the article key (from mapping above)
+	 */
 	let returnFormattedItems: ArticlePreview[] = items.map((item, i) => ({
 		url: item.link,
 		snippet: item.snippet,
@@ -103,12 +124,25 @@ export const webSearch = async function (
 		key: keys[i],
 	}));
 
+	/**
+	 * Here we scrape all the articles  given to us
+	 * by Google. This is not needed for the data, but rather
+	 * we do so to make sure that the urls we receive have
+	 * at least some data, and that they have valid content
+	 */
 	const scrapedArticles = await Promise.all(
 		returnFormattedItems.map((item) => {
 			return this.findArticleByUrl(item.url);
 		})
 	);
 
+	/**
+	 * return the returnFormattedItems but filter
+	 * them to make sure that the scraped article is defined
+	 * AND that the scraped article has at least 1 paragraph
+	 * AND the article does not return REMOVE_TOKEN which
+	 * hint some error occured.
+	 */
 	return returnFormattedItems.filter((item, i) => {
 		return (
 			!!scrapedArticles[i] &&

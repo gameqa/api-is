@@ -25,3 +25,5 @@ For example, the input value `"__wiki__"` along with an article key `"Barack Oba
 7. Add the new Scraper class to the `ScrapingFactory`
 
 8. Open the web interface for Googles Programmable Search engine and add the hostname's URL pattern which you want to see in your google search results. Once you do this your users will immediately start to see search results from the new source on the front end.
+
+As the users will see the articles immediately in their search results once the URL pattern has been added to Googles Programmable Search Engine, it is advised that you complete steps 1-7 first, test them thoroughly and deploy before proceeding to step 8.

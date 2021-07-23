@@ -53,11 +53,13 @@ export const findByIdAndMarkAsImpossible = async function (
 	this: QuestionsCollectionInterface,
 	_id: string | Types.ObjectId
 ) {
+	// find question
 	const doc = await this.findByIdAndUpdate(_id, {
 		$set: {
 			isImpossible: true,
 		},
 	});
+	// check if question is found, if not throw error
 	if (!doc)
 		throw new Error(`No question with _id ${_id} found to mark as impossible`);
 	return doc;
@@ -73,10 +75,15 @@ export const findByUserIdAndPopulateAnswers = async function (
 	this: QuestionsCollectionInterface,
 	userId: Types.ObjectId
 ) {
+	// find questions by specific user
 	const docs = await this.find({ createdBy: userId });
+
+	// find answers to the users questions
 	const answers = await Promise.all(
 		docs.map((question) => Answers.find({ questionId: question._id }))
 	);
+
+	// put question with answer into array of objects
 	// @ts-ignore
 	const output: QuestionsWithAnswers[] = docs.map((doc, i) => ({
 		...doc.toObject(),

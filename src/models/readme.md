@@ -10,9 +10,9 @@ Further documentation going into explanations of instance variables, methods, co
 
 Initial requirement analysis suggested that a Document Oriented Database might be the way to go. As the project progressed and as the scope and idea increased and matured, it became clear that his was not necessarily the case. Due to the timeframe of the project, we decided to continue with the database in mind. We had little concern for the fact that a relational database might be more efficient, as the size of the dataset is not expected to grow in the millions, or billions of records per collection. Rather it was the fact that we might have benefitted from the relational model in the development of this project, for example key constraints.
 
-MongoDB does, however, work exceptionally well in our case. And Mongoose's easy validation, lifecycle hooks, well documented interface and seamless TypeScript support has really had a positive impact on the pseed of development.
+MongoDB does, however, work exceptionally well in our case. And Mongoose's easy validation, lifecycle hooks, well documented interface and seamless TypeScript support has really had a positive impact on the speed of development.
 
-## Model folder structure
+## Models and the folder structure
 
 The model folder structure is relatively simple. Each model is its own module, with an `index.ts` file which contains the model definition. Interfaces, static methods, instance methods, and utils are kept in their own file in order to maintain readability.
 
@@ -30,29 +30,25 @@ The model folder structure is relatively simple. Each model is its own module, w
     ├── ...                   # ... other models
     └── README.md
 
-## Models
-
-TODO: fill out
-
 ### Users
 
-TODO: fill out
+The users model contains information about the users of our platform.
 
 ### Questions
 
-TODO: fill out
+The questions model contains information about user submitted questions and their state in the `pipeline`.
 
 ### Answers
 
-TODO: fill out
+The questions model contains information about user submitted answers and their state in the `pipeline`.
 
 ### Articles
 
-TODO: fill out
+Articles is a cache/store of articles that we have scraped online. Our policy is to not store the article unless there is a reference to one in other database models which depend on the article to remain unchanged. For example if we have an `Answers` instance which claims that there is an answer to a `Questions` instance in the Wikipedia page for Barack Obama in words 3-7 in paragraph 18, it is obvious that if the article changes in its source the `Answers` instance information becomes incorrect.
 
 ### Article Sources
 
-TODO: fill out
+An article source is a website that contains articles which we can scrape. An example would be Wikipedia. To see information on how to add new Article sources and how to add scrapers for a new article source see documentation [here](https://github.com/cadia-lvl/qa-crowdsourcing-api/blob/main/src/models/Articles/ScrapingService/readme.md).
 
 ### Game Rounds
 

@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Types } from "mongoose";
 import {
 	PrizeCategoriesInterface,
 	PrizeCategoriesCollections,
@@ -9,11 +9,11 @@ const prizeCategoriesSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	chestClosedURL: {
+	lockedImg: {
 		type: String,
 		required: true,
 	},
-	chestURL: {
+	unlockedImg: {
 		type: String,
 		required: true,
 	},
@@ -21,6 +21,7 @@ const prizeCategoriesSchema = new Schema({
 		type: Number,
 		required: true,
 	},
+	prizes: [{ type: Types.ObjectId, ref: "prizes" }],
 });
 
 export const PrizeCategories = model<

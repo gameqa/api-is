@@ -153,3 +153,54 @@ schedule.scheduleJob("00 16 * * *", async function () {
 		);
 	}
 });
+
+/**
+ * PICKING WINNERS
+ * this task picks winners automatically at 16:00 every thursday
+ */
+schedule.scheduleJob("0 16 * * THU", async () => {
+	const LEVELS = [0, 5, 10, 15, 20];
+	let text = "";
+
+	try {
+		// iterate through level thresholds which give prizes
+		for (const level of LEVELS) {
+			// find users that have either passed the level or are doing a redo
+			const users = await Users.find({
+				$or: [{ level: { $gt: level - 1 } }, { resetCount: { $gt: 0 } }],
+			});
+
+			// a pot from which we will select the winner from
+			const pot: { username: string; email: string }[] = [];
+
+			// iterate through eligible users
+			for (const user of users) {
+				const { email, username } = user;
+
+				// calculate how many tickets the user has in this pot
+				const tickets = (user.level >= level ? 1 : 0) + (user.resetCount ?? 0);
+
+				// add the user once per ticket into the pot
+				for (let i = 0; i < tickets; i++) pot.push({ username, email });
+			}
+
+			// pick the winner randomly
+			const winner = pot[Math.floor(Math.random() * pot.length)];
+
+			// append the information to the text
+			text += `LVL ${level}    ||   TOTAL PARTICIPANTS: ${users.length}    ||    WINNER IS: ${winner.username}    ||    email: ${winner.email}\n\n`;
+		}
+
+		// send the text via email to default sender
+		await new Services.DynamicEmail.Sender({
+			to: [Services.DynamicEmail.DEFAULT_SENDER],
+			from: Services.DynamicEmail.DEFAULT_SENDER,
+			subject: "Vinningshafar",
+		}).send({
+			templateId: Services.DynamicEmail.WEEKLY_WINNERS_TEMPLATE,
+			data: { text },
+		});
+	} catch (e) {
+		console.log(e);
+	}
+});

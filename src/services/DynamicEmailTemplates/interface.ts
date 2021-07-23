@@ -19,4 +19,14 @@ export interface ResetPasswordTemplateData {
 	};
 }
 
-export type Template = SignupTemplateData | ResetPasswordTemplateData;
+export interface SendWeeklyWinners {
+	templateId: "d-3c9addb0168445328e035b6244145fcd";
+	data: {
+		text: string;
+	};
+}
+
+export type Template =
+	| SendWeeklyWinners
+	| SignupTemplateData
+	| ResetPasswordTemplateData;

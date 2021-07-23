@@ -60,4 +60,25 @@ TODO: fill out
 
 ## The Pipeline
 
+TODO: fill out
 ![Screenshot](__UML__/PipelineHighLevelOverview.png)
+
+## Getting Articles
+
+TODO: fill out
+![Screenshot](__UML__/ArticleCaching.png)
+
+## Google Search
+
+TODO: fill out
+TODO: add image
+
+## Reset Password
+
+TODO: fill out
+TODO: add image
+
+## Register
+
+TODO: fill out
+TODO: add image

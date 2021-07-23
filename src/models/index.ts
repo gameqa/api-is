@@ -6,4 +6,3 @@ export * from "./GameRounds";
 export * from "./Questions";
 export * from "./Answers";
 export * from "./PrizeCategories";
-export * from "./Prizes";

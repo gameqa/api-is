@@ -1,32 +1,15 @@
-import { Response } from "express";
-import { PrizeCategories, Prizes } from "../../../../../models";
+import { Request, Response } from "express";
+import prizes from "../prizes.json";
 import { ReadAllRequest } from "./interface";
+import { prizeAvailable } from "./utils";
 
-/**
- * Route to read list of prize categories with prizes
- *
- * Used in: App, Dashboard
- */
 export default async (req: ReadAllRequest, res: Response) => {
 	const { user } = req.body;
 
-	const prizesCategories = (
-		await PrizeCategories.find().populate("prizes")
-	).map((prizeCategory) => {
-		return {
-			_id: prizeCategory.id,
-			name: prizeCategory.name,
-			unlockedImg: prizeCategory.unlockedImg,
-			lockedImg: prizeCategory.lockedImg,
-			prereqDescription: `komast í LVL ${prizeCategory.requiredLvl}`,
-			prizes: prizeCategory.prizes.map((prize) => ({
-				_id: prize.id,
-				name: prize.name,
-				img: prize.img,
-				brandImg: prize.brandImg,
-			})),
-		};
-	});
+	const prizeCategories = prizes.map((prize) => ({
+		...prize,
+		isAvailable: prizeAvailable(prize._id, user),
+	}));
 
-	res.send(prizesCategories);
+	res.send(prizeCategories);
 };

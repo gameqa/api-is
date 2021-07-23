@@ -1,4 +1,4 @@
-import { Schema, model, Types, ObjectId } from "mongoose";
+import { Schema, model, Types } from "mongoose";
 import { QuestionsCollectionInterface, QuestionsInterface } from "./interface";
 import * as utils from "./utils";
 import { GameRounds } from "../";

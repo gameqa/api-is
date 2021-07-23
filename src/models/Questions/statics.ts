@@ -23,6 +23,7 @@ export const findByIdAndArchive = async function (
  * @deprecated - no longer supported
  *
  * Here for backwards compatability
+ * Original purpose was to suggest a question word to create a question out of
  *
  * @param this - type declaration
  * @returns string
@@ -41,6 +42,13 @@ export const getQuestionWord = function (
 	else return "Afhverju";
 };
 
+/**
+ * This function finds and marks a specific question as impossible
+ *
+ * @param this - type declaration
+ * @param _id - id of the quesiton to mark as impossible
+ * @returns QuestionInterface, the question marked impossible
+ */
 export const findByIdAndMarkAsImpossible = async function (
 	this: QuestionsCollectionInterface,
 	_id: string | Types.ObjectId
@@ -55,6 +63,12 @@ export const findByIdAndMarkAsImpossible = async function (
 	return doc;
 };
 
+/**
+ *
+ * @param this - type declaration
+ * @param userId - id of the question to find and populate answers
+ * @returns QuestionWithAnswers, the question with answers.
+ */
 export const findByUserIdAndPopulateAnswers = async function (
 	this: QuestionsCollectionInterface,
 	userId: Types.ObjectId

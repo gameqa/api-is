@@ -3,9 +3,8 @@ import { allowOnly, auth } from "../utils";
 import readAll from "./readAll";
 import getRandom from "./getRandom";
 import create from "./create";
-import id from "./id";
 
-export default RouteBuilder.join([
+export default RouteBuilder.routerForEndpoints([
 	{
 		route: "/",
 		controller: readAll,
@@ -23,9 +22,5 @@ export default RouteBuilder.join([
 		controller: getRandom,
 		method: "get",
 		middleware: [],
-	},
-	{
-		route: "/:id/",
-		controller: id,
 	},
 ]);

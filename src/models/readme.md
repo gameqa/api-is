@@ -66,6 +66,7 @@ TODO: fill out
 ## Getting Articles
 
 TODO: fill out
+TODO: fix usuer
 ![Screenshot](__UML__/ArticleCaching.png)
 
 ## Google Search

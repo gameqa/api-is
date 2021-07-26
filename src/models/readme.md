@@ -60,4 +60,27 @@ An `AuthToken` instance is created for each user session. This was done so we co
 
 ## The Pipeline
 
+TODO: fill out
+![Screenshot](__UML__/PipelineHighLevelOverview.png)
 The pipeline
+
+## Getting Articles
+
+TODO: fill out
+TODO: fix usuer
+![Screenshot](__UML__/ArticleCaching.png)
+
+## Google Search
+
+TODO: fill out
+TODO: add image
+
+## Reset Password
+
+TODO: fill out
+TODO: add image
+
+## Register
+
+TODO: fill out
+TODO: add image

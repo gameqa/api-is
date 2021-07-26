@@ -60,12 +60,43 @@ An `AuthToken` instance is created for each user session. This was done so we co
 
 ## The Pipeline
 
-TODO: fill out
+The pipeline describes the process user submitted content needs to go through in order to become a part of the dataset. The data enters the pipeline as a question, written by a user. The question goes through multiple steps that include question review, search for an answer, marking the answer, and verifying the answer. There is a lot of data generated during the pipeline and there are a few terminal states including 'completed' and 'archived'.
+
+Below is a description of each step, accompanies with a state diagram that shows a high level overview of the process. There are many levels of abstractions we could have depicted, but we chose to show this high level overview as it will make code inspection and understanding the code easier. We also believe the well documented code can answer questions that might arise about lower level details and implementation.
+
+### The diagram
+
+The boxes show different intermediary states, black dots show terminal states and the arrows are labeled with actions that cause a state transition. In the description below will comment on both transitions and the states.
+
 ![Screenshot](__UML__/PipelineHighLevelOverview.png)
-The pipeline
 
-## Getting Articles
+### Write question (transition / start)
 
+When a user submits a question, the process starts for a new entity which is saved in our databse.
+
+### Verify question (state)
+
+A question that has been created and has not either been rejected (bad review) or reviewed positively N number of times is called unverified. A question in this state is presented to users until the question is either rejected or verified N times. A user can not review his own questions.
+
+### Question is marked as bad (transition)
+
+If a user mark the question as a 'bad question' it is archived. This transition results in the question landing on a terminal state.
+
+### Question pased N verifications (transition)
+
+A question that passes N verifications is considered verified and is placed to the Google Search stage.
+
+### Google Search (state)
+
+A question in this stage is presented to users as they are asked to find an article that contains the answer via Google. If successful, the user will mark the answer as a part of an article, otherwise the user can mark the question as impossible.
+
+### User unable to find answer via Google (transition)
+
+If the user says that he is unable to find an answer to the question online, then the question enters a terminal state and is marked as impossible.
+
+### User finds a website that contains the answer (transition)
+
+A user that finds the answer to a verified question via Google Search will mark the paragraph containing the answer and in the process of doing so will cause the side-effect of answer instance (referencing the question) to be created in the database.
 TODO: fill out
 TODO: fix usuer
 ![Screenshot](__UML__/ArticleCaching.png)

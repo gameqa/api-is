@@ -126,6 +126,8 @@ A single negative review will cause the answer to be archived. This will result 
 
 When N users have given the answer a positive review, then the answer is considered 'verified' which results in a (positive) terminal state. This is the final transition of the pipeline.
 
+## Open Article By URL
+
 TODO: fill out
 TODO: fix usuer
 ![Screenshot](__UML__/ArticleCaching.png)

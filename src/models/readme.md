@@ -97,6 +97,35 @@ If the user says that he is unable to find an answer to the question online, the
 ### User finds a website that contains the answer (transition)
 
 A user that finds the answer to a verified question via Google Search will mark the paragraph containing the answer and in the process of doing so will cause the side-effect of answer instance (referencing the question) to be created in the database.
+
+### Select answer (state)
+
+A newly created answer is still in the 'Select Answer' state, as even though an answer has been found it has not been marked / selected with in the paragraph. As the resource enters this stage only a paragraph on a website has been selected. But to advance from the 'Select Answer' stage a user must mark the exact words that contain the answer.
+
+#### CAVEAT: yes / no questions
+
+A question whose answer is either yes or no will not have their answer spans marked in the text. Rather, the answer will contain information on whether the answer is yes or no.
+
+### User determinees that paragraph does **NOT** contain the answer (transition)
+
+A user, tasked with selecting an answer within a paragraph can archive the answer if the paragraph does not contain the answer. In this case, we do not throw away everything up to this point, but rather reroute the resource to the Google Search phase hoping that another user will find the actual answer. The answer is marked as archived and the question is made available for the Google Search phase once more.
+
+### User marks the answer in the paragraph (transition)
+
+A user that marks the answer, after reviewing the paragraph, causes the question to transition from the Select Answer phase to the Verify Answer phase. At this point in time, the answer should be fully formed needing only verifications.
+
+### Verify Answer (state)
+
+A answer in this state should have all relevant fields set with only the verifications missing. Similar to the question verification state, an answer needs N positive reviews but a single negative one will result in the answer being archived.
+
+### Single user gives an answer a negative review (transition)
+
+A single negative review will cause the answer to be archived. This will result in a terminal state.
+
+### N users verify the answer positively (transition)
+
+When N users have given the answer a positive review, then the answer is considered 'verified' which results in a (positive) terminal state. This is the final transition of the pipeline.
+
 TODO: fill out
 TODO: fix usuer
 ![Screenshot](__UML__/ArticleCaching.png)

@@ -128,8 +128,16 @@ When N users have given the answer a positive review, then the answer is conside
 
 ## Open Article By URL
 
-TODO: fill out
-TODO: fix usuer
+Articles can be opened via URL. This means, that if we have an article URL (which we might have gotten through Google Search) we can use that to retrieve an Article instance. This process -- as seen from the user -- which is typically initiated by the him by calling the API is transparent of whether we keep a cache of the article or not.
+
+The reason for why some articles are cached or not is twofold:
+
+1. There could potentially be millions of articles available to us and we really do not want to keep a backup of these sites, especially since our answers might only reference a thousand of them.
+
+2. We need to store a copy of the article starting from the time the article is referenced (for example) by an answer. At that point in time, an answer is dependant on the contents of the article and if the article were to change, the answer metadata would be invalid. Thus, such content is sought from our cache instead of the world wide web.
+
+Sites not in the cache are scraped in real time. We used a factory design pattern to allow easy scraping of multiple sites. The code documentation contains additional information about these processes. Further information about scraping and adding a new scraper can be found [here](https://github.com/cadia-lvl/qa-crowdsourcing-api/blob/main/src/models/Articles/ScrapingService/readme.md).
+
 ![Screenshot](__UML__/ArticleCaching.png)
 
 ## Google Search

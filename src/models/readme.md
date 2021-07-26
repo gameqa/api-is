@@ -143,7 +143,7 @@ Sites not in the cache are scraped in real time. We used a factory design patter
 ## Google Search
 
 TODO: fill out
-TODO: add image
+![Screenshot](__UML__/GoogleSearch.png)
 
 ## Reset Password
 

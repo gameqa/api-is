@@ -148,9 +148,4 @@ TODO: fill out
 ## Reset Password
 
 TODO: fill out
-TODO: add image
-
-## Register
-
-TODO: fill out
-TODO: add image
+![Screenshot](__UML__/ResetPassword.png)

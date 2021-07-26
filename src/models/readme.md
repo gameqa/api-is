@@ -52,12 +52,12 @@ An article source is a website that contains articles which we can scrape. An ex
 
 ### Game Rounds
 
-TODO: fill out
+A `GameRounds` instance keeps track of a users progress in their current level.
 
 ### Auth Tokens
 
-TODO: fill out
+An `AuthToken` instance is created for each user session. This was done so we could easily revoke sessions.
 
 ## The Pipeline
 
-TODO: fill out
+The pipeline

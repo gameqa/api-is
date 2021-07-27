@@ -46,11 +46,25 @@ REDIS_URL=...
 
 The process will exit with status code 0 immediately if any one of these environment variables is missing. So you need to have these variables set up both for your local development environment as well as any production environment.
 
+Once you have the .env file set up you are now ready to start the server.
+
+#### Run locally on nodemon with local mongo instance
+
+```
+npm run dev
+```
+
+#### Build TypeScript and run in production
+
+```
+npm start
+```
+
 ### Google's Programmable Search Engine
 
 Make sure that the Google account responsible for your API keys has a valid quota for the programmable search engine. Failure doing so will result in errors once you have outgrown the 100 searches per day limit.
 
-### REDIS
+### Redis
 
 Additionally to having the REDIS_URL set you will need to have an instance of redis running in the backround on your machine.
 

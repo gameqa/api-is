@@ -4,7 +4,7 @@ When using the SendGrid api, there is a considerable chance that you will spend 
 
 This service was created in order to minimize the possibility of developers making these kinds of mistakes. It encapsulates SendGrid with-in a class that fully utilizing TypeScript and generics to make sending easy.
 
-## Creating a new tample.
+## Creating a new template
 
 To create a new template, you first need to add an opdject representing the Dynamic Template under `./interface.ts` like so.
 

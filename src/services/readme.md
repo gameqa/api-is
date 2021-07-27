@@ -12,6 +12,6 @@ Each services contains a small README with code examples.
 
 - **Cache** - Provides a simple interface to in-memory caching. Currently implemented with Redis. Provides methods to get, set, and set with TTL. One of the main conveniences of this service is its easy typescript support and added Type Generics for the get methods which increase type safety when used.
 
-* Dynamic Email Templates
+* **Dynamic Email Templates** - Encapsulates api calls to SendGrid. Provides an easy and safe way to send transactional emails. Each transactional template is defined as an interface which minimizes the chance of sending a wrong JSON body, when utilizing this service.
 
-* Push Notifications
+* **Push Notifications** - TO ADD

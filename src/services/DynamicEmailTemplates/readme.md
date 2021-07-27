@@ -1,6 +1,6 @@
 # Documentation & Code examples
 
-When using the SendGrid api, there is a considerable chance that you will spend some time debugging due to small careless erros. Asyncronous programming, by itself, can present debugging challenges. Adding to that, the way that that SendGrid relies on long strings identifying templates as well as the fact that each template needs a different JSON structure just for it, the possibilities to err increase considerably.
+When using the SendGrid api, there is a considerable chance that you will spend some time debugging due to small careless errors. Asyncronous programming, by itself, can present debugging challenges. Adding to that, the way that that SendGrid relies on long strings identifying templates as well as the fact that each template needs a different JSON structure just for it, the possibilities to err increase considerably.
 
 This service was created in order to minimize the possibility of developers making these kinds of mistakes. It encapsulates SendGrid with-in a class that fully utilizing TypeScript and generics to make sending easy.
 

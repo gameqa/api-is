@@ -2,8 +2,18 @@ import { Response } from "express";
 import { GetByIdRequest } from "./interface";
 import * as Services from "../../../../../services";
 import * as Models from "../../../../../models";
+
 /**
- * GET answer by id
+ * Answers REST API resource end-point
+ * @endpoint /api/v1/:answerId
+ * @name Answers get by id
+ * @version v1
+ * @since v1
+ * @description Answers REST API resource end-point
+ *     Answer from body, set time to live in cache to 1 day if quesiton is answered,
+ *     else set time to live to 300 seconds.
+ *     Get public answer form cache if cached, else set answer to cache.
+ *     Send answer to front end.
  */
 export default async (req: GetByIdRequest, res: Response) => {
 	try {

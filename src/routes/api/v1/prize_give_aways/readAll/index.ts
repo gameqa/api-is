@@ -1,5 +1,14 @@
 import { Request, Response } from "express";
 import { ReadAllRequest } from "./interface";
+/**
+ * Prize give aways REST API resource end-point
+ * @endpoint /api/v1/prize_give_aways
+ * @name prizeGiveAways
+ * @version v1
+ * @since v1
+ * @description Sends Array of objects with date and items about all giveaways,
+ * 			  past, present or future to the front end.
+ */
 
 export default async (req: ReadAllRequest, res: Response) => {
 	res.send([

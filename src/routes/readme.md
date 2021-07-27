@@ -7,14 +7,14 @@ POST: requestResetPasswordToken
 POST: resetPassword
 
     CHARTS
-        GET: answersPerDay
-        GET: usersPerDay
-        GET: questionsPerDay
+    ├── GET: answersPerDay
+    ├── GET: usersPerDay
+    ├── GET: questionsPerDay
 
     V1
-        ANSWERS
-            GET: by id
-            PATCH: by id
+    ├── ANSWERS
+    |       ├── GET: by id
+    |       ├── PATCH: by id
 
         ARTICLE_SOURCES
             POST: create

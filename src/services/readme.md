@@ -6,9 +6,12 @@ Please not that the likelihood that a new functionality should be placed in the 
 should be placed in a `.utils.ts` file. Only put Services here that are truly not local to any specific functionality/place in the project structure and that will
 need to be shared among different parts of the project.
 
+Each services contains a small README with code examples.
+
 # List of services
 
-    Services
-    ├── Cache
-    ├── Dynamic Email Templates
-    └── Push Notifications
+- **Cache** - Provides a simple interface to in-memory caching. Currently implemented with Redis. Provides methods to get, set, and set with TTL. One of the main conveniences of this service is its easy typescript support and added Type Generics for the get methods which increase type safety when used.
+
+* Dynamic Email Templates
+
+* Push Notifications

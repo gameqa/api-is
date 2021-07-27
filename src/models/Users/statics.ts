@@ -2,7 +2,6 @@ import { UserRegisterInfo, UserCollectionInterface } from "./interface";
 import { AuthTokens } from "../AuthTokens";
 import bcrypt from "bcrypt";
 import * as utils from "./utils";
-import { USER_PW_HASH_KEY } from "../../utils";
 
 /**
  * This is a function that takes in UserRegisterInfo,

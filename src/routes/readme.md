@@ -10,6 +10,7 @@
     └── v1
         ├── answers
         │   ├── GET /:id
+        └── └──
 
 AUTH
 POST: authenticate

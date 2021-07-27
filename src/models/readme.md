@@ -142,12 +142,14 @@ Sites not in the cache are scraped in real time. We used a factory design patter
 
 ## Google Search
 
-TODO: fill out
+The google search query process is initiated by calling `.webSearch(query: string)` which is a static method on the Articles model, which returns an `ArticlePreview` array. The `webSearch` function calls our `Google` instance which encapsulates the functionality of calling Google's Cloud API. The Google's cloud api also simplifies the response and strips away the response meta data and returns only an array of `SearchItem` objects.
+
+The `.webSearch` functions takes measures to make sure that all `ArticlePreview` object represent valid articles by scraping each URL (`ArticlePreview` objects contain the URL) and making sure that there is actual content present in the article. The reason for this is, due to the unpredictable nature of websites, we can not trust that every website/article contains data or is structured in a way that our scraper understands. This seemed to be a miniscule problem upfront but as it turns out, this affected more than 1% of all articles which is signifcant enough for us to do this check.
 
 ![Screenshot](__UML__/GoogleSearch.png)
 
 ## Reset Password
 
-TODO: fill out
+The way the _reset password_ process is handled, from the users viewpoint, is through a code he receives via his (already) verified email address. The user is asked to insert an D digit long verification code, which is then sent to the back end. If the code is correct and valid, then a token is generated (by sha256 hash) which is then sent to the user via HTTP/JSON response. With this token, the front-end can ask the user to select a new password, which it can send to the backend with the token and the users email address to change the password. If the email address and token match, and if the token is valid then the password is reset.
 
 ![Screenshot](__UML__/ResetPassword.png)

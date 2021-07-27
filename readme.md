@@ -80,16 +80,4 @@ The project is split into five major modules, each of which contain a seperate R
     ├── /utils        # currently only holds a validation file for structure of .env
     └── server.ts     # starts express server and chron tasks
 
-Each of these modules share a different purpose and should be individually maintained needing each others interface to work together. That is these folders should only import from the root level of each other.
-
-## TODOS
-
-TODO: document API routes
-
-TODO: document api index
-
-TODO: write main api readmi (this document)
-
-TODO: document services
-
-TODO: document api utils
+Each of these modules share a different purpose and should be individually maintained needing only each others interface to operate. That is these folders should only import from the root level of one another.

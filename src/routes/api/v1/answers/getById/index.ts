@@ -4,16 +4,17 @@ import * as Services from "../../../../../services";
 import * as Models from "../../../../../models";
 
 /**
- * Answers REST API resource end-point
- * @endpoint /api/v1/:answerId
- * @name Answers get by id
+ * reads a single answer by id and respond with PublicAnswer
+ *
+ * @verb GET
+ * @endpoint /api/v1/answers/:id
  * @version v1
- * @since v1
- * @description Answers REST API resource end-point
- *     Answer from body, set time to live in cache to 1 day if quesiton is answered,
- *     else set time to live to 300 seconds.
- *     Get public answer form cache if cached, else set answer to cache.
- *     Send answer to front end.
+ * @description provided a valid id the route will return a public view
+ *     of the answer
+ * @auth user+
+ * @example
+ *     GET /api/v1/answers/507f191e810c19729de860ea \
+ *     --data { }
  */
 export default async (req: GetByIdRequest, res: Response) => {
 	try {

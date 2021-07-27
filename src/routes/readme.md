@@ -1,4 +1,16 @@
-API
+    api
+    ├── auth
+    │   ├── POST /authenticate
+    │   ├── POST /register
+    │   ├── POST /request_reset_password_code
+    │   ├── POST /request_reset_password_token
+    │   └── POST /reset_password
+    ├── charts
+    |    ...
+    └── v1
+        ├── answers
+        │   ├── GET /:id
+
 AUTH
 POST: authenticate
 POST: register

@@ -6,64 +6,42 @@
     │   ├── POST /request_reset_password_token
     │   └── POST /reset_password
     ├── charts
-    |    ...
+    │   ├── GET /answers_per_day
+    │   ├── GET /users_per_day
+    │   └── GET /questions_per_day
     └── v1
         ├── answers
         │   ├── GET /:id
-        └── └──
-
-AUTH
-POST: authenticate
-POST: register
-POST: requestResetPasswordCode
-POST: requestResetPasswordToken
-POST: resetPassword
-
-    CHARTS
-    ├── GET: answersPerDay
-    ├── GET: usersPerDay
-    ├── GET: questionsPerDay
-
-    V1
-    ├── ANSWERS
-    |       ├── GET: by id
-    |       ├── PATCH: by id
-
-        ARTICLE_SOURCES
-            POST: create
-            GET: readAll
-            GET: readArticleByKey
-
-        ARTICLES
-            GET: readQuery
-
-        GAME_ROUNDS
-            GET: readCurrent
-            GET: getAskAboutImage
-            POST: advanceCurrent
-
-        PRIZE_GIVE_AWAYAS
-            GET: readAll
-
-        PRIZES
-            GET: readAll
-            GET: getRandom
-            POST: create
-
-        QUESTIONS
-            GET: readAll
-            PATCH: by id
-
-        USERS
-            GET: current
-            GET: currentScoreCard
-            POST: verificationCode
-            GET: generateVerificationCode
-            DELETE: deleteJWT
-            GET: currentInvites
-            PATCH: completeTutorial
-            PATCH: pushNotificationTokens
-            GET: getMotivation
-            GET: hiscorePlacement
-            GET: getQuestions
-            POST: resetLevel
+        │   └── PATCH /:id
+        ├── article_sources
+        │   ├── POST /
+        │   ├── GET /
+        │   └── GET /:sourceIdentifier/article/:articleKey
+        ├── articles
+        │   └── GET /
+        ├── game_rounds
+        │   ├── GET /current
+        │   ├── POST /:roundId/advance
+        │   └── GET /write_question/image
+        ├── prize_give_away
+        │   └── GET /
+        ├── prizes
+        │   ├── GET /
+        │   ├── POST /
+        │   └── GET /random
+        ├── questions
+        │   ├── GET /
+        │   └── PATCH /:id
+        ├── users
+        │   ├── GET /current
+        │   ├── GET /current/score_card
+        │   ├── POST /verification_code
+        │   ├── GET /verification_code/generate
+        │   ├── DELETE /current/auth_token
+        │   ├── GET /current/invites
+        │   ├── PATCH /complete_tutorial
+        │   ├── PATCH /push_notification_tokens
+        │   ├── GET /motivation
+        │   ├── GET /hiscore_placement
+        │   ├── GET /questions
+        │   └── POST /reset_level

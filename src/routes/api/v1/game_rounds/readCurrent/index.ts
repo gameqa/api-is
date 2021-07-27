@@ -5,6 +5,19 @@ import { ReadCurrentGameRoundRequest } from "./interface";
 /**
  * GET current round for authorized user
  */
+
+/**
+ * responds with GameRoundWithTask
+ *
+ * @verb GET
+ * @endpoint /api/v1/game_rounds/current
+ * @version v1
+ * @description the route returns the current round for authorized user
+ * @auth user+
+ * @example
+ *     GET /api/v1/game_rounds/current \
+ *     --data { }
+ */
 export default async (req: ReadCurrentGameRoundRequest, res: Response) => {
 	try {
 		const doc = await GameRounds.findByUserId(req.body.user._id);

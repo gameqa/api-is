@@ -3,8 +3,20 @@ import { findByUserIdAndPopulateAnswers } from "../../../../../models/Questions/
 import { QuestionsRequest } from "./interface";
 
 import { Questions } from "../../../../../models";
+
 /**
- * Route for getting hiscorePlacement of current user
+ * responds with QuestionInterface
+ *
+ * @verb GET
+ * @endpoint /api/v1/users/questions
+ * @version v1
+ * @description the route will populate all answered questions of current user with answer
+ *     and return a QuestionInterface
+ *
+ * @auth user+
+ * @example
+ *     GET /api/v1/answers/507f191e810c19729de860ea \
+ *     --data { }
  */
 export default async (req: QuestionsRequest, res: Response) => {
 	try {

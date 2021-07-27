@@ -3,7 +3,20 @@ import { Response } from "express";
 import { RequestTokenRequest } from "./interface";
 
 /**
- * Route for requesting reset paassword code
+ * responds with noting/undefined
+ *
+ * @verb POST
+ * @endpoint /api/auth/request_reset_password_token
+ * @version v1
+ * @description provided with valid email and reset password code,
+ * 		generate new reset password token
+ * @auth user+
+ * @example
+ *     POST /api/auth/authenticate \
+ *     --data {
+ * 				email,
+ * 				code
+ * 			 }
  */
 export default async (req: RequestTokenRequest, res: Response) => {
 	try {
@@ -13,7 +26,7 @@ export default async (req: RequestTokenRequest, res: Response) => {
 		);
 		res.send({ token });
 	} catch (error) {
-		console.log(`error`, error)
+		console.log(`error`, error);
 		res.status(400).send({
 			message: "Invalid code",
 		});

@@ -4,7 +4,21 @@ import { RequestTokenRequest } from "./interface";
 import { isProd } from "../../../../utils/secrets";
 
 /**
- * Route for requesting reset paassword code
+ * responds with PublicUser
+ *
+ * @verb POST
+ * @endpoint /api/auth/reset_password
+ * @version v1
+ * @description provided with valid email, password and token, updates users new password,
+ * 		 sets cookies and returns public view of the user
+ * @auth user+
+ * @example
+ *     POST /api/auth/reset_password \
+ *     --data {
+ * 				email,
+ * 				password,
+ * 				token
+ * 			 }
  */
 export default async (req: RequestTokenRequest, res: Response) => {
 	const { email, password, token } = req.body;
@@ -19,7 +33,8 @@ export default async (req: RequestTokenRequest, res: Response) => {
 			password
 		);
 		const authToken = await AuthTokens.generate(user._id);
-		res.cookie("token", authToken, {
+		res
+			.cookie("token", authToken, {
 				expires: AuthTokens.getExpiry(),
 				httpOnly: true,
 				sameSite: "none",

@@ -73,6 +73,6 @@ await new DynamicEmail.Sender({
 
 ### Notes
 
-- The DEFAULT_SENDER is exported from this service. It can be anything, but should ideally be the main email registered with sendgrid.
+- The DEFAULT_SENDER is exported from this service. It can be anything, but should ideally be the main email registered with SendGrid.
 
 - TypeScripts inference understands exactly what the structure of the data field should be, given the templateId you used.

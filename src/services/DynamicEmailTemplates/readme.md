@@ -10,15 +10,15 @@ To create a new template, you first need to add an object representing the Dynam
 
 ```
 export interface MyNewTemplateExample1 {
-	templateId: "d-00000000000000000000000000000001";
-	data: {
-		foo: string;
-	};
+    templateId: "d-00000000000000000000000000000001";
+    data: {
+        foo: string;
+    };
 }
 
 export interface MyNewTemplateExample2 {
-	templateId: "d-00000000000000000000000000000002";
-	data: {
+    templateId: "d-00000000000000000000000000000002";
+    data: {
         turtles: [
             {name: "foo", age: 100},
             {name: "bar", age: 102}
@@ -36,9 +36,9 @@ In order to make the template accessible to developers using this service you ne
 
 ```
 export type Template =
-	| SendWeeklyWinners
-	| SignupTemplateData
-	| ResetPasswordTemplateData
+    | SendWeeklyWinners
+    | SignupTemplateData
+    | ResetPasswordTemplateData
     | MyNewTemplateExample1
     | MyNewTemplateExample2;
 

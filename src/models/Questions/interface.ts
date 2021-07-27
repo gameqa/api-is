@@ -1,14 +1,17 @@
 import { Document, Model, Types } from "mongoose";
 import { AnswersInterface } from "../Answers";
 
-export type ArchiveReason = "long-answer" | "unintelligible" | "variable-answer";
+export type ArchiveReason =
+	| "long-answer"
+	| "unintelligible"
+	| "variable-answer";
 
 export interface QuestionsInterface extends Document {
 	text: string;
 	creationRoundId: Types.ObjectId;
 	createdBy?: Types.ObjectId;
 	verifycationRoundIds: Types.ObjectId[];
-	verifiedAt: Date;
+	verifiedAt?: Date;
 	archived: boolean;
 	archiveReason?: ArchiveReason;
 	answeredAt?: Date;

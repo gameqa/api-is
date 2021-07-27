@@ -28,11 +28,11 @@ export interface MyNewTemplateExample2 {
 
 ```
 
-Notice the templateId needs to be the exact string identifying the templae. The data field can be any JSON object, With-in sendgrid there is a dynamic dummy data editor. The data object should be of the same form as the dummy data in SendGrid.
+Notice the templateId needs to be the exact string identifying the template. The data field can be any JSON object, With-in sendgrid there is a dynamic dummy data editor. The data object should be of the same form as the dummy data in SendGrid.
 
 ## Registering the template
 
-In order to make the template accessible to developers using this service you need to include (registering) the template in the `Template` type union.
+In order to make the template accessible to developers using this service you need to include (register) the template in the `Template` type union.
 
 ```
 export type Template =
@@ -53,11 +53,11 @@ export const MY_NEW_TEMPLATE_1 = "d-000000000000000000000000000000001";
 export const MY_NEW_TEMPLATE_2 = "d-000000000000000000000000000000002";
 ```
 
-The constants name can be anything, but its best to keep it similar to the template name in sendgrid
+The constants name can be anything, but its best to keep it similar to the template name in SendGrid
 
 ## Use case
 
-Here is a realistic example, sending the string "123456" which (in this example) represents a verification code
+Here is a realistic example: we want to send the string "123456" which represents a verification code
 
 ```
 await new DynamicEmail.Sender({

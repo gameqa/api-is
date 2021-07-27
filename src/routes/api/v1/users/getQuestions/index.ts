@@ -1,5 +1,4 @@
 import { Response } from "express";
-import { findByUserIdAndPopulateAnswers } from "../../../../../models/Questions/statics";
 import { QuestionsRequest } from "./interface";
 
 import { Questions } from "../../../../../models";

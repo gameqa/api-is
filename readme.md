@@ -68,6 +68,18 @@ Make sure that the Google account responsible for your API keys has a valid quot
 
 Additionally to having the REDIS_URL set you will need to have an instance of redis running in the backround on your machine.
 
+# The project structure
+
+The project is split into five major modules, each of which contain a seperate README which elucidates its purpose, nature of its contents and folder structure.
+
+    ./src
+    ├── /app          # set-up of the Express application
+    ├── /models       # database models
+    ├── /routes       # all routes
+    ├── /services     # services shared by all modules
+    ├── /utils        # currently only holds a validation file for structure of .env
+    └── server.ts     # starts express server and chron tasks
+
 ## TODOS
 
 TODO: document API routes

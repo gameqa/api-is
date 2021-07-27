@@ -75,10 +75,12 @@ The project is split into five major modules, each of which contain a seperate R
     ./src
     ├── /app          # set-up of the Express application
     ├── /models       # database models
-    ├── /routes       # all routes
+    ├── /routes       # all API endpoints
     ├── /services     # services shared by all modules
     ├── /utils        # currently only holds a validation file for structure of .env
     └── server.ts     # starts express server and chron tasks
+
+Each of these modules share a different purpose and should be individually maintained needing each others interface to work together. That is these folders should only import from the root level of each other.
 
 ## TODOS
 

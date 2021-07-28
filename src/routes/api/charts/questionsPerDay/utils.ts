@@ -35,3 +35,26 @@ export const getQuestionsPerDay = async (
 		}))
 		.sort((a, b) => a.date.getTime() - b.date.getTime());
 };
+
+export const ALLOWED_QUERY_KEYS = [
+	"archived",
+	"isImpossible",
+	"isDisqualified",
+];
+export const CHACHE_KEY = "questions:per:day";
+export const CACHE_DURATION_SECONDS = 240;
+
+export const getQueryObject = (requestQuery: {}): Decleration.QueryObject => {
+	// object returned as output
+	const queryObject: Declerations.QueryObject = {};
+
+	// pass valid boolean constraints in to query object if provided in req.query
+	// this is done as express has poor support for boolean query values
+	for (const key in requestQuery) {
+		if (!Utils.ALLOWED_QUERY_KEYS.includes(key))
+			throw new Error(`${key} is not a valid query key`);
+		queryObject[key] = requestQuery[key] === "false" ? false : true;
+	}
+
+	return queryObject;
+};

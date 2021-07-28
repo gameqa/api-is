@@ -18,27 +18,13 @@ import * as Services from "../../../../services";
  */
 export default async (req: Request, res: Response) => {
 	try {
-		// declare constants
-		const allowedQueryKeys = ["archived", "isImpossible", "isDisqualified"];
-		const CHACHE_KEY = "questions:per:day";
-		const CACHE_DURATION_SECONDS = 240;
-
-		// object used in query
-		const queryObject: Declerations.QueryObject = {};
-
-		// pass valid boolean constraints in to query object if provided in req.query
-		// this is done as express has poor support for boolean query values
-		for (const key in req.query) {
-			if (!allowedQueryKeys.includes(key))
-				throw new Error(`${key} is not a valid query key`);
-			queryObject[key] = req.query[key] === "false" ? false : true;
-		}
+		const queryObject = Utils.getQueryObject(req.query);
 
 		// send the results and store them in cache temporarilly
 		res.send(
 			await Services.Cache.getOrSetTTL<Declerations.PerDate[]>(
-				CHACHE_KEY,
-				CACHE_DURATION_SECONDS,
+				Utils.CHACHE_KEY,
+				Utils.CACHE_DURATION_SECONDS,
 				() => Utils.getQuestionsPerDay(queryObject)
 			)
 		);

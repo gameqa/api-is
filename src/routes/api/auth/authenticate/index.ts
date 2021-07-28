@@ -1,10 +1,11 @@
 import { Users, AuthTokens } from "../../../../models";
 import { Response } from "express";
-import { RegisterRequest } from "./interface";
+import { AuthenticateRequest } from "./interface";
 import { isProd } from "../../../../utils/secrets";
 
 /**
- * responds with PublicUser
+ * responds with PublicUser if authentication
+ * information is valid
  *
  * @verb POST
  * @endpoint /api/auth/authenticate
@@ -15,16 +16,19 @@ import { isProd } from "../../../../utils/secrets";
  * @example
  *     POST /api/auth/authenticate \
  *     --data {
- * 			email,
- * 			password
- * 			}
+ *          email: "test@spurningar.is"
+ * 			password: "some.$ecur3.Pw"
+ * 	   }
  */
-export default async (req: RegisterRequest, res: Response) => {
+export default async (req: AuthenticateRequest, res: Response) => {
 	try {
+		// destructure information from body
 		const { email, password } = req.body;
+
+		// find the user
 		const { user, token } = await Users.findByCreds(email, password);
 
-		res
+		res // set cookie on front end
 			.cookie("token", token, {
 				expires: AuthTokens.getExpiry(),
 				httpOnly: true,

@@ -1,6 +1,6 @@
 import { Request } from "express";
 
-export interface RegisterRequest extends Request {
+export interface AuthenticateRequest extends Request {
 	body: {
 		password: string;
 		email: string;

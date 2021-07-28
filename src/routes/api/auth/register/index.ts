@@ -8,28 +8,31 @@ import { isProd } from "../../../../utils/secrets";
  */
 
 /**
- * responds with PublicUser
- *
  * @verb POST
  * @endpoint /api/auth/authenticate
  * @version v1
- * @description provided a email and password the route will return a public view
- *     of the user
- * @auth user+
+ * @description provided a email, password1, password2 and username,
+ *     will register user and respond with PublicUser. Password1 and
+ *     password2 must match while email and username must be unique.
+ * @auth none
  * @example
  *     POST /api/auth/authenticate \
  *     --data {
- * 			username,
- * 			password,
- * 			password2,
- * 			email,
- * 			}
+ * 			username:  "apidocsuser"
+ * 			password:  "$ecure.pw123!"
+ * 			password2: "$ecure.pw123!",
+ * 			email:     "docs@spurningar.is"
+ * 		}
  */
 export default async (req: RegisterRequest, res: Response) => {
 	try {
+		// register the user
 		const user = await Users.register(req.body);
+
+		// generate auth token
 		const token = await AuthTokens.generate(user._id);
-		res
+
+		res // set token in cookie on front end
 			.cookie("token", token, {
 				expires: AuthTokens.getExpiry(),
 				httpOnly: true,

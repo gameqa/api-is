@@ -1,4 +1,4 @@
 # Auth routes
 
-- [api/auth/register](./register/index.ts) - foo
-- [api/auth/auth](./auth/index.ts) - foo
+- POST [/api/auth/register](./register/index.ts)
+- POST [/api/auth/auth](./auth/index.ts)

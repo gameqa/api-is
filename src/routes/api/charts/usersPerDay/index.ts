@@ -16,7 +16,6 @@ export default async (req: Request, res: Response) => {
 				queryObject.shadowBanned === "false" ? false : true;
 		}
 
-		console.log("GETTING USERS INFO: " + new Date().toISOString());
 		const results = await Users.aggregate([
 			{ $match: queryObject },
 			{

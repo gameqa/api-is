@@ -63,6 +63,7 @@ export const CACHE_DURATION_SECONDS = 240;
  * with actual boolean values
  *
  * For exmaple {archived: 'true'}
+ * is mapped to {archived: true}
  *
  * This function does two things
  * i) validates that the query parameters
@@ -80,8 +81,6 @@ export const getQueryObject = (
 	// object returned as output
 	const queryObject: Decleration.QueryObject = {};
 
-	// pass valid boolean constraints in to query object if provided in req.query
-	// this is done as express has poor support for boolean query values
 	for (const key in requestQuery) {
 		if (!ALLOWED_QUERY_KEYS.includes(key))
 			throw new Error(`${key} is not a valid query key`);

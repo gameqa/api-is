@@ -18,7 +18,9 @@ import * as Services from "../../../../services";
  */
 export default async (req: Request, res: Response) => {
 	try {
-		const queryObject = Utils.getQueryObject(req.query);
+		const queryObject = Utils.getQueryObject(
+			req.query as Declerations.StringToString
+		);
 
 		// send the results and store them in cache temporarilly
 		res.send(

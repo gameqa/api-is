@@ -1,3 +1,5 @@
+    # Api Routes
+
     /api
     ├── /auth
     │   ├── POST /authenticate

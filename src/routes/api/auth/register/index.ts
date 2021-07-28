@@ -4,16 +4,14 @@ import { RegisterRequest } from "./interface";
 import { isProd } from "../../../../utils/secrets";
 
 /**
- * Route for sign up
- */
-
-/**
  * @verb POST
- * @endpoint /api/auth/authenticate
+ * @endpoint /api/auth/register
  * @version v1
- * @description provided a email, password1, password2 and username,
- *     will register user and respond with PublicUser. Password1 and
- *     password2 must match while email and username must be unique.
+ * @description provided an email, password, password2 and username,
+ *     will register user and respond with PublicUser.
+ *
+ *     Password1 and password2 must match while email
+ *     and username must be unique.
  * @auth none
  * @example
  *     POST /api/auth/authenticate \

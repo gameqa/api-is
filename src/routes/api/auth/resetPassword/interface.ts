@@ -1,6 +1,6 @@
 import { Request } from "express";
 
-export interface RequestTokenRequest extends Request {
+export interface ResetPasswordRequest extends Request {
 	body: {
 		email: string;
 		token: string;

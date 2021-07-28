@@ -1,4 +1,4 @@
-    # Api Routes
+# Api Routes
 
     /api
     ├── /auth

@@ -12,7 +12,6 @@ import { isProd } from "../../../../utils/secrets";
  * @version v1
  * @description provided a email and password the route will return a public view
  *     of the user
- * @auth user+
  * @example
  *     POST /api/auth/authenticate \
  *     --data {

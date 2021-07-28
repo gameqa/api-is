@@ -1,4 +1,3 @@
 # Auth routes
 
-- POST [/api/auth/register](./register/index.ts)
-- POST [/api/auth/auth](./auth/index.ts)
+Auth routes are used by users that are not signed in (authenticated) to perform tasks in relation to authentication. This means logging in, registering, resetting password, and so on.

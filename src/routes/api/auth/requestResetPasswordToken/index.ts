@@ -10,7 +10,6 @@ import { RequestTokenRequest } from "./interface";
  *     to reset password (which user got via email), generate
  *     token and send it in HTTP response to user so he can change
  *     his password
- * @auth user+
  * @example
  *     POST /api/auth/authenticate \
  *     --data {

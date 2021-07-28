@@ -1,5 +1,7 @@
 # Api Routes
 
+This api contains all endpoints for HTTP calls in our application. The API is neatly seperated into directories with one route per file. The folder structure matches the api URLS exactly. So the endpoint `/api/v1/users/current` is found in in `api > v1 > users > current`. The name of the leaf file... TODO
+
     /api
     ├── /auth
     │   ├── POST /authenticate

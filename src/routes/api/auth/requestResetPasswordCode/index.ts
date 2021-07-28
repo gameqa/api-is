@@ -9,7 +9,6 @@ import { RequestCodeRequest } from "./interface";
  * @description provided with valid email, generate new code
  *     that is sent to users email so he can proceed with
  *     resetting his password
- * @auth user+
  * @example
  *     POST /api/auth/authenticate \
  *     --data {

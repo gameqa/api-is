@@ -10,7 +10,6 @@ import { isProd } from "../../../../utils/secrets";
  * @description will reset password for user with
  *     given email if he possesses a valid reset
  *     password token
- * @auth user+
  * @example
  *     POST /api/auth/reset_password \
  *     --data {

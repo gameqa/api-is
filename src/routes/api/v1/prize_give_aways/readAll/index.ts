@@ -2,12 +2,15 @@ import { Request, Response } from "express";
 import { ReadAllRequest } from "./interface";
 /**
  * Prize give aways REST API resource end-point
+ * @verb GET
  * @endpoint /api/v1/prize_give_aways
- * @name prizeGiveAways
  * @version v1
- * @since v1
- * @description Sends Array of objects with date and items about all giveaways,
- * 			  past, present or future to the front end.
+ * @description the route will reutrn a array of object containing date and items of
+ * 			past and future prize give aways
+ * @auth user+
+ * @example
+ *     GET /api/v1/prize_give_aways \
+ *     --data { }
  */
 
 export default async (req: ReadAllRequest, res: Response) => {

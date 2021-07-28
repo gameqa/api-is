@@ -4,6 +4,19 @@ import { ResetLevelRequest } from "./interface";
 /**
  * Route for reset level
  */
+
+/**
+ * responds with PublicUser
+ *
+ * @verb POST
+ * @endpoint /api/v1/users/reset_level
+ * @version v1
+ * @description the route will reset and update the current user
+ * @auth user+
+ * @example
+ *     GET /api/v1/users/reset_level \
+ *     --data { }
+ */
 export default async (req: ResetLevelRequest, res: Response) => {
 	try {
 		await req.body.user.resetLevel();

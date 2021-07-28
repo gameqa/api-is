@@ -2,9 +2,17 @@ import { Request, Response } from "express";
 import { Questions } from "../../../../../models";
 
 /**
- * For admin dashboard
+ * responds with QuestionsInterface[]
+ *
+ * @verb GET
+ * @endpoint /api/v1/questions/
+ * @version v1
+ * @description the route will return all questions
+ * @auth admin+
+ * @example
+ *     GET /api/v1/questions/ \
+ *     --data { }
  */
-
 export default async (req: Request, res: Response) => {
 	try {
 		const allowedQueryKeys = ["archived", "isImpossible", "isDisqualified"];

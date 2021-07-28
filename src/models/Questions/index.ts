@@ -131,7 +131,7 @@ questionSchema.pre<QuestionsInterface>("save", async function (next) {
  * @param {ObjectId[] } verifycationRoundIds - unique ids af the gameround the question was verified in
  * @param {Date | undefined} verifiedAt - The date of the questions last verification
  * @param {boolean} archived - Boolean value, if question is marked bad it is true else false by default
- * @param {ArchiveReason | undefined} archiveReason - @deprecated, no longer supported
+ * @param {ArchiveReason | undefined} archiveReason - deprecated, no longer supported
  * @param {Date | undefined} answeredAt - The date of which an answer was found in the google search for the question
  * @param {boolean} isImpossible - Boolean value, if user marks the question has no answer isImpossible is true
  *     else false by default.

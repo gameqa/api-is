@@ -2,8 +2,18 @@ import { Response, Request } from "express";
 import { Articles } from "../../../../../models";
 import { ReadQueryRequest } from "./interface";
 
-/**
+/** TODO:
  * GET articles via google query
+ *
+ * @verb GET
+ * @endpoint /api/v1/articles/
+ * @version v1
+ * @description provided with a valid query the route
+ * 		returns an array of article preview
+ * @auth user+
+ * @example
+ *     GET /api/v1/articles \
+ *     --data { }
  */
 export default async (req: ReadQueryRequest, res: Response) => {
 	try {

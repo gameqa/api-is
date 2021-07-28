@@ -3,8 +3,18 @@ import { HiscorePlacementRequest } from "./interface";
 import { PublicUser, Users } from "../../../../../models";
 
 import * as Services from "../../../../../services";
-/**
+
+/**TODO:
  * Route for getting hiscorePlacement of current user
+ *
+ * @verb GET
+ * @endpoint /api/v1/users/hiscore_placement
+ * @version v1
+ * @description returns a list of ten (by default) users on the hiscore
+ * @auth user+
+ * @example
+ *     GET /api/v1/users/hiscore_placement \
+ *     --data { }
  */
 export default async (req: HiscorePlacementRequest, res: Response) => {
 	const DEFAULT_LIMIT = 10;

@@ -6,6 +6,22 @@ import { isProd } from "../../../../utils/secrets";
 /**
  * Route for requesting reset paassword code
  */
+
+/**
+ * responds with PublicUser
+ *
+ * @verb POST
+ * @endpoint /api/auth/request_reset_password_code
+ * @version v1
+ * @description provided with valid email, generate new reset password verification code
+ * 		and sent to user by email
+ * @auth user+
+ * @example
+ *     POST /api/auth/authenticate \
+ *     --data {
+ * 				email
+ * 			 }
+ */
 export default async (req: RequestCodeRequest, res: Response) => {
 	try {
 		await Users.findByEmailAndRequestResetPasswordCode(req.body.email);

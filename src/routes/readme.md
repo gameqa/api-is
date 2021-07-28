@@ -13,27 +13,27 @@
     │   └── GET /questions_per_day
     └── /v1
         ├── /answers
-        │   ├── GET   /:id
-        │   └── PATCH /:id
+        │   ├── GET    /:id
+        │   └── PATCH  /:id
         ├── /article_sources
-        │   ├── POST /
-        │   ├── GET  /
-        │   └── GET  /:sourceIdentifier/article/:articleKey
+        │   ├── POST   /
+        │   ├── GET    /
+        │   └── GET    /:sourceIdentifier/article/:articleKey
         ├── /articles
-        │   └── GET  /
+        │   └── GET    /
         ├── /game_rounds
-        │   ├── GET  /current
-        │   ├── POST /:roundId/advance
-        │   └── GET  /write_question/image
+        │   ├── GET    /current
+        │   ├── POST   /:roundId/advance
+        │   └── GET    /write_question/image
         ├── /prize_give_away
-        │   └── GET /
+        │   └── GET    /
         ├── /prizes
-        │   ├── GET  /
-        │   ├── POST /
-        │   └── GET  /random
+        │   ├── GET    /
+        │   ├── POST   /
+        │   └── GET    /random
         ├── /questions
-        │   ├── GET   /
-        │   └── PATCH /:id
+        │   ├── GET    /
+        │   └── PATCH  /:id
         ├── /users
         └── ├── GET    /current
             ├── GET    /current/score_card

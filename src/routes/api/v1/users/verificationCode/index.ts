@@ -8,12 +8,15 @@ import { Response } from "express";
  * @verb POST
  * @endpoint /api/v1/users/verification_code
  * @version v1
- * @description provided a valid verification code the route will return a public view
- *     of the user
+ * @description provided a valid verification code the route will verify the user.
+ *     This changes the user-type to "user" from "not-verified"
+ *     The route will respond with a public view of the current user.
  * @auth user+
  * @example
  *     POST /api/v1/users/verification_code \
- *     --data { code }
+ *     --data {
+ *   		code: "123456"
+ * 		}
  */
 export default async (req: VerificationCodeRequest, res: Response) => {
 	const { user, verificationCode } = req.body;

@@ -4,14 +4,11 @@ import { QuestionsRequest } from "./interface";
 import { Questions } from "../../../../../models";
 
 /**
- * responds with QuestionInterface
- *
  * @verb GET
  * @endpoint /api/v1/users/questions
  * @version v1
- * @description the route will populate all answered questions of current user with answer
- *     and return a QuestionInterface
- *
+ * @description the route will respond with a populated list of answered
+ *     questions that have been asked by the current user
  * @auth user+
  * @example
  *     GET /api/v1/answers/507f191e810c19729de860ea \

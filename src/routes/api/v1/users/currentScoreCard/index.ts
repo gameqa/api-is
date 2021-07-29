@@ -2,12 +2,10 @@ import { Response } from "express";
 import { CurrentUserRequest } from "./interface";
 
 /**
- * Route for getting score card of current user
- *
  * @verb GET
  * @endpoint api/v1/users/current/score_card
  * @version v1
- * @description the route returns the score card of current user
+ * @description the route responds with the score card of current user
  * @auth user+
  * @example
  *     GET api/v1/users/current/score_card \

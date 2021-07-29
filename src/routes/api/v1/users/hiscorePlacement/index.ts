@@ -4,16 +4,18 @@ import { PublicUser, Users } from "../../../../../models";
 
 import * as Services from "../../../../../services";
 
-/**TODO:
- * Route for getting hiscorePlacement of current user
- *
+/**
  * @verb GET
  * @endpoint /api/v1/users/hiscore_placement
  * @version v1
- * @description returns a list of ten (by default) users on the hiscore
+ * @description this route responds with a list of users order by highscore rank
+ *     by default the route selects users based on the highscore placement of the current user,
+ *     but allows query parameters "offset" and "limit".
+ *     "Offset" refers to the first user in the response array
+ *     "Limit" refers to the length of the response array
  * @auth user+
  * @example
- *     GET /api/v1/users/hiscore_placement \
+ *     GET /api/v1/users/hiscore_placement?offset=15&limit=20 \
  *     --data { }
  */
 export default async (req: HiscorePlacementRequest, res: Response) => {

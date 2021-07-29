@@ -1,9 +1,7 @@
 import { Response } from "express";
 import { CompleteTutorialRequest } from "./interface";
 
-/**TODO:
- * responds with PublicUser
- *
+/**
  * @verb PATCH
  * @endpoint /api/v1/users/push_notification_tokens
  * @version v1
@@ -11,9 +9,9 @@ import { CompleteTutorialRequest } from "./interface";
  * @auth user+
  * @example
  *     PATCH /api/v1/users/push_notification_tokens \
- *     --data { 
- * 				user: UserInterface;
-				token: string; }
+ *     --data {
+ *			token: string;
+ *			}
  */
 export default async (req: CompleteTutorialRequest, res: Response) => {
 	try {

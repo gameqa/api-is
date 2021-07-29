@@ -1,18 +1,13 @@
 import { Response } from "express";
 import { CompleteTutorialRequest } from "./interface";
-/**
- * Route for getting current user
- */
 
 /**
- * responds with PublicUser
- * 
  * @deprecated no longer in use
  * @verb PATCH
  * @endpoint /api/v1/users/complete_tutorial
  * @version v1
- * @description provided a valid id the route will return a public view
- *     of the answer
+ * @description provided a valid id the user will be marked having completed
+ *     the tutorial and the route will respond with a public view of the user
  * @auth user+
  * @example
 	   /api/v1/users/complete_tutorial \

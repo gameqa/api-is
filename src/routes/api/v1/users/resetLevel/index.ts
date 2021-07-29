@@ -2,19 +2,16 @@ import { Response } from "express";
 import { ResetLevelRequest } from "./interface";
 
 /**
- * Route for reset level
- */
-
-/**
- * responds with PublicUser
- *
  * @verb POST
  * @endpoint /api/v1/users/reset_level
  * @version v1
- * @description the route will reset and update the current user
+ * @description the route will reset levels and update the current user.
+ *     Allowing him to keep his progress but start again at lvl 1, from there he can level up
+ *     and unlock chests again, increasing his chances to win a prize.
+ *     This route responds with public view of the user.
  * @auth user+
  * @example
- *     GET /api/v1/users/reset_level \
+ *     POST /api/v1/users/reset_level \
  *     --data { }
  */
 export default async (req: ResetLevelRequest, res: Response) => {

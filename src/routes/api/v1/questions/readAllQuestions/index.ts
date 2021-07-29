@@ -5,10 +5,10 @@ import { Questions } from "../../../../../models";
  * @verb GET
  * @endpoint /api/v1/questions/
  * @version v1
- * @description the route will respond with all questions
+ * @description the route will respond with all questions matching the query
  * @auth admin+
  * @example
- *     GET /api/v1/questions/ \
+ *     GET /api/v1/questions?archived=true \
  *     --data { }
  */
 export default async (req: Request, res: Response) => {

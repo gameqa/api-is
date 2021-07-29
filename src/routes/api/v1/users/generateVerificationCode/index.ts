@@ -3,13 +3,11 @@ import { VerificationCodeRequest } from "./interface";
 import { Response } from "express";
 
 /**
- * TODO:
- * Respond with PublicUser
- *
  * @verb POST
  * @endpoint /api/v1/users/verification_code
  * @version v1
- * @description this endpoint
+ * @description this route generates new verification and send by email,
+ *     responds with public view of current user
  * @auth user+
  * @example
  *     GET /api/v1/users/verification_code \

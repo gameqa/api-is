@@ -1,4 +1,3 @@
-import { Users } from "../../../../models";
 import { Request, Response } from "express";
 import * as Utils from "./utils";
 import * as Declerations from "./declerations";

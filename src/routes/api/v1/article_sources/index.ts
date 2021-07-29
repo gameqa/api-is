@@ -9,10 +9,7 @@ export default RouteBuilder.routerForEndpoints([
 		route: "/",
 		controller: create,
 		method: "post",
-		middleware: [
-			auth,
-			// allowOnly(["admin"])
-		],
+		middleware: [auth, allowOnly(["admin"])],
 	},
 	{
 		route: "/",

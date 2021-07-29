@@ -2,17 +2,15 @@ import { Response } from "express";
 import { Articles } from "../../../../../models";
 import { ReadByKeyRequest } from "./interface";
 
-/** TODO:
- * responds with ArticleInterface
- *
+/**
  * @verb GET
  * @endpoint /api/v1/article_sources/:sourceIdentifier/article/:articleKey
  * @version v1
- * @description provided a valid sourceIdentifier and valid articleKey the route will
- *     return the article
+ * @description provided a valid sourceIdentifier and valid articleKey the route
+ *     responds with the article
  * @auth user+
  * @example
- *     GET api/v1/article_sources/:sourceIdentifier/article/:articleKey \
+ *     GET api/v1/article_sources/__wiki__/article/Barack_Obama \
  *     --data { }
  */
 export default async (req: ReadByKeyRequest, res: Response) => {

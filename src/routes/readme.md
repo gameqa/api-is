@@ -52,13 +52,13 @@ Here below is a tree diagram showing all routes in the Api. It is convenient to 
             ├── GET    /questions
             └── POST   /reset_level
 
-# Creating a new branch in the tree structure
+# Expanding the API
 
-If you want to add a new branch into the API you will need to first of decide where it should be located. Lets say that we created the model `Fruits`. We want have the following requirements.
+If you want to add a new branch into the API you will need to first of decide where it should be located. Lets say that we created the model `Fruits` and need to do some api calls. We want have the following requirements.
 
 - We want to have a route to read all fruits.
 - The read all route should require auth.
-- We want to have a PATCH route which needs admin privileges.
+- We want to have a PATCH route which requires admin privileges.
 
 After having researched the structure of the api we have decided that `Fruits` should be located under `/api/v1/fruits`. Now, we need to take the following steps:
 
@@ -68,7 +68,7 @@ Inside /api/v1/ you want to create a /fruits directory with a single index.ts fi
 
 ### Export a router from the index.file
 
-Inside of /api/v1/fruits/index.ts you want to export a router that will contain all the endpoints for `fruits`. Here is an example of how this might look, before you add any andpoints to the router.
+Inside of /api/v1/fruits/index.ts you want to export a router that will contain all the endpoints for `fruits`. Here is an example of how this might look before you add any andpoints to the router.
 
 ```
 import { RouteBuilder } from "../../../utils";
@@ -108,7 +108,7 @@ When you have succesfully added the `fruits` router to `/api/v1` you should be a
 
 Now you can start implementing your endpoints. We will not write examples for both the PATCH and GET endpoints but rather only show an example of the GET endpoint to save space.
 
-Now you can create a directory call `/api/v1/fruits/readAll` with an `index.ts` file. The index file might look something like this
+Now you can create a directory called `/api/v1/fruits/readAll` with an `index.ts` file. The index file might look something like this
 
 ```
 import {Request, Response} from "express"
@@ -154,7 +154,7 @@ export default RouteBuilder.routerForEndpoints([
 
 ### Adding authentication
 
-You can add middleware we have created to the
+You can add an auth middleware we created to the
 middleware array to add authentication
 
 #### To allow only verified users:
@@ -165,7 +165,7 @@ middleware: [auth],
 
 #### To allow only a specific user type
 
-Note auth must be called first.
+Note that auth must be called first.
 
 ```
 middleware: [auth, allowOnly(["admin"])],
@@ -173,9 +173,10 @@ middleware: [auth, allowOnly(["admin"])],
 
 ### Populating id's from params
 
-If you have ':fruitId' in the route in routebuilder, and want to look the fruitId with the Fruits model and attach it to req.body as `{fruit: <Fruit Object>}` then you can use the following middleware
+If you have the param ':fruitId' in a route in routebuilder and you want to look up the `Fruit` with the given `_id` and attach it to req.body as `{fruit: <Fruit Object>}` then you can use the following middleware
 
 ```
+// param name, model, key name in req.body attachment
 [populate([["fruitId", Fruits, "fruit"]])]
 ```
 

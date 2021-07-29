@@ -2,6 +2,7 @@ import { Users } from "../../../../models";
 import { Request, Response } from "express";
 import * as Utils from "./utils";
 import * as Declerations from "./declerations";
+import * as Services from "../../../../services";
 
 /**
  * @verb GET
@@ -22,7 +23,13 @@ export default async (req: Request, res: Response) => {
 			req.query as Declerations.StringToString
 		);
 
-		res.send(await Utils.getUsersPerDay(queryObject));
+		res.send(
+			await Services.Cache.getOrSetTTL<Declerations.PerDate[]>(
+				Utils.CHACHE_KEY,
+				Utils.CACHE_DURATION_SECONDS,
+				() => Utils.getUsersPerDay(queryObject)
+			)
+		);
 	} catch (error) {
 		res.status(500).send({
 			message: error.message,

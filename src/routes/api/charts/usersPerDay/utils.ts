@@ -39,6 +39,12 @@ export const getUsersPerDay = async (queryObject: Decleration.QueryObject) => {
 
 export const ALLOWED_QUERY_KEYS = ["hiscoreRank", "level", "shadowBanned"];
 
+// memory cache key
+export const CHACHE_KEY = "users:per:day";
+
+// store the results in cache for this many secnods
+export const CACHE_DURATION_SECONDS = 240;
+
 /**
  * Maps an object (from express request query)
  * which can have boolean values as strings to objects

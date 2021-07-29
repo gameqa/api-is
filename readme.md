@@ -2,6 +2,8 @@
 
 Spurningar.is API used for crowdsourcing the creation of RUQuAD (Reykjavik University Question Answering Dagaset.
 
+Postman documentation can be found here: https://documenter.getpostman.com/view/9071874/TzseGkgk
+
 # Getting Started
 
 To clone the repo run the following command in your command line

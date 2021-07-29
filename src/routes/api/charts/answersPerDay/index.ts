@@ -15,13 +15,10 @@ import * as Utils from "./utils";
  */
 export default async (_: Request, res: Response) => {
 	try {
-		const CHACHE_KEY = "ANSWERS_PER_DAY";
-		const CACHE_DURATION_SECONDS = 240;
-
 		res.send(
 			await Services.Cache.getOrSetTTL<Declerations.PerDate[]>(
-				CHACHE_KEY,
-				CACHE_DURATION_SECONDS,
+				Utils.CHACHE_KEY,
+				Utils.CACHE_DURATION_SECONDS,
 				Utils.getAnswersPerDay
 			)
 		);

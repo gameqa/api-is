@@ -3,9 +3,7 @@ import _ from "lodash";
 import { Answers } from "../../../../../models";
 import { PatchByIdRequest } from "./interface";
 
-/** TODO:
- * updates a single answer by id and respond with PublicAnswer
- *
+/**
  * @verb PATCH
  * @endpoint /api/v1/answers/:id
  * @version v1
@@ -14,10 +12,12 @@ import { PatchByIdRequest } from "./interface";
  * @auth user+
  * @example
  *     PATCH /api/v1/answers/507f191e810c19729de860ea \
- *     --data { }
+ *     --data {
+ * 			seenByQuestionerAt: "2021-06-15T00:00:00.000Z"}
  */
 export default async (req: PatchByIdRequest, res: Response) => {
 	try {
+		/** Pick only allowed values */
 		const body = _.pick(req.body, ["seenByQuestionerAt"]);
 		const doc = await Answers.findByIdAndUpdate(
 			req.body.answer._id,

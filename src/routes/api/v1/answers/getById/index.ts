@@ -4,8 +4,6 @@ import * as Services from "../../../../../services";
 import * as Models from "../../../../../models";
 
 /**
- * reads a single answer by id and respond with PublicAnswer
- *
  * @verb GET
  * @endpoint /api/v1/answers/:id
  * @version v1

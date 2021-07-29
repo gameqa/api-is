@@ -1,19 +1,20 @@
 import { Response, Request } from "express";
 import { ArticleSources } from "../../../../../models";
-/**
- * POST article_source
- */
-/** TODO:
- * responds with ArticleSourcesInterface
- *
+
+/** 
  * @verb POST
  * @endpoint /api/v1/article_sources/
  * @version v1
- * @description this endpoint creates a document of type ArticleSourcesInterface
- * @auth user+
+ * @description this endpoint creates an ArticleSources Document
+ * @auth admin
  * @example
  *     POST api/v1/article_sources/ \
- *     --data { }
+ *     --data {
+        logo: "https://image.flaticon.com/icons/png/512/48/48927.png",
+        identifier: "__wiki__",
+        hostname: "is.wikipedia.org",
+        displayName: "Wikipedia",
+    }
  */
 export default async (req: Request, res: Response) => {
 	try {

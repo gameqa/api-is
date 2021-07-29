@@ -2,12 +2,10 @@ import { Response } from "express";
 import { CurrentUserRequest } from "./interface";
 
 /**
- * respond with PublicUser of the current user
- *
  * @verb GET
  * @endpoint /api/v1/users/current
  * @version v1
- * @description this route will return the current public user
+ * @description this route will respond with a public view of the current user
  * @auth user+
  * @example
  *     GET /api/v1/users/current \

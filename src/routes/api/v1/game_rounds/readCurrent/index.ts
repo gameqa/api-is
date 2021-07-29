@@ -3,16 +3,10 @@ import { GameRounds } from "../../../../../models";
 import { ReadCurrentGameRoundRequest } from "./interface";
 
 /**
- * GET current round for authorized user
- */
-
-/**
- * responds with GameRoundWithTask
- *
  * @verb GET
  * @endpoint /api/v1/game_rounds/current
  * @version v1
- * @description the route returns the current round for authorized user
+ * @description the route responds with the current round for authorized user
  * @auth user+
  * @example
  *     GET /api/v1/game_rounds/current \

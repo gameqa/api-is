@@ -3,16 +3,16 @@ import { Request, Response } from "express";
 import { Questions } from "../../../../../models";
 
 /**
- * responds with QuestionsInterface
- *
  * @verb PATCH
  * @endpoint /api/v1/questions/:id
  * @version v1
- * @description provided a valid id the route will update and return the question
+ * @description provided a valid id the route will update and respond with the updated question
  * @auth admin+
  * @example
- *     PATCH /api/v1/questions/:id \
- *     --data { }
+ *     PATCH /api/v1/questions/507f191e810c19729de860ea \
+ *     --data {
+ * 			isImpossible: false
+ * 			}
  */
 export default async (req: Request, res: Response) => {
 	try {

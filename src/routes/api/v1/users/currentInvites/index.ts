@@ -3,13 +3,11 @@ import { CurrentInvitesRequest } from "./interface";
 import { Response } from "express";
 
 /**
- * returns all the list of public users invited by currenct user
- *
  * @verb GET
  * @endpoint /api/v1/users/current/invites
  * @deprecated no longer in use
  * @version v1
- * @description
+ * @description returns all the list of public view of users invited by current user
  * @auth user+
  * @example
  *     GET /api/v1/users/current/invites \

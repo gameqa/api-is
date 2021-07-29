@@ -1,18 +1,21 @@
 import { Response } from "express";
-import { GameRounds, TaskUserPayload } from "../../../../../models";
+import { TaskUserPayload } from "../../../../../models";
 import { AdvanceCurrentGameRoundRequest } from "./interface";
 
-/** TODO:
- * responds with GameRoundWithTask
- *
+/**
  * @verb POST
  * @endpoint /api/v1/game_rounds/
  * @version v1
- * @description advance round to next round for current user
+ * @description takes information on the task the current user is finishing,
+ *     and responds with a new GameRoundWithTask for the current user
  * @auth user+
  * @example
- *     POST /api/v1/game_rounds/:roundId/advance \
- *     --data { }
+ *     POST /api/v1/game_rounds/507f191e810c19729de860ea/advance \
+ *     --data { 
+ * 			_id: "507f191e810c19729de860ea",
+ * 			type: "make-question",
+			text: "What is the capital of Iceland?",
+ * 		}
  */
 export default async (req: AdvanceCurrentGameRoundRequest, res: Response) => {
 	try {

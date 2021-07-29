@@ -1,13 +1,12 @@
 import { Request, Response } from "express";
 import { ReadAllRequest } from "./interface";
 /**
- * Prize give aways REST API resource end-point
  * @verb GET
  * @endpoint /api/v1/prize_give_aways
  * @version v1
- * @description the route will reutrn a array of object containing date and items of
- * 			past and future prize give aways
- * @auth user+
+ * @description the route will responds with an array of objects containing date and items of
+ *     past and future prize give aways
+ * @auth none
  * @example
  *     GET /api/v1/prize_give_aways \
  *     --data { }

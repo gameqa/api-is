@@ -2,12 +2,10 @@ import { Request, Response } from "express";
 import { Questions } from "../../../../../models";
 
 /**
- * responds with QuestionsInterface[]
- *
  * @verb GET
  * @endpoint /api/v1/questions/
  * @version v1
- * @description the route will return all questions
+ * @description the route will respond with all questions
  * @auth admin+
  * @example
  *     GET /api/v1/questions/ \

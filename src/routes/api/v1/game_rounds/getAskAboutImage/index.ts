@@ -3,12 +3,10 @@ import { AskAboutImage } from "../../../../../models";
 import { GetAskAboutImageRequest } from "./interface";
 
 /**
- * responds with ImageInfo
- *
  * @verb GET
  * @endpoint /api/v1/game_rounds/write_question/image
  * @version v1
- * @description the route returns a single image object for write question round
+ * @description the route responds with a single image object for write question round
  * @auth user+
  * @example
  *     GET /api/v1/game_rounds/write_question/image \

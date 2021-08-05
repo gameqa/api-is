@@ -8,7 +8,7 @@ This service was created in order to minimize the possibility of developers maki
 
 To create a new template, you first need to add an object representing the Dynamic Template under `./interface.ts` like so.
 
-```
+```ts
 export interface MyNewTemplateExample1 {
     templateId: "d-00000000000000000000000000000001";
     data: {

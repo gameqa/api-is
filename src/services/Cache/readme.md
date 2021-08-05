@@ -6,26 +6,26 @@ In the below examples all keys will be represented by the string `"cache-key"` a
 
 ## Store a value by key
 
-```
+```ts
 await set("cache-key", foo);
 ```
 
 ## Store an object by key for one minute
 
-```
+```ts
 const ONE_MINUTE = 60;
 await setTTL("cache-key", foo, ONE_MINUTE);
 ```
 
 ## Retrieve a value by key
 
-```
+```ts
 await get("cache-key")
 ```
 
 We can also use a generic to statically type the return value of get:
 
-```
+```ts
 await get<User>("cache-key")
 ```
 
@@ -35,7 +35,7 @@ Sometimes, we want to retrieve data from storage that takes a lot of time, for e
 
 To achieve this we can use `getOrSet`.
 
-```
+```ts
 await getOrSet("cache-key", async () => {
     return Users.findOne(...);
 });
@@ -48,7 +48,7 @@ This method takes a cache key, and a call back which fetches the data if the val
 
 The above Get or Set function can be replaced with `getOrSetTTL` to add a time to live field, like so.
 
-```
+```ts
 const ONE_MINUTE = 60;
 await getOrSet("cache-key", ONE_MINUTE, async () => {
     return Users.findOne(...);

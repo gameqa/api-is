@@ -83,7 +83,7 @@ export default RouteBuilder.routerForEndpoints([
 
 Now that you have created and exported a router containing `fruits` endpoints you can add it to the /api/v1 router. The `/api/v1/index.ts` should look something like this when you're done.
 
-```
+```ts
 import { RouteBuilder } from "../../utils";
 import fruits from "./fruits";
 
@@ -110,7 +110,7 @@ Now you can start implementing your endpoints. We will not write examples for bo
 
 Now you can create a directory called `/api/v1/fruits/readAll` with an `index.ts` file. The index file might look something like this
 
-```
+```ts
 import {Request, Response} from "express"
 import * as Models from "../../../../../models";
 
@@ -130,7 +130,7 @@ export default async (req: Request, res: Response) => {
 
 Now you can add the endpoints to your `fruits` router
 
-```
+```ts
 import { RouteBuilder } from "../../../utils";
 import readAll from "./readAll";
 import update from "./update";
@@ -159,7 +159,7 @@ middleware array to add authentication
 
 #### To allow only verified users:
 
-```
+```ts
 middleware: [auth],
 ```
 
@@ -167,7 +167,7 @@ middleware: [auth],
 
 Note that auth must be called first.
 
-```
+```ts
 middleware: [auth, allowOnly(["admin"])],
 ```
 
@@ -175,7 +175,7 @@ middleware: [auth, allowOnly(["admin"])],
 
 If you have the param ':fruitId' in a route in routebuilder and you want to look up the `Fruit` with the given `_id` and attach it to req.body as `{fruit: <Fruit Object>}` then you can use the following middleware
 
-```
+```ts
 // param name, model, key name in req.body attachment
 [populate([["fruitId", Fruits, "fruit"]])]
 ```

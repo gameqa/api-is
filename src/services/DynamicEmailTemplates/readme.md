@@ -8,7 +8,7 @@ This service was created in order to minimize the possibility of developers maki
 
 To create a new template, you first need to add an object representing the Dynamic Template under `./interface.ts` like so.
 
-```
+```ts
 export interface MyNewTemplateExample1 {
     templateId: "d-00000000000000000000000000000001";
     data: {
@@ -34,7 +34,7 @@ Notice the templateId needs to be the exact string identifying the template. The
 
 In order to make the template accessible to developers using this service you need to include (register) the template in the `Template` type union.
 
-```
+```ts
 export type Template =
     | SendWeeklyWinners
     | SignupTemplateData
@@ -48,7 +48,7 @@ export type Template =
 
 Next, you need to `export` the templateId from the `index.ts` file like so
 
-```
+```ts
 export const MY_NEW_TEMPLATE_1 = "d-000000000000000000000000000000001";
 export const MY_NEW_TEMPLATE_2 = "d-000000000000000000000000000000002";
 ```
@@ -59,7 +59,7 @@ The constants name can be anything, but its best to keep it similar to the templ
 
 Here is a realistic example: we want to send the string "123456" which represents a verification code
 
-```
+```ts
 await new DynamicEmail.Sender({
     to: ["recipient@company.com"],
     from: DynamicEmail.DEFAULT_SENDER,

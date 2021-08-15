@@ -10,7 +10,7 @@ import { ReadQueryRequest } from "./interface";
  *  the route responds with an array of article previews
  * @auth user+
  * @example
- *     GET /api/v1/articles \
+ *     GET /api/v1/articles?query=Obama \
  *     --data { }
  */
 export default async (req: ReadQueryRequest, res: Response) => {

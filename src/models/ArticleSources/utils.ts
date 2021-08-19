@@ -12,6 +12,7 @@ export const mapHostToArticleSourceIdentifier: {
 	"is.wikipedia.org": "__wiki__",
 	"www.visir.is": "__visir__",
 	"www.visindavefurinn.is": "__visindavef__",
+	"www.stjornarradid.is": "__stjornarradid__",
 };
 
 /**
@@ -26,4 +27,5 @@ export const mapArticleSourceIdentifierToArticleKeyRegex: {
 	__mbl__: /(?<=mbl\.is\/)[^#?]*/g,
 	__wiki__: /(?<=org\/wiki\/)[^#?]*/g,
 	__visir__: /(?<=is\/g\/)[^#?]*/g,
+	__stjornarradid__: /(?<=is)*/g,
 };

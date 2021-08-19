@@ -21,6 +21,9 @@ export class ScraperFactory implements ArticleScraper {
 			case "__visindavef__":
 				this.instance = new VisindavefurScraper(sourceArticleKey);
 				break;
+			case "__stjornarradid__":
+				// this.instance = new
+				break;
 			default:
 				throw new Error("Scraper not found for source");
 		}
@@ -29,7 +32,6 @@ export class ScraperFactory implements ArticleScraper {
 	public async scrapeArticle(): Promise<ScrapeData> {
 		return this.instance.scrapeArticle();
 	}
-
 }
 
 export * from "./interface";

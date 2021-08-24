@@ -3,6 +3,7 @@ import MblScraper from "../MblScraper";
 import VisindavefurScraper from "../VisindavefurScraper";
 import VisirScraper from "../VisirScraper";
 import WikipediaScraper from "../WikipediaScraper";
+import StjornarradidScraper from "../StjornarradidScraper";
 import { ArticleSource } from "./interface";
 
 export class ScraperFactory implements ArticleScraper {
@@ -22,7 +23,7 @@ export class ScraperFactory implements ArticleScraper {
 				this.instance = new VisindavefurScraper(sourceArticleKey);
 				break;
 			case "__stjornarradid__":
-				// this.instance = new
+				this.instance = new StjornarradidScraper(sourceArticleKey);
 				break;
 			default:
 				throw new Error("Scraper not found for source");

@@ -27,5 +27,5 @@ export const mapArticleSourceIdentifierToArticleKeyRegex: {
 	__mbl__: /(?<=mbl\.is\/)[^#?]*/g,
 	__wiki__: /(?<=org\/wiki\/)[^#?]*/g,
 	__visir__: /(?<=is\/g\/)[^#?]*/g,
-	__stjornarradid__: /(?<=is)*/g,
+	__stjornarradid__: /(?<=stjornarradid\.is\/)[^#?]*/g,
 };

@@ -14,6 +14,10 @@ const prizesSchema = new Schema({
 		type: String,
 		required: true,
 	},
+	available: {
+		type: Boolean,
+		required: true,
+	},
 });
 
 export const Prizes = model<PrizesInterface, PrizesSchema>(

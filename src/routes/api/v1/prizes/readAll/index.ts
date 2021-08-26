@@ -24,6 +24,7 @@ export default async (req: ReadAllRequest, res: Response) => {
 				name: prize.name,
 				img: prize.img,
 				brandImg: prize.brandImg,
+				available: prize.available,
 			})),
 		};
 	});

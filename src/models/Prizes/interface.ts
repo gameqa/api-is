@@ -5,6 +5,7 @@ export interface PrizesInterface extends Document {
 	img: string;
 	brandImg: string;
 	prizeCategory: Types.ObjectId;
+	available: Boolean;
 }
 
 export interface PrizesSchema extends Model<PrizesInterface> {}

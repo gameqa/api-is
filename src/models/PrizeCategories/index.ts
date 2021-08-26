@@ -17,7 +17,7 @@ const prizeCategoriesSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	requiredLvl: {
+	requiredLVL: {
 		type: Number,
 		required: true,
 	},

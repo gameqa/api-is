@@ -10,24 +10,26 @@ import { ReadAllRequest } from "./interface";
 export default async (req: ReadAllRequest, res: Response) => {
 	const { user } = req.body;
 
-	const prizesCategories = (
-		await PrizeCategories.find().populate("prizes")
-	).map((prizeCategory) => {
-		return {
-			_id: prizeCategory.id,
-			name: prizeCategory.name,
-			unlockedImg: prizeCategory.unlockedImg,
-			lockedImg: prizeCategory.lockedImg,
-			prereqDescription: `komast í LVL ${prizeCategory.requiredLVL}`,
-			prizes: prizeCategory.prizes.map((prize) => ({
-				_id: prize.id,
-				name: prize.name,
-				img: prize.img,
-				brandImg: prize.brandImg,
-				available: prize.available,
-			})),
-		};
-	});
+	const prizesCategories = await Promise.all(
+		(
+			await PrizeCategories.find().populate("prizes")
+		).map((prizeCategory) => {
+			return {
+				_id: prizeCategory.id,
+				name: prizeCategory.name,
+				unlockedImg: prizeCategory.unlockedImg,
+				lockedImg: prizeCategory.lockedImg,
+				prereqDescription: `komast í LVL ${prizeCategory.requiredLVL}`,
+				prizes: prizeCategory.prizes.map((prize) => ({
+					_id: prize.id,
+					name: prize.name,
+					img: prize.img,
+					brandImg: prize.brandImg,
+					available: prize.available,
+				})),
+			};
+		})
+	);
 
 	res.send(prizesCategories);
 };

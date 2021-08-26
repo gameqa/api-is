@@ -18,7 +18,7 @@ export default async (req: ReadAllRequest, res: Response) => {
 			name: prizeCategory.name,
 			unlockedImg: prizeCategory.unlockedImg,
 			lockedImg: prizeCategory.lockedImg,
-			prereqDescription: `komast í LVL ${prizeCategory.requiredLvl}`,
+			prereqDescription: `komast í LVL ${prizeCategory.requiredLVL}`,
 			prizes: prizeCategory.prizes.map((prize) => ({
 				_id: prize.id,
 				name: prize.name,

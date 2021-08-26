@@ -5,7 +5,7 @@ export interface PrizeCategoriesInterface extends Document {
 	name: string;
 	unlockedImg: string;
 	lockedImg: string;
-	requiredLvl: number;
+	requiredLVL: number;
 	prizes?: PrizesInterface[];
 }
 

@@ -19,13 +19,14 @@ export default class StjornarradidScraper
 				paragraphs: [ArticleScraperBase.REMOVE_TOKEN],
 			};
 		}
+
 		const $ = cheerio.load(data.replace(/\&shy;/, ""));
-		const articleText = $(".main-layout").text();
+		const articleText = $("#main").text();
 		this.paragraphs = articleText
 			.replace(/[\n\r\t]{1,}/g, "\n")
 			.replace(/\u00AD/g, "")
 			.split(/[\t\r\n]/g)
-			.filter((para) => !!para.trim());
+			.filter((para) => !!para.trim() && para !== "Hlusta");
 
 		this.title = $("h1").get(0)?.children?.pop?.().data ?? "Titil vantar";
 

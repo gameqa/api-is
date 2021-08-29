@@ -21,7 +21,8 @@ export default class StjornarradidScraper
 		}
 
 		const $ = cheerio.load(data.replace(/\&shy;/, ""));
-		const articleText = $("#main").text();
+		// classes: content hasBookmarks ||
+		const articleText = $(".l-user-content").text();
 		this.paragraphs = articleText
 			.replace(/[\n\r\t]{1,}/g, "\n")
 			.replace(/\u00AD/g, "")

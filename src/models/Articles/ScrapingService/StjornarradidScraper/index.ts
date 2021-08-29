@@ -9,7 +9,7 @@ export default class StjornarradidScraper
 {
 	public async scrapeArticle(): Promise<ScrapeData> {
 		const { data, headers } = await axios.get<string>(
-			`https://www.stjornarradid.is/${this.sourceArticleKey}`
+			`https://www.stjornarradid.is/verkefni/${this.sourceArticleKey}`
 		);
 		if (!headers["content-type"] || !headers["content-type"].includes("html")) {
 			return {

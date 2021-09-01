@@ -48,7 +48,15 @@ export default async (req: ReadAllRequest, res: Response) => {
 			items: [],
 		},
 		{
+			time: new Date(1630602000000), // 17:00 september 2nd,
+			items: [],
+		},
+		{
 			time: new Date(1631206800000), // 17:00 september 9th,
+			items: [],
+		},
+		{
+			time: new Date(), // 17:00 september 16th
 			items: [],
 		},
 

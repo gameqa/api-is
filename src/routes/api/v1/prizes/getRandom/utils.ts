@@ -7,7 +7,7 @@ export const getRandomPrize = async () => {
 	// 	.filter((prize) => prize.available);
 	// return prizeArray[Math.floor(Math.random() * prizeArray.length)];
 
-	const prizeArray = await Prizes.find();
-	console.log(prizeArray);
+	const prizeArray = await Prizes.find({ available: { $eq: true } });
+	// console.log(prizeArray);
 	return prizeArray[Math.floor(Math.random() * prizeArray.length)];
 };

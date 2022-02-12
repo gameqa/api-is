@@ -2,7 +2,8 @@ import { RouteBuilder } from "../../../utils";
 import { allowOnly, auth } from "../utils";
 import readAll from "./readAll";
 import getRandom from "./getRandom";
-import create from "./create";
+import createCategory from "./createCategory";
+import createPrize from "./createPrize";
 import id from "./id";
 
 export default RouteBuilder.join([
@@ -13,8 +14,14 @@ export default RouteBuilder.join([
 		middleware: [auth],
 	},
 	{
-		route: "/",
-		controller: create,
+		route: "/prizeCategory",
+		controller: createCategory,
+		method: "post",
+		middleware: [auth, allowOnly(["admin"])],
+	},
+	{
+		route: "/prize",
+		controller: createPrize,
 		method: "post",
 		middleware: [auth, allowOnly(["admin"])],
 	},

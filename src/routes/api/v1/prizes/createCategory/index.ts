@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { PrizeCategories } from "../../../../../models";
+import { CreateCategoryRequest } from "./interface";
 
-export default async (req: Request, res: Response) => {
+export default async (req: CreateCategoryRequest, res: Response) => {
 	try {
 		const prizeCategory = await PrizeCategories.create(req.body);
 

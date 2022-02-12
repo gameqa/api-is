@@ -4,7 +4,7 @@ export interface PrizesInterface extends Document {
 	name: string;
 	img: string;
 	brandImg: string;
-	prizeCategory: Types.ObjectId;
+	prizeCategory?: Types.ObjectId;
 	available: Boolean;
 }
 

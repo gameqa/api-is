@@ -4,6 +4,6 @@ export interface CreatePrizeRequest extends Request {
 		name: string;
 		brandImg: string;
 		img: string;
-		available: boolean;
+		available?: boolean;
 	};
 }

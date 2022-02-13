@@ -5,6 +5,7 @@ import getRandom from "./getRandom";
 import createCategory from "./createCategory";
 import createPrize from "./createPrize";
 import id from "./id";
+import getAllPrizes from "./getAllPrizes";
 
 export default RouteBuilder.join([
 	{
@@ -23,6 +24,12 @@ export default RouteBuilder.join([
 		route: "/prize",
 		controller: createPrize,
 		method: "post",
+		middleware: [auth, allowOnly(["admin"])],
+	},
+	{
+		route: "/allPrizes",
+		controller: getAllPrizes,
+		method: "get",
 		middleware: [auth, allowOnly(["admin"])],
 	},
 	{

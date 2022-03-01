@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import { Prizes } from "../../../../../models";
+import { Prizes } from "../../../../../../models";
 
 export default async (req: Request, res: Response) => {
 	try {

@@ -1,4 +1,5 @@
 import { Request } from "express";
+import { PrizesInterface } from "../../../../../../models";
 
 export interface CreateCategoryRequest extends Request {
 	body: {
@@ -6,6 +7,6 @@ export interface CreateCategoryRequest extends Request {
 		lockedImg: string;
 		unlockedImg: string;
 		requiredLVL: number;
-		prizes?: string[];
+		prizes?: PrizesInterface[];
 	};
 }

@@ -1,4 +1,5 @@
 import { Request } from "express";
+import { Types } from "mongoose";
 import { PrizesInterface } from "../../../../../../models";
 export interface ModifyPrizeCategoryRequest extends Request {
 	body: {
@@ -6,6 +7,6 @@ export interface ModifyPrizeCategoryRequest extends Request {
 		lockedImg: string;
 		unlockedImg: string;
 		requiredLVL: number;
-		prizes: PrizesInterface[];
+		prizes: string[];
 	};
 }

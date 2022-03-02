@@ -9,9 +9,9 @@ export default async (req: ModifyPrizeCategoryRequest, res: Response) => {
 
 		const updatedCategory = await PrizeCategories.findByIdAndUpdate(
 			categoryId,
-			// req.body,
-			{ name, lockedImg, unlockedImg, requiredLVL, prizes },
-			{ new: true, useFindAndModify: false }
+			// { $push: req.body },
+			{ $set: { name, lockedImg, unlockedImg, requiredLVL, prizes } },
+			{ new: true, useFindAndModify: false, upsert: true }
 		);
 		res.status(200).send(updatedCategory);
 	} catch (error) {

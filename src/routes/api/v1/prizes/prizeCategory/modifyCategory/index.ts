@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PrizeCategories } from "../../../../../../models";
+import { PrizeCategories, Prizes } from "../../../../../../models";
 import { ModifyPrizeCategoryRequest } from "./interface";
 
 export default async (req: ModifyPrizeCategoryRequest, res: Response) => {
@@ -7,10 +7,19 @@ export default async (req: ModifyPrizeCategoryRequest, res: Response) => {
 		const { categoryId } = req.params;
 		const { name, lockedImg, unlockedImg, requiredLVL, prizes } = req.body;
 
+		const prizesToInsert = await Prizes.find({ _id: { $in: prizes } });
 		const updatedCategory = await PrizeCategories.findByIdAndUpdate(
 			categoryId,
-			// { $push: req.body },
-			{ $set: { name, lockedImg, unlockedImg, requiredLVL, prizes } },
+
+			{
+				$set: {
+					name,
+					lockedImg,
+					unlockedImg,
+					requiredLVL,
+					prizes: prizesToInsert,
+				},
+			},
 			{ new: true, useFindAndModify: false, upsert: true }
 		);
 		res.status(200).send(updatedCategory);

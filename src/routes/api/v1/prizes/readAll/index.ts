@@ -27,6 +27,7 @@ export default async (req: ReadAllRequest, res: Response) => {
 				brandImg: prize.brandImg,
 				available: prize.available,
 			})),
+			requiredLVL: prizeCategory.requiredLVL,
 		};
 	});
 

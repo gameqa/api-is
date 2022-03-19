@@ -7,7 +7,7 @@ export default async (req: CreateGiveAwayRequest, res: Response) => {
 		const date = new Date(req.body.date);
 		const time = date.getTime();
 
-		const prizeGiveAway = await PrizeGiveAways.create(time);
+		const prizeGiveAway = await PrizeGiveAways.create({ time: time });
 
 		res.send(prizeGiveAway);
 	} catch (error) {

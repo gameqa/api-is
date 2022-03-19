@@ -18,7 +18,7 @@ export default RouteBuilder.routerForEndpoints([
 		middleware: [auth, allowOnly(["admin"])],
 	},
 	{
-		route: "/",
+		route: "/:giveAwayId",
 		controller: remove,
 		method: "delete",
 		middleware: [auth, allowOnly(["admin"])],

@@ -7,3 +7,4 @@ export * from "./Questions";
 export * from "./Answers";
 export * from "./PrizeCategories";
 export * from "./Prizes";
+export * from "./PrizeGiveAways";

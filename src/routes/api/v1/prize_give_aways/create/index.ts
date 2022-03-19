@@ -4,7 +4,7 @@ import { PrizeGiveAways } from "../../../../../models";
 
 export default async (req: CreateGiveAwayRequest, res: Response) => {
 	try {
-		const date = new Date(req.body.date);
+		const date = new Date(req.body.time);
 		const time = date.getTime();
 
 		const prizeGiveAway = await PrizeGiveAways.create({ time: time });

@@ -1,9 +1,9 @@
-export interface SendEmailRequest {
+export interface SendNotificationRequest {
 	body: {
 		date: string;
 		prizeCategory: string;
 		lvl: string;
-		img: string;
+		time: string;
 		prize: string;
 	};
 }

@@ -1,15 +1,16 @@
 import { Response } from "express";
-import { SendEmailRequest, Months, WeekDays } from "./interface";
+import { SendEmailRequest } from "./interface";
+import { WeekDays, Months } from "../interface";
 
 import * as Services from "../../../../services";
 
+// TODO: send to everyone with allowEmail = true
 export default async (req: SendEmailRequest, res: Response) => {
 	try {
-		const { date, img, prizeCategory, lvl } = req.body;
+		const { date, img, prizeCategory, lvl, prize } = req.body;
 
 		const date_date = new Date(date);
 		const month_day = date_date.getDate();
-		console.log(month_day, "dagsetning i man");
 		const month = Months[date_date.getMonth()];
 		const day = WeekDays[date_date.getDay()];
 		const format_date = `${month_day}. ${month}`;
@@ -25,6 +26,7 @@ export default async (req: SendEmailRequest, res: Response) => {
 				img: img,
 				lvl: lvl,
 				prizeCategory: prizeCategory,
+				prize: prize,
 			},
 		});
 		res.status(200).send("Email successfully sent");

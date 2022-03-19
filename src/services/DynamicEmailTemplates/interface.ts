@@ -33,6 +33,7 @@ export interface SendEmailGiveawayAnnouncement {
 		prizeCategory: string;
 		img: string;
 		lvl: string;
+		day: string;
 	};
 }
 

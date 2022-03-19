@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { SendEmailRequest, Months } from "./interface";
+import { SendEmailRequest, Months, WeekDays } from "./interface";
 
 import * as Services from "../../../../services";
 
@@ -11,6 +11,7 @@ export default async (req: SendEmailRequest, res: Response) => {
 		const month_day = date_date.getDate();
 		console.log(month_day, "dagsetning i man");
 		const month = Months[date_date.getMonth()];
+		const day = WeekDays[date_date.getDay()];
 		const format_date = `${month_day}. ${month}`;
 		await new Services.DynamicEmail.Sender({
 			to: [Services.DynamicEmail.DEFAULT_SENDER],
@@ -19,6 +20,7 @@ export default async (req: SendEmailRequest, res: Response) => {
 		}).send({
 			templateId: Services.DynamicEmail.EMAIL_GIVEAWAY_ANNOUNCEMENT_TEMPLATE,
 			data: {
+				day: day,
 				date: format_date,
 				img: img,
 				lvl: lvl,

@@ -8,13 +8,13 @@ export interface SendEmailRequest {
 }
 
 export enum WeekDays {
-	Sunnudagur = 0,
-	Mánudagur = 1,
-	Þriðjudagur = 2,
-	Miðvikudagur = 3,
-	Fimmtudagur = 4,
-	Föstudagur = 5,
-	Laugardagur = 6,
+	sunnudag = 0,
+	mánudag = 1,
+	þriðjudag = 2,
+	miðvikudag = 3,
+	fimmtudag = 4,
+	föstudag = 5,
+	laugardag = 6,
 }
 
 export enum Months {

@@ -18,16 +18,16 @@ export enum WeekDays {
 }
 
 export enum Months {
-	Janúar,
-	Febrúar,
-	Mars,
-	Apríl,
-	Maí,
-	Júní,
-	Júlí,
-	Ágúst,
-	September,
-	Október,
-	Nóvember,
-	Desember,
+	janúar,
+	febrúar,
+	mars,
+	apríl,
+	maí,
+	júní,
+	júlí,
+	ágúst,
+	september,
+	október,
+	nóvember,
+	desember,
 }

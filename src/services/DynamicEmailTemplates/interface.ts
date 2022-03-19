@@ -26,7 +26,18 @@ export interface SendWeeklyWinners {
 	};
 }
 
+export interface SendEmailGiveawayAnnouncement {
+	templateId: "d-bb06178c3b89497bb867cfcf2fed37ea";
+	data: {
+		date: string;
+		prizeCategory: string;
+		img: string;
+		lvl: string;
+	};
+}
+
 export type Template =
 	| SendWeeklyWinners
 	| SignupTemplateData
-	| ResetPasswordTemplateData;
+	| ResetPasswordTemplateData
+	| SendEmailGiveawayAnnouncement;

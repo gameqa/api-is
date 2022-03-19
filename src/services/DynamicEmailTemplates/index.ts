@@ -61,3 +61,5 @@ export const DEFAULT_SENDER = "spurningarapp@ru.is";
 export const REGISTER_USER_TEMPLATE = "d-848972f67bb94ba4a22e826ab6656bff";
 export const RESET_PW_CODE_TEMPLATE = "d-87d0255b6c7e4bde9594ee435f4fc80d";
 export const WEEKLY_WINNERS_TEMPLATE = "d-3c9addb0168445328e035b6244145fcd";
+export const EMAIL_GIVEAWAY_ANNOUNCEMENT_TEMPLATE =
+	"d-bb06178c3b89497bb867cfcf2fed37ea";

@@ -17,7 +17,7 @@ export default async (req: ReadAllRequest, res: Response) => {
 	try {
 		const giveAways = await PrizeGiveAways.find();
 		const giveAways_format = giveAways.map((ga) => {
-			return { time: new Date(ga.time), items: [] };
+			return { time: new Date(ga.time), items: [], _id: ga._id };
 		});
 		res.send(giveAways_format);
 	} catch (error) {

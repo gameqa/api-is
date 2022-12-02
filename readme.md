@@ -83,3 +83,6 @@ The project is split into five major modules, each of which contain a seperate R
     └── server.ts     # starts express server and chron tasks
 
 Each of these modules share a different purpose and should be individually maintained needing only each others interface to operate. That is these folders should only import from the root level of one another.
+
+# The mobile app
+The mobile app can be found [here](https://github.com/cadia-lvl/qa-crowdsourcing-api)

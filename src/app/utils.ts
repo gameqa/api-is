@@ -83,6 +83,7 @@ export default class AppUtils {
 				useCreateIndex: true,
 				useUnifiedTopology: true,
 			});
+			console.log("Connected to Mongo")
 		} catch (error) {
 			console.log(
 				"error",

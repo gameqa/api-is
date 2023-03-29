@@ -17,7 +17,7 @@ export const register = async function (
 ) {
 	// if password dont match throw error: Password must match
 	if (info.password !== info.password2)
-		throw new Error("Lykilorð verða að vera eins");
+		throw new Error("[[translation:faceb97a-63cc-48e1-9b5b-7917546711b2]]");
 	const user = await this.create(info);
 	await user.setVerificationCode();
 	return user;
@@ -40,11 +40,11 @@ export const findByCreds = async function (
 	// find user by email
 	const user = await this.findOne({ email: email.toLowerCase().trim() });
 	// if no user found, throw error
-	if (!user) throw new Error("No user with this email and password");
+	if (!user) throw new Error("[[translation:339ca901-d88e-4e10-916a-95c54a4ed932]]");
 	// check if password matches found user password
 	const isMatch = await bcrypt.compare(password, user.password);
 	// if no match throw error
-	if (!isMatch) throw new Error("No user with this email and password");
+	if (!isMatch) throw new Error("[[translation:339ca901-d88e-4e10-916a-95c54a4ed932]]");
 	// generate new auth token
 	const token = await AuthTokens.generate(user._id);
 	return {

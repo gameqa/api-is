@@ -71,7 +71,7 @@ questionSchema.pre<QuestionsInterface>("save", async function (next) {
 				`Question must be at least ${utils.MIN_WORD_COUNT} words`
 			);
 		if (this.text.charAt(this.text.length - 1) !== "?")
-			throw new Error("Question must end in question mark");
+			throw new Error("[[translation:d692f3e6-c4e9-47b4-8fdb-e080669ee68b]]");
 	}
 
 	/**

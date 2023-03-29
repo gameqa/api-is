@@ -62,7 +62,7 @@ export const verify = async function (this: UserInterface, code: string) {
 	 * Throw error: cannot make verification code for user that is verified
 	 */
 	if (this.type !== "not-verified")
-		throw new Error("Þú ert núþegar búin/n að staðfesta aðganginn");
+		throw new Error("[[translation:2cff5e53-bb19-490b-8454-3e3fce014488]]n");
 	/**
 	 * if user inputted verification code is not of right lenght
 	 * throw error: verification code must be X long
@@ -75,7 +75,7 @@ export const verify = async function (this: UserInterface, code: string) {
 	 * If set verification code does not match the hashed of the user inputted one,
 	 * throw error: Wrong verification code */
 	if (this.verificationCode !== hashed)
-		throw new Error("Rangur staðfestingarkóði");
+		throw new Error("[[translation:6169c959-ec25-4449-a23b-5ba3307cc209]]");
 	this.type = "user";
 
 	/**

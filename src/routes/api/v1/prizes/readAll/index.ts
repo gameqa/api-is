@@ -18,7 +18,7 @@ export default async (req: ReadAllRequest, res: Response) => {
 			name: prizeCategory.name,
 			unlockedImg: prizeCategory.unlockedImg,
 			lockedImg: prizeCategory.lockedImg,
-			prereqDescription: `komast í LVL ${prizeCategory.requiredLVL}`,
+			prereqDescription: `[[translation:be737f7e-1b79-4893-805c-8739912cb70d]] ${prizeCategory.requiredLVL}`,
 			isAvailable: prizeCategory.requiredLVL <= user.level,
 			prizes: prizeCategory.prizes.map((prize) => ({
 				_id: prize.id,

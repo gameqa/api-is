@@ -151,7 +151,7 @@ export const toPublic = async function (
 		textSpan = answerWords.join(" ");
 	} catch (e) {
 		// if the operation above fails, give default answer (answer not found)
-		textSpan = "Svar fannst ekki";
+		textSpan = "[[translation:68d189a7-eea9-42c8-b604-409cbd7e128d]]";
 	}
 
 	// return this interface if text span has been selected

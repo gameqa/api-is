@@ -141,7 +141,7 @@ userSchema.pre<UserInterface>("validate", async function (next) {
 	 *    on no username, throw error
 	 */
 	if (!this.username) {
-		throw new Error("Það vantar notandanafn");
+		throw new Error("[[translation:e7d3ddaf-5f0d-42cd-97a8-97bd47bb44e6]]");
 	}
 
 	/**
@@ -153,7 +153,7 @@ userSchema.pre<UserInterface>("validate", async function (next) {
 	 *    on no email, throw error
 	 */
 	if (!this.email) {
-		throw new Error("Það vantar tölvupóstfang");
+		throw new Error("[[translation:b87d4fe0-094d-4062-b215-237136000155]]");
 	}
 
 	next();
@@ -223,7 +223,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		await new DynamicEmail.Sender({
 			to: [this.email],
 			from: DynamicEmail.DEFAULT_SENDER,
-			subject: "Staðfestingarkóði Spurningar.is",
+			subject: "[[translation:c2b7cf3e-86f1-431e-bb12-d4b5a89f382c]]",
 		}).send({
 			templateId: DynamicEmail.REGISTER_USER_TEMPLATE,
 			data: { verificationCode: unHashed! },
@@ -253,7 +253,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		await new DynamicEmail.Sender({
 			to: [this.email],
 			from: DynamicEmail.DEFAULT_SENDER,
-			subject: "Breyta lykilorði Spurningar.is",
+			subject: "[[translation:c067890d-fb0d-4fb4-b169-8ad288a38866]]",
 		}).send({
 			templateId: DynamicEmail.RESET_PW_CODE_TEMPLATE,
 			data: { resetPasswordCode: unHashed! },
@@ -276,10 +276,10 @@ userSchema.pre<UserInterface>("save", async function (next) {
 		let doc: UserInterface;
 		// check if email is already taken
 		doc = await Users.findOne({ email: this.email });
-		if (doc) throw new Error("Tölvupóstfang er ekki laust");
+		if (doc) throw new Error("[[translation:4d0120d8-f9fb-4b23-892e-eb4746d5493a]]");
 		// check if username is already taken
 		doc = await Users.findOne({ username: this.username });
-		if (doc) throw new Error("Notendanafn er ekki laust");
+		if (doc) throw new Error("[[translation:a4f02bcc-cce6-45ec-bdf5-3a1f836feb15]]");
 		this.verificationCode = undefined;
 		// new user placed last on highscore list
 		this.hiscoreRank = await this.collection.estimatedDocumentCount();
@@ -315,7 +315,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	 *    on incorrect format throw error
 	 */
 	if (!validator.isEmail(this.email))
-		throw new Error("Tölvupóstfang er á röngu sniði");
+		throw new Error("[[translation:81e89af0-22cc-47d5-a7fd-20db983021b6]]");
 	/**
 	 * TRIGGER:
 	 *    this is always run
@@ -325,7 +325,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	 *    on incorrect length throw error
 	 */
 	if (this.username.length < MIN_USER_NAME_LENGTH)
-		throw new Error("Notendanafn verður að vera amk. 4 stafir");
+		throw new Error("[[translation:87dce2ce-f100-4ae6-841d-bb66e77ce1e9]]");
 	next();
 });
 

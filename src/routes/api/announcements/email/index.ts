@@ -17,7 +17,7 @@ export default async (req: SendEmailRequest, res: Response) => {
 		await new Services.DynamicEmail.Sender({
 			to: [Services.DynamicEmail.DEFAULT_SENDER],
 			from: Services.DynamicEmail.DEFAULT_SENDER,
-			subject: `Útdráttur á ${month_day}. ${month}`,
+			subject: `[[translation:7d8390ba-4d60-4b9c-94d3-56660da805c4]] ${month_day}. ${month}`,
 		}).send({
 			templateId: Services.DynamicEmail.EMAIL_GIVEAWAY_ANNOUNCEMENT_TEMPLATE,
 			data: {

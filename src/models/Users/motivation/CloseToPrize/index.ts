@@ -7,7 +7,7 @@ const LEVEL_FOR_PRIZE_ID_4 = 15;
 const LEVEL_FOR_PRIZE_ID_3 = 10;
 const LEVEL_FOR_PRIZE_ID_2 = 5;
 
-const formatLvlToPrizeString = (lvl: number) => `Þú ert ${lvl} lvl-um frá því að aflæsa þennan vinninga flokk`;
+const formatLvlToPrizeString = (lvl: number) => `[[translation:82749b03-becd-4845-bfa9-0ef8a1cb5ea2]]`;
 
 /**
  * array of functions that map
@@ -27,18 +27,18 @@ const mappings: MapUserToMotivation[] = [
 		user.level >= LEVEL_FOR_PRIZE_ID_3
 			? {
 					type: "close-to-prize",
-					text: "Vissir þú að þú hefur aflæst þennan vinninga flokk?",
+					text: "[[translation:7aa3322d-a60e-4b38-91c8-ffbdc7aa06f5]]",
 					prizeId: "3",
 			  }
 			: user.level >= LEVEL_FOR_PRIZE_ID_2
 			? {
 					type: "close-to-prize",
-					text: "Vissir þú að þú hefur aflæst þennan vinninga flokk?",
+					text: "[[translation:7aa3322d-a60e-4b38-91c8-ffbdc7aa06f5]]",
 					prizeId: "2",
 			  }
 			: {
 					type: "close-to-prize",
-					text: "Vissir þú að þú hefur aflæst þennan vinninga flokk?",
+					text: "[[translation:7aa3322d-a60e-4b38-91c8-ffbdc7aa06f5]]",
 					prizeId: "1",
 			  },
 	(user) =>
@@ -68,7 +68,7 @@ const mappings: MapUserToMotivation[] = [
 			  }
 			: {
 					type: "close-to-prize",
-					text: "Þú hefur aflæst alla mögulega vinningaflokka!",
+					text: "[[translation:aa635d9d-a3c2-4a47-a67a-31a45a5d1966]]!",
 					prizeId: "5",
 			  },
 ];

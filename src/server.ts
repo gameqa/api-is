@@ -91,8 +91,8 @@ schedule.scheduleJob("00 20 * * *", async function () {
 		(user) => ({
 			to: user.pushNotificationTokens,
 			sound: "default",
-			title: "Haltu áfram að standa þig vel!",
-			body: `Þú hefur spilað ${user.dailyStreak} daga í röð, ekki láta syrpuna þína enda í dag.`,
+			title: "[[translation:c27b9752-ac3d-498b-b053-29b932d3c689]]",
+			body: `[[translation:81842581-d2ce-4949-9940-97f9a123056f]]`,
 		})
 	);
 });
@@ -147,8 +147,8 @@ schedule.scheduleJob("00 16 * * *", async function () {
 			(user) => ({
 				to: user.pushNotificationTokens,
 				sound: "default",
-				title: `Þú hefur fengið ${answerCount} svör!`,
-				body: `Síðastliðinn sólarhring hafa aðrir notendur svarað ${answerCount} spurningum frá þér. Sjáðu svörin í appinu.`,
+				title: `[[translation:2ce39965-d09b-4e3f-abc0-27556165de65]]`,
+				body: `[[translation:e7e5652d-fcd7-40e2-a033-b6d8762ae5d6]]`,
 			})
 		);
 	}
@@ -195,7 +195,7 @@ schedule.scheduleJob("0 16 * * THU", async () => {
 		await new Services.DynamicEmail.Sender({
 			to: [Services.DynamicEmail.DEFAULT_SENDER],
 			from: Services.DynamicEmail.DEFAULT_SENDER,
-			subject: "Vinningshafar",
+			subject: "[[translation:0bc8ab5f-2076-4a8f-8d2d-7c0309fc19ac]]",
 		}).send({
 			templateId: Services.DynamicEmail.WEEKLY_WINNERS_TEMPLATE,
 			data: { text },

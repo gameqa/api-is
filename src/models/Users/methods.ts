@@ -41,7 +41,7 @@ export const setVerificationCode = async function (this: UserInterface) {
 	 */
 	if (this.type !== "not-verified")
 		throw new Error(
-			"Ekki hægt að búa til staðfestingarkóða fyrir notanda sem hefur núþegar staðfest"
+			"[[translation:b369fb95-f7cc-4e6a-ba0f-ff9de7c5a770]]"
 		);
 	// Generate new verification code
 	const code = generateVerificationCode(VERIFICATION_CODE_LENGTH);
@@ -69,7 +69,7 @@ export const verify = async function (this: UserInterface, code: string) {
 	 */
 	if (code.length !== VERIFICATION_CODE_LENGTH)
 		throw new Error(
-			`Staðfestingarkóði verður að vera ${VERIFICATION_CODE_LENGTH} tölur`
+			`[[translation:f2afc6de-75b2-4aa2-b029-c77e7cd012cc]]`
 		);
 	/**
 	 * If set verification code does not match the hashed of the user inputted one,

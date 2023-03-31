@@ -129,7 +129,7 @@ userSchema.pre<UserInterface>("validate", async function (next) {
 	 *    on no password, throw error
 	 */
 	if (!this.password) {
-		throw new Error("Það vantar lykilorð");
+		throw new Error("[[translation:e2f5cedf-b998-4af8-a82d-a1d8cd3bd037]]");
 	}
 
 	/**
@@ -179,7 +179,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	 */
 	if (this.isModified("password")) {
 		if (this.password.length < MIN_PW_LENGTH)
-			throw new Error(`Lykilorð verður að vera amk. ${MIN_PW_LENGTH} stafir`);
+			throw new Error(`[[translation:7e289193-01ff-4fb3-b8d5-e2ed3faefe0b]]`);
 		this.password = await this.hashString(this.password);
 	}
 

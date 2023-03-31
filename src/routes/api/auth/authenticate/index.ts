@@ -37,6 +37,6 @@ export default async (req: AuthenticateRequest, res: Response) => {
 			.status(200)
 			.send(user);
 	} catch (error) {
-		res.status(400).send({ message: "Innskráning gekk ekki" });
+		res.status(400).send({ message: "[[translation:196be13e-e188-41fc-93d5-36a06102ddbb]]" });
 	}
 };

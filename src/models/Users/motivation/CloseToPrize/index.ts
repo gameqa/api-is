@@ -68,7 +68,7 @@ const mappings: MapUserToMotivation[] = [
 			  }
 			: {
 					type: "close-to-prize",
-					text: "[[translation:aa635d9d-a3c2-4a47-a67a-31a45a5d1966]]!",
+					text: "[[translation:aa635d9d-a3c2-4a47-a67a-31a45a5d1966]]",
 					prizeId: "5",
 			  },
 ];

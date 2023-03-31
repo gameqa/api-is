@@ -4,6 +4,10 @@ import * as Services from "../../../../services";
 import { WeekDays, Months } from "../interface";
 import { SendNotificationRequest } from "./interface";
 
+/**
+ * Probably not in use..
+ */
+
 export default async (req: SendNotificationRequest, res: Response) => {
 	try {
 		const { date, time, prizeCategory, prize, lvl } = req.body;
@@ -15,7 +19,7 @@ export default async (req: SendNotificationRequest, res: Response) => {
 		await Services.PushNotifications.send(
 			"Útdráttur!",
 			{
-				email: "brekigudm+5@gmail.com",
+				email: "",
 				"pushNotificationTokens.0": { $exists: true },
 			},
 			(user) => ({

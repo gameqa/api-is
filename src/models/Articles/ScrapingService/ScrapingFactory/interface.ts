@@ -1,1 +1,1 @@
-export type ArticleSource = ;
+export type ArticleSource = null;

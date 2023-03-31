@@ -62,7 +62,7 @@ export const verify = async function (this: UserInterface, code: string) {
 	 * Throw error: cannot make verification code for user that is verified
 	 */
 	if (this.type !== "not-verified")
-		throw new Error("[[translation:2cff5e53-bb19-490b-8454-3e3fce014488]]n");
+		throw new Error("[[translation:2cff5e53-bb19-490b-8454-3e3fce014488]]");
 	/**
 	 * if user inputted verification code is not of right lenght
 	 * throw error: verification code must be X long

@@ -8,21 +8,10 @@ import { Document, Model } from "mongoose";
  */
 
 // static type checking for identifier
-export type ArticleSourceIdentifier =
-	| "__visir__"
-	| "__mbl__"
-	| "__wiki__"
-	| "__visindavef__"
-	| "__stjornarradid__";
+export type ArticleSourceIdentifier = null;
 
 // static type checking for hostnames
-export type ArticleHostnames =
-	| "www.visindavefur.is"
-	| "www.visindavefurinn.is"
-	| "www.mbl.is"
-	| "www.visir.is"
-	| "is.wikipedia.org"
-	| "www.stjornarradid.is";
+export type ArticleHostnames = null;
 
 // interface for ArticleSource Mongoose schema
 export interface ArticleSourcesInterface extends Document {

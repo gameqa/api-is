@@ -7,6 +7,11 @@ import { ArticleSourceIdentifier, ArticleHostnames } from "./interface";
 export const mapHostToArticleSourceIdentifier: {
 	[key in ArticleHostnames]: ArticleSourceIdentifier;
 } = {
+	"is.wikipedia.org": "__wiki__",
+	"www.visindavefur.is": "__visindavef__",
+	"www.visindavefurinn.is": "__visindavef__",
+	"https://www.mbl.is/": "__mbl__",
+	"https://www.visir.is/": "__visir__",
 };//[mapHostToArticleSourceIdentifier] DO NOT EDIT THIS BECAUSE OF CODEGEN SCRIPT
 
 /**
@@ -17,4 +22,8 @@ export const mapHostToArticleSourceIdentifier: {
 export const mapArticleSourceIdentifierToArticleKeyRegex: {
 	[key in ArticleSourceIdentifier]: RegExp;
 } = {
+	"__wiki__": /(?<=org\/wiki\/)[^#?]*/g,
+	"__visindavef__": /(?<=id=)\d*/g,
+	"__mbl__": /(?<=mbl\.is\/)[^#?]*/g,
+	"__visir__": /(?<=is\/g\/)[^#?]*/g,
 };//[mapArticleSourceIdentifierToArticleKeyRegex] DO NOT EDIT THIS BECAUSE OF CODEGEN SCRIPT

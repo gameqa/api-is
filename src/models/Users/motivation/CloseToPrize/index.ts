@@ -7,6 +7,8 @@ const LEVEL_FOR_PRIZE_ID_4 = 15;
 const LEVEL_FOR_PRIZE_ID_3 = 10;
 const LEVEL_FOR_PRIZE_ID_2 = 5;
 
+const formatLvlToPrizeString = (lvl: number) => `Þú ert ${lvl} lvl-um frá því að aflæsa þennan vinninga flokk`;
+
 /**
  * array of functions that map
  * a user to  a motivation regarding
@@ -43,33 +45,25 @@ const mappings: MapUserToMotivation[] = [
 		user.level < LEVEL_FOR_PRIZE_ID_2
 			? {
 					type: "close-to-prize",
-					text: `Þú ert ${
-						LEVEL_FOR_PRIZE_ID_2 - user.level
-					} lvl-um frá því að aflæsa þennan vinninga flokk`,
+					text: formatLvlToPrizeString(LEVEL_FOR_PRIZE_ID_2 - user.level),
 					prizeId: "2",
 			  }
 			: user.level < LEVEL_FOR_PRIZE_ID_3
 			? {
 					type: "close-to-prize",
-					text: `Þú ert ${
-						LEVEL_FOR_PRIZE_ID_3 - user.level
-					} lvl-um frá því að aflæsa þennan vinninga flokk`,
+					text: formatLvlToPrizeString(LEVEL_FOR_PRIZE_ID_3 - user.level),
 					prizeId: "3",
 			  }
 			: user.invites < LEVEL_FOR_PRIZE_ID_4
 			? {
 					type: "close-to-prize",
-					text: `Þú ert ${
-						LEVEL_FOR_PRIZE_ID_4 - user.level
-					} lvl-um frá því að aflæsa þennan vinninga flokk`,
+					text: formatLvlToPrizeString(LEVEL_FOR_PRIZE_ID_4 - user.level),
 					prizeId: "4",
 			  }
 			: user.invites < LEVEL_FOR_PRIZE_ID_5
 			? {
 					type: "close-to-prize",
-					text: `Þú ert ${
-						LEVEL_FOR_PRIZE_ID_5 - user.level
-					} lvl-um frá því að aflæsa þsennan vinninga flokk`,
+					text: formatLvlToPrizeString(LEVEL_FOR_PRIZE_ID_5 - user.level),
 					prizeId: "5",
 			  }
 			: {
@@ -80,4 +74,4 @@ const mappings: MapUserToMotivation[] = [
 ];
 
 export const getItem = () => utils.getRandom(mappings);
-export const isAvailable = () => true;
+export const isAvailable = () => false;

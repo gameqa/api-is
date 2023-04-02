@@ -83,8 +83,30 @@ export const getArticleKey = function (
 	const regex = RegExp(pattern, "g");
 	const key = regex.exec(URL);
 
-	// throw error if no key found (invalid URL)
-	if (!key) return null;
+	if (!key){
+		console.log(`~~~~~ START OF WARNING ~~~~~
+We received the following URL from a google search: ${URL}.
+
+We applied the regex patterns available to the URL to extract a 'key',
+that is the part of the URL that is unique to the article / page 
+in question
+
+The identifier in question for the URL is ${identifier}. This identifier
+matches to the pattern ${pattern}. When applying this pattern to the URL
+nothing is matched.
+
+There are two likely causes.
+
+1) this is a one-off URL and this can be left unhandled. In this case, URLS
+   like this will not be shown in the app
+
+2) the regex is wrong / flawed. If this is the case, update the regex
+
+NOTE: these hostnames need to match exactly.\n\n
+
+~~~~ END OF WARNING ~~~~`)
+		return null
+	};
 
 	// return the first result from the regex search
 	return key[0];

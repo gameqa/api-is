@@ -100,8 +100,10 @@ export const webSearch = async function (
 		.filter((link) => !link.includes("pdf"));
 
 	// get an array of article source identifiers (e.g. __wiki__, __visir__) from urls
-	const identifiers = urls.map((url) => ArticleSources.getIdentifier(url));
-
+	const identifiers = urls.map((url) => 
+		ArticleSources.getIdentifier(url)
+	);
+	
 	// get an array of article keys from the urls
 	const keys = urls.map((url) => ArticleSources.getArticleKey(url));
 
@@ -110,19 +112,28 @@ export const webSearch = async function (
 		identifiers.map((identifier) => ArticleSources.findOne({ identifier }))
 	);
 
+	const N = identifiers.length;
+
+
+
 	/**
 	 * map the data we got from above into an ArticlePreview interface
 	 * which contains info about the source, url (from google), snippet/extract (from google)
 	 * webpage title (from google), source object (from mapping and query above), and
 	 * the article key (from mapping above)
 	 */
-	let returnFormattedItems: ArticlePreview[] = items.map((item, i) => ({
-		url: item.link,
-		snippet: item.snippet,
-		title: item.title,
-		source: sources[i],
-		key: keys[i],
-	}));
+	let returnFormattedItems: ArticlePreview[] = items.map((item, i) => {
+
+		if(identifiers[i] == null || keys[i] == null || sources[i] == null) return null;
+
+		return {
+			url: item.link,
+			snippet: item.snippet,
+			title: item.title,
+			source: sources[i],
+			key: keys[i],
+		}
+	}).filter((item) => item !== null);
 
 	/**
 	 * Here we scrape all the articles  given to us

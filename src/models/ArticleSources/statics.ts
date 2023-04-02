@@ -39,8 +39,25 @@ export const getIdentifier = function (
 		mapHostToArticleSourceIdentifier[hostname as ArticleHostnames];
 
 	// if the key is not present (invalid url) we throw an error
-	if (!identifier)
-		throw new Error(`No identifier found for hostname of url: ${URL}`);
+	if (!identifier){
+		console.log(`~~~~~ START OF WARNING ~~~~~
+We received the following URL from a google search: ${URL}.
+
+However, none mapHostToArticleSourceIdentifier does not
+map the URL to any 'identifier'. This needs to be fixed
+so this URL can be shown in the google search stage.
+
+The hostname we automatically associated with this URL is '${hostname}'
+
+The hostnames listed in mapHostToArticleSourceIdentifier are:
+
+\t${Object.keys(mapHostToArticleSourceIdentifier).join("\n\t-")}
+
+NOTE: these hostnames need to match exactly.\n\n
+
+~~~~ END OF WARNING ~~~~`)
+		return null;
+	}
 
 	// return the identifier
 	return identifier;
@@ -67,7 +84,7 @@ export const getArticleKey = function (
 	const key = regex.exec(URL);
 
 	// throw error if no key found (invalid URL)
-	if (!key) throw new Error(`Unable to find article key in url ${URL}`);
+	if (!key) return null;
 
 	// return the first result from the regex search
 	return key[0];

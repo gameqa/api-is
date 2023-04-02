@@ -10,8 +10,8 @@ export const mapHostToArticleSourceIdentifier: {
 	"is.wikipedia.org": "__wiki__",
 	"www.visindavefur.is": "__visindavef__",
 	"www.visindavefurinn.is": "__visindavef__",
-	"https://www.mbl.is/": "__mbl__",
-	"https://www.visir.is/": "__visir__",
+	"www.mbl.is": "__mbl__",
+	"www.visir.is": "__visir__",
 };//[mapHostToArticleSourceIdentifier] DO NOT EDIT THIS BECAUSE OF CODEGEN SCRIPT
 
 /**

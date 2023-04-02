@@ -30,8 +30,6 @@ export default class WikipediaScraper
 			.split(/[\t\r\n]/g)
 			.filter((para) => !!para.trim() && para !== "Hlusta");
 
-		console.log(this.paragraphs)
-
 		this.title = $("h1 span")?.get(0)?.children?.pop?.().data;
 		return {
 			extract: this.paragraphs[0],

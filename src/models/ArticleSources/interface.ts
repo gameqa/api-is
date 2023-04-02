@@ -19,8 +19,8 @@ export type ArticleHostnames =
 	| "is.wikipedia.org"
 	| "www.visindavefur.is"
 	| "www.visindavefurinn.is"
-	| "https://www.mbl.is/"
-	| "https://www.visir.is/";
+	| "www.mbl.is"
+	| "www.visir.is";
 
 // interface for ArticleSource Mongoose schema
 export interface ArticleSourcesInterface extends Document {

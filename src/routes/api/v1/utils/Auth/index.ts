@@ -30,7 +30,6 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
 		}
 		user.lastDateActive = today();
 		await user.save();
-
 		next();
 	} catch (e) {
 		res.status(401).send({

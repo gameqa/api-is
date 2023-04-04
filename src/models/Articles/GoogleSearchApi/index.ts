@@ -45,7 +45,7 @@ class GoogleSearchApi {
 				q: query,
 			},
 		});
-		return data.items;
+		return data.items ?? [];
 	}
 }
 

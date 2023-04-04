@@ -3,7 +3,7 @@ import {
 	ArticleSourceIdentifier,
 	ArticleSources,
 } from "../";
-import { ArticlePreview } from "./interface";
+import { ArticlePreview, ArticlesInterface } from "./interface";
 import { ScraperFactory, ArticleScraperBase } from "./ScrapingService";
 import Google from "./GoogleSearchApi";
 
@@ -59,7 +59,24 @@ export const findArticleByKey = async function (
 	if (doc) return doc;
 
 	// scrape article if it isnt found
-	const scrapeData = await new ScraperFactory(identifier, key).scrapeArticle();
+	let scrapeData;
+	try {
+		scrapeData = await new ScraperFactory(identifier, key).scrapeArticle();
+	} catch(e) {
+		console.log(`~~~~~ START OF WARNING ~~~~~
+There was an error when trying to scrape an article for 
+identifier ${identifier} and key ${key}.
+
+The error happened inside the scraper which likely is caused
+with errors in the scraping logic.  To fix this, you should
+try to fix the code.
+
+The error message is: '${e}'
+
+~~~~ END OF WARNING ~~~~`)
+		return null;
+	}
+	
 
 	// create a (unsaved) article instance
 	const article = new this({
@@ -141,11 +158,11 @@ export const webSearch = async function (
 	 * we do so to make sure that the urls we receive have
 	 * at least some data, and that they have valid content
 	 */
-	const scrapedArticles = await Promise.all(
+	const scrapedArticles: ArticlesInterface[] = (await Promise.all(
 		returnFormattedItems.map((item) => {
 			return this.findArticleByUrl(item.url);
 		})
-	);
+	)).filter((a) => a !== null);
 
 	/**
 	 * return the returnFormattedItems but filter

@@ -18,6 +18,7 @@ const authTokenSchema = new Schema(
 	}
 );
 
+// @ts-ignore
 authTokenSchema.statics = statics;
 
 /**

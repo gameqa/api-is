@@ -113,9 +113,6 @@ const userSchema = new Schema(
 	}
 );
 
-userSchema.methods = methods;
-userSchema.statics = statics;
-
 /**
  * Form validation, errors thrown here will send a message to the front end
  * */
@@ -160,7 +157,9 @@ userSchema.pre<UserInterface>("validate", async function (next) {
 });
 
 /**@mixin */
+// @ts-ignore
 userSchema.statics = statics;
+// @ts-ignore
 userSchema.methods = methods;
 
 /**
@@ -325,7 +324,7 @@ userSchema.pre<UserInterface>("save", async function (next) {
 	 *    on incorrect length throw error
 	 */
 	if (this.username.length < MIN_USER_NAME_LENGTH)
-		throw new Error("Notendanafn verður að vera amk. 4 stafir");
+		throw new Error(`Notendanafn verður að vera amk. ${MIN_USER_NAME_LENGTH} stafir`);
 	next();
 });
 

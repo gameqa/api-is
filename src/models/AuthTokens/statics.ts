@@ -16,7 +16,7 @@ export const generate = async function (
 	userId: Types.ObjectId
 ): Promise<string> {
 	// validate that the userId is a valid objectId
-	if (!Types.ObjectId.isValid(userId))
+	if (!Types.ObjectId.isValid(userId as string))
 		throw new Error("Can not generate AuthToken from invalid UserId");
 
 	// generate a token String with jwt.sign

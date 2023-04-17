@@ -33,7 +33,10 @@ const articleSchema = new Schema(
 	{ timestamps: true }
 );
 
+
+// @ts-ignore
 articleSchema.statics = statics;
+// @ts-ignore
 articleSchema.methods = methods;
 
 /**

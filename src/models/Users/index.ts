@@ -113,9 +113,6 @@ const userSchema = new Schema(
 	}
 );
 
-userSchema.methods = methods;
-userSchema.statics = statics;
-
 /**
  * Form validation, errors thrown here will send a message to the front end
  * */
@@ -160,7 +157,9 @@ userSchema.pre<UserInterface>("validate", async function (next) {
 });
 
 /**@mixin */
+// @ts-ignore
 userSchema.statics = statics;
+// @ts-ignore
 userSchema.methods = methods;
 
 /**

@@ -66,7 +66,9 @@ const answerSchema = new Schema({
 	},
 });
 
+// @ts-ignore
 answerSchema.methods = methods;
+// @ts-ignore
 answerSchema.statics = statics;
 
 /**

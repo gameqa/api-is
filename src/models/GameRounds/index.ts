@@ -32,7 +32,9 @@ const gameRoundsSchema = new Schema({
 });
 
 /**@mixin */
+// @ts-ignore
 gameRoundsSchema.statics = statics;
+// @ts-ignore
 gameRoundsSchema.methods = methods;
 
 /**

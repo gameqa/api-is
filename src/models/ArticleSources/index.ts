@@ -31,6 +31,7 @@ const articleSourcesSchema = new Schema({
 });
 
 /** @mixin */
+// @ts-ignore
 articleSourcesSchema.statics = statics;
 
 /**

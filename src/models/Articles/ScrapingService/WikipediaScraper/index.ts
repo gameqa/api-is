@@ -34,7 +34,7 @@ export default class WikipediaScraper
 		this.title = $("h1")?.get(0)?.children?.pop?.().data;
 		return {
 			extract: this.paragraphs[0],
-			title: this.title.trim(),
+			title: this.title?.trim() ?? "Title missing",
 			sourceArticleKey: this.sourceArticleKey,
 			paragraphs: this.paragraphs.map((para) => para.trim()),
 		};

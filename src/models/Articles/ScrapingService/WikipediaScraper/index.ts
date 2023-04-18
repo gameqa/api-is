@@ -9,7 +9,7 @@ export default class WikipediaScraper
 	implements ArticleScraper {
 	public async scrapeArticle(): Promise<ScrapeData> {
 		const { data, headers } = await axios.get<string>(
-			`https://is.wikipedia.org/wiki/${this.sourceArticleKey}`
+			`https://en.wikipedia.org/wiki/${this.sourceArticleKey}`
 		);
 
 		if (!headers['content-type'] || !headers['content-type'].includes('html')) {

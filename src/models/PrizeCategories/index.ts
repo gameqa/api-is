@@ -24,6 +24,7 @@ const prizeCategoriesSchema = new Schema({
 	prizes: [{ type: Types.ObjectId, ref: "prizes" }],
 });
 
+//@ts-ignore
 export const PrizeCategories = model<
 	PrizeCategoriesInterface,
 	PrizeCategoriesCollections

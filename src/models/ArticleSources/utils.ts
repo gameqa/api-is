@@ -7,6 +7,7 @@ import { ArticleSourceIdentifier, ArticleHostnames } from "./interface";
 export const mapHostToArticleSourceIdentifier: {
 	[key in ArticleHostnames]: ArticleSourceIdentifier;
 } = {
+	"en.wikipedia.org": "__wiki__"
 };
 
 /**
@@ -17,4 +18,5 @@ export const mapHostToArticleSourceIdentifier: {
 export const mapArticleSourceIdentifierToArticleKeyRegex: {
 	[key in ArticleSourceIdentifier]: RegExp;
 } = {
+	__wiki__: /(?<=org\/wiki\/)[^#?]*/g,
 };

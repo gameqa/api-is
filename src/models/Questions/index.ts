@@ -46,7 +46,9 @@ const questionSchema = new Schema({
 	},
 });
 
+//@ts-ignore
 questionSchema.methods = methods;
+//@ts-ignore
 questionSchema.statics = statics;
 
 /**

@@ -62,6 +62,7 @@ articleSchema.pre<ArticlesInterface>("save", async function (next) {
 });
 
 // create a unique index for (sourceId, key)
+//@ts-ignore
 articleSchema.index({ sourceId: 1, key: 1 }, { unique: true });
 
 /**

@@ -1,1 +1,1 @@
-export type ArticleSource = null;
+export type ArticleSource = "__wiki__";

@@ -2,8 +2,9 @@ import { PublicUser, UserInterface } from "./interface";
 import bcrypt from "bcrypt";
 import { generateVerificationCode, VERIFICATION_CODE_LENGTH } from "./utils";
 import crypto from "crypto";
-import { Users, GameRounds } from "../";
+import { Users, GameRounds, AuthTokens } from "../";
 import motivation from "./motivation";
+import * as Uuid from 'uuid';
 
 /**
  * This is a function that takes in a data string and hashes it
@@ -190,4 +191,25 @@ export const resetLevel = async function (
 	// save and return instance
 	await this.save();
 	return this;
+};
+
+/**
+ * This function deletes the user and makes it impossible
+ * to sign back in
+ *
+ * @param this - type declaration
+ * @returns void
+ */
+ export const safeDelete = async function (
+	this: UserInterface
+): Promise<void> {
+	this.type = "deleted";
+	this.email = `${Uuid.v4()}@deleted.com`;
+	this.pushNotificationTokens = [];
+	this.username += ` (aðgangi eytt)`
+	await this.save();
+
+	await AuthTokens.deleteMany({
+		userId: this._id
+	});
 };

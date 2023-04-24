@@ -11,6 +11,8 @@ import { RouteBuilder } from "../../../utils";
 import { auth, deleteJWT } from "../utils";
 import getQuestions from "./getQuestions";
 import resetLevel from "./resetLevel";
+import deleteAccount from "./delete";
+
 
 export default RouteBuilder.routerForEndpoints([
 	{
@@ -81,6 +83,12 @@ export default RouteBuilder.routerForEndpoints([
 	{
 		route: "/reset_level",
 		controller: resetLevel,
+		middleware: [auth],
+		method: "post",
+	},
+	{
+		route: "/delete",
+		controller: deleteAccount,
 		middleware: [auth],
 		method: "post",
 	},

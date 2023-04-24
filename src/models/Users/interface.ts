@@ -55,6 +55,7 @@ export interface UserInterface extends Document {
 	completeTutorial: () => Promise<void>;
 	getMovitation: () => MotivationType;
 	getHighscoreList: () => Promise<PublicUser[]>;
+	safeDelete: () => Promise<void>;
 }
 
 export interface ResetPasswordCodeInfo {
@@ -94,4 +95,4 @@ export interface UserAuthData {
 	token: string;
 }
 
-export type UserTypes = "user" | "admin" | "not-verified";
+export type UserTypes = "user" | "admin" | "not-verified" | "deleted";

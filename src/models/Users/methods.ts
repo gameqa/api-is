@@ -203,10 +203,10 @@ export const resetLevel = async function (
  export const safeDelete = async function (
 	this: UserInterface
 ): Promise<void> {
-	this.type = "(aðgangi eytt)";
+	this.type = "deleted";
 	this.email = `${Uuid.v4()}@deleted.com`;
 	this.pushNotificationTokens = [];
-	this.username += ` (deleted)`
+	this.username += ` (aðgangi eytt)`
 	await this.save();
 
 	await AuthTokens.deleteMany({

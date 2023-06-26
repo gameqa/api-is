@@ -4,6 +4,8 @@ import VisindavefurScraper from "../VisindavefurScraper";
 import WikipediaScraper from "../WikipediaScraper";
 import MblScraper from "../MblScraper";
 import VisirScraper from "../VisirScraper";
+import CmuScraper from "../CmuScraper";
+
 
 export class ScraperFactory implements ArticleScraper {
 	private instance: ArticleScraper;
@@ -23,6 +25,10 @@ export class ScraperFactory implements ArticleScraper {
 
 			case "__visir__":
 				this.instance = new VisirScraper(sourceArticleKey);
+				break;
+				
+			case "__cmu__":
+				this.instance = new CmuScraper(sourceArticleKey);
 				break;
 			default:
 				throw new Error("Scraper not found for source");

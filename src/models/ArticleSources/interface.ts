@@ -12,7 +12,8 @@ export type ArticleSourceIdentifier =
 	| "__wiki__"
 	| "__visindavef__"
 	| "__mbl__"
-	| "__visir__";
+	| "__visir__"
+	| "__cmu__";
 
 // static type checking for hostnames
 export type ArticleHostnames =
@@ -20,7 +21,8 @@ export type ArticleHostnames =
 	| "www.visindavefur.is"
 	| "www.visindavefurinn.is"
 	| "www.mbl.is"
-	| "www.visir.is";
+	| "www.visir.is"
+	| "www.cmu.edu"
 
 // interface for ArticleSource Mongoose schema
 export interface ArticleSourcesInterface extends Document {

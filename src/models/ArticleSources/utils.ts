@@ -12,6 +12,7 @@ export const mapHostToArticleSourceIdentifier: {
 	"www.visindavefurinn.is": "__visindavef__",
 	"www.mbl.is": "__mbl__",
 	"www.visir.is": "__visir__",
+	"www.cmu.edu": "__cmu__",
 };//[mapHostToArticleSourceIdentifier] DO NOT EDIT THIS BECAUSE OF CODEGEN SCRIPT
 
 /**
@@ -26,4 +27,5 @@ export const mapArticleSourceIdentifierToArticleKeyRegex: {
 	"__visindavef__": /(?<=id=)\d*/g,
 	"__mbl__": /(?<=mbl\.is\/)[^#?]*/g,
 	"__visir__": /(?<=is\/g\/)[^#?]*/g,
+	"__cmu__": /\/news\/stories.*/g,
 };//[mapArticleSourceIdentifierToArticleKeyRegex] DO NOT EDIT THIS BECAUSE OF CODEGEN SCRIPT

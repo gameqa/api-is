@@ -3,4 +3,5 @@ export type ArticleSource =
 	| "__wiki__"
 	| "__mbl__"
 	| "__visindavef__"
-	| "__stjornarradid__";
+	| "__stjornarradid__"
+	| "__cmu__";
